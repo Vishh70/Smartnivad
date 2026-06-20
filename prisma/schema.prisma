@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AffiliateNetwork {
+  AMAZON
+  FLIPKART
+  IMPACT
+  CJ
+  CLICKBANK
+}
+
+model Product {
+  id               String           @id @default(uuid()) @db.Uuid
+  title            String
+  slug             String           @unique
+  description      String
+  shortSummary     String?
+  image            String
+  categoryId       String           @db.Uuid
+  category         Category         @relation(fields: [categoryId], references: [id])
+  affiliateLink    String
+  affiliateNetwork AffiliateNetwork
+  price            Decimal
+  rating           Float            @default(0)
+  pros             String[]
+  cons             String[]
+  specifications   Json?
+  featured         Boolean          @default(false)
+  seoTitle         String?
+  seoDescription   String?
+  seoKeywords      String[]
+  views            Int              @default(0)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([slug])
+  @@index([categoryId])
+}
+
+model Category {
+  id       String    @id @default(uuid()) @db.Uuid
+  name     String
+  slug     String    @unique
+  products Product[]
+
+  @@index([slug])
+}
+
+model AdminUser {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  name      String
+  image     String?
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+}
