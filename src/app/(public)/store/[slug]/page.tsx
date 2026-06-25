@@ -40,7 +40,7 @@ export default async function StorePage({
   const coupons = allCoupons.filter((c) => c.storeId === store.id);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32 pb-12">
       {/* Store Hero */}
       <GlassCard className="mb-12 !p-8 sm:!p-12 flex flex-col sm:flex-row items-center gap-8">
         <div className="text-8xl shrink-0">🏪</div>

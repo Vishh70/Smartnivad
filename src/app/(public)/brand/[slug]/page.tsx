@@ -38,7 +38,7 @@ export default async function BrandPage({
   )[0];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32 pb-12">
       {/* Brand Hero */}
       <GlassCard className="mb-12 !p-8 sm:!p-12 flex flex-col sm:flex-row items-center gap-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)]/5 to-transparent -z-0" />

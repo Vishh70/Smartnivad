@@ -50,14 +50,14 @@ export default async function CategoryPage({
   };
 
   return (
-    <div className="w-full min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="w-full min-h-screen pt-24 lg:pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Category Header Banner */}
-      <div className="mb-12 text-center p-12 rounded-3xl bg-[rgba(255,255,255,0.03)] border border-[var(--color-glass-border)] backdrop-blur-md relative overflow-hidden">
+      <div className="mb-12 text-center p-6 sm:p-12 rounded-3xl bg-[rgba(255,255,255,0.03)] border border-[var(--color-glass-border)] backdrop-blur-md relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10 blur-2xl -z-10" />
         <div className="flex justify-center mb-4 text-gray-700">
           {getIcon(category.icon)}
         </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
           {category.name} Deals
         </h1>
         <p className="text-xl text-gray-700 mb-6 max-w-2xl mx-auto">
