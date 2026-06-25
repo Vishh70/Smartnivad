@@ -1,0 +1,801 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Dealsmagnet Logo | Dealsmagnet" [ref=e5] [cursor=pointer]:
+        - /url: https://www.dealsmagnet.com/
+        - img "Dealsmagnet Logo | Dealsmagnet" [ref=e6]
+      - navigation [ref=e7]:
+        - link "Live Deals" [ref=e8] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/new
+        - link "Hotdeals" [ref=e9] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/hotdeals
+        - link "Deal Finder" [ref=e10] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/amazon-deal-finder
+        - link "Coupons" [ref=e11] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/coupons
+        - link "Quiz" [ref=e12] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/quiz
+        - link "Blog" [ref=e13] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/blog
+    - link "×" [ref=e15] [cursor=pointer]:
+      - /url: javascript:void(0)
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - list [ref=e20]:
+        - listitem [ref=e21]:
+          - link [ref=e22] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Redirect/?url=https%3A%2F%2Ft.me%2FDealsMagnet&key=hp_story
+            - img [ref=e23]
+        - listitem [ref=e24]:
+          - link [ref=e25] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/whatsapp?story
+            - img [ref=e26]
+      - generic [ref=e28]:
+        - generic [ref=e29] [cursor=pointer]:
+          - heading "Live Deals" [level=3] [ref=e31]
+          - heading "Hot Deal" [level=3] [ref=e33]
+          - heading "Coupons" [level=3] [ref=e35]
+        - generic [ref=e36]:
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - link "Clinic Plus Strength & Shine Shampoo with Egg Protein for Strength, Shine and Smoothness, 650 ml":
+                - /url: https://www.dealsmagnet.com/deal/clinic-plus-strength-amp-shine-shampoo-with-egg-pr-1ao9olDL
+                - img "Clinic Plus Strength & Shine Shampoo with Egg Protein for Strength, Shine and Smoothness, 650 ml" [ref=e40] [cursor=pointer]
+              - generic [ref=e41]:
+                - text: 51%
+                - generic [ref=e42]: "off"
+            - generic [ref=e43]:
+              - link "Clinic Plus Strength & Shine Shampoo with Egg Protein for Strength, Shine and Smoothness, 650 ml" [ref=e44] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/clinic-plus-strength-amp-shine-shampoo-with-egg-pr-1ao9olDL
+                - paragraph [ref=e45]: Clinic Plus Strength & Shine Shampoo with Egg Protein for Strength, Shine and Smoothness, 650 ml
+              - generic [ref=e47]:
+                - generic [ref=e48]: ₹396 ₹815
+                - generic [ref=e49]:
+                  - img [ref=e50]
+                  - text: 13 min
+              - generic [ref=e53]:
+                - link "amazon" [ref=e55] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e56]
+                - button "Buy" [ref=e59] [cursor=pointer]:
+                  - img [ref=e60]
+                  - text: Buy
+          - generic [ref=e63]:
+            - generic [ref=e64]:
+              - link "Parachute Advansed Ultra Nourish Hair Serum - 100ml":
+                - /url: https://www.dealsmagnet.com/deal/parachute-advansed-ultra-nourish-hair-serum-coconu-1bX6IlPh
+                - img "Parachute Advansed Ultra Nourish Hair Serum - 100ml" [ref=e65] [cursor=pointer]
+              - generic [ref=e66]:
+                - text: 65%
+                - generic [ref=e67]: "off"
+            - generic [ref=e68]:
+              - link "Parachute Advansed Ultra Nourish Hair Serum - 100ml" [ref=e69] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/parachute-advansed-ultra-nourish-hair-serum-coconu-1bX6IlPh
+                - paragraph [ref=e70]: Parachute Advansed Ultra Nourish Hair Serum - 100ml
+              - generic [ref=e72]:
+                - generic [ref=e73]: ₹139 ₹399
+                - generic [ref=e74]:
+                  - img [ref=e75]
+                  - text: 1 hr
+              - generic [ref=e78]:
+                - link "amazon" [ref=e80] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e81]
+                - button "Buy" [ref=e84] [cursor=pointer]:
+                  - img [ref=e85]
+                  - text: Buy
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - link "Streax Bright & Shine Serum Infused Face Cream Gel, 50 gm with 6% Vitamin C & Glycolic Acid":
+                - /url: https://www.dealsmagnet.com/deal/streax-bright-amp-shine-serum-infused-face-cream-g-1cpPs6Qd
+                - img "Streax Bright & Shine Serum Infused Face Cream Gel, 50 gm with 6% Vitamin C & Glycolic Acid" [ref=e90] [cursor=pointer]
+              - generic [ref=e91]:
+                - text: 50%
+                - generic [ref=e92]: "off"
+            - generic [ref=e93]:
+              - link "Streax Bright & Shine Serum Infused Face Cream Gel, 50 gm with 6% Vitamin C & Glycolic Acid" [ref=e94] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/streax-bright-amp-shine-serum-infused-face-cream-g-1cpPs6Qd
+                - paragraph [ref=e95]: Streax Bright & Shine Serum Infused Face Cream Gel, 50 gm with 6% Vitamin C & Glycolic Acid
+              - generic [ref=e97]:
+                - generic [ref=e98]: ₹125 ₹249
+                - generic [ref=e99]:
+                  - img [ref=e100]
+                  - text: 1 hr
+              - generic [ref=e103]:
+                - link "amazon" [ref=e105] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e106]
+                - button "Buy" [ref=e109] [cursor=pointer]:
+                  - img [ref=e110]
+                  - text: Buy
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - link "Miss Chase Women's Round Neck Short Sleeve Embellished Front Slit Fringed Regular Jumpsuit with Pockets":
+                - /url: https://www.dealsmagnet.com/deal/miss-chase-womens-round-neck-short-sleeve-embellis-1cMwf4Ha
+                - img "Miss Chase Women's Round Neck Short Sleeve Embellished Front Slit Fringed Regular Jumpsuit with Pockets" [ref=e115] [cursor=pointer]
+              - generic [ref=e116]:
+                - text: 92%
+                - generic [ref=e117]: "off"
+            - generic [ref=e118]:
+              - link "Miss Chase Women's Round Neck Short Sleeve Embellished Front Slit Fringed Regular Jumpsuit with Pockets" [ref=e119] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/miss-chase-womens-round-neck-short-sleeve-embellis-1cMwf4Ha
+                - paragraph [ref=e120]: Miss Chase Women's Round Neck Short Sleeve Embellished Front Slit Fringed Regular Jumpsuit with Pockets
+              - generic [ref=e121]: "Size : XS"
+              - generic [ref=e122]:
+                - generic [ref=e123]: ₹396 ₹4949
+                - generic [ref=e124]:
+                  - img [ref=e125]
+                  - text: 1 hr
+              - generic [ref=e128]:
+                - link "amazon" [ref=e130] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e131]
+                - button "Buy" [ref=e134] [cursor=pointer]:
+                  - img [ref=e135]
+                  - text: Buy
+          - generic [ref=e138]:
+            - generic [ref=e139]:
+              - link "Engage Yang Eau De Parfum for Women, Floral and Fruity, Skin Friendly and Long Lasting, 90ml":
+                - /url: https://www.dealsmagnet.com/deal/engage-yang-edp-perfume-for-women-90ml-floral-and--17PlIaKI
+                - img "Engage Yang Eau De Parfum for Women, Floral and Fruity, Skin Friendly and Long Lasting, 90ml" [ref=e140] [cursor=pointer]
+              - generic [ref=e141]:
+                - text: 62%
+                - generic [ref=e142]: "off"
+            - generic [ref=e143]:
+              - link "Engage Yang Eau De Parfum for Women, Floral and Fruity, Skin Friendly and Long Lasting, 90ml" [ref=e144] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/engage-yang-edp-perfume-for-women-90ml-floral-and--17PlIaKI
+                - paragraph [ref=e145]: Engage Yang Eau De Parfum for Women, Floral and Fruity, Skin Friendly and Long Lasting, 90ml
+              - generic [ref=e147]:
+                - generic [ref=e148]: ₹246 ₹649
+                - generic [ref=e149]:
+                  - img [ref=e150]
+                  - text: 1 hr
+              - generic [ref=e153]:
+                - link "amazon" [ref=e155] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e156]
+                - button "Buy" [ref=e159] [cursor=pointer]:
+                  - img [ref=e160]
+                  - text: Buy
+          - generic [ref=e163]:
+            - generic [ref=e164]:
+              - link "Parachute Advansed Protein Shampoo with Coconut Milk & Rosemary | 340ml":
+                - /url: https://www.dealsmagnet.com/deal/parachute-advansed-protein-shampoo-with-coconut-mi-1cMvQm2H
+                - img "Parachute Advansed Protein Shampoo with Coconut Milk & Rosemary | 340ml" [ref=e165] [cursor=pointer]
+              - generic [ref=e166]:
+                - text: 54%
+                - generic [ref=e167]: "off"
+            - generic [ref=e168]:
+              - link "Parachute Advansed Protein Shampoo with Coconut Milk & Rosemary | 340ml" [ref=e169] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/parachute-advansed-protein-shampoo-with-coconut-mi-1cMvQm2H
+                - paragraph [ref=e170]: Parachute Advansed Protein Shampoo with Coconut Milk & Rosemary | 340ml
+              - generic [ref=e171]: Apply 15% Coupon
+              - generic [ref=e172]:
+                - generic [ref=e173]: ₹169 ₹370
+                - generic [ref=e174]:
+                  - img [ref=e175]
+                  - text: 2 hr
+              - generic [ref=e178]:
+                - link "amazon" [ref=e180] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e181]
+                - button "Buy" [ref=e184] [cursor=pointer]:
+                  - img [ref=e185]
+                  - text: Buy
+          - generic [ref=e188]:
+            - generic [ref=e189]:
+              - 'link "Flipkart Minutes : Ice-Cream at ₹1 Using Supercoins (12 Noon - 1 PM)"':
+                - /url: https://www.dealsmagnet.com/deal/flipkart-minutes-ice-cream-at-1-using-supercoins-1-1cMvPeKo
+                - 'img "Flipkart Minutes : Ice-Cream at ₹1 Using Supercoins (12 Noon - 1 PM)" [ref=e190] [cursor=pointer]'
+            - generic [ref=e191]:
+              - 'link "Flipkart Minutes : Ice-Cream at ₹1 Using Supercoins (12 Noon - 1 PM)" [ref=e192] [cursor=pointer]':
+                - /url: https://www.dealsmagnet.com/deal/flipkart-minutes-ice-cream-at-1-using-supercoins-1-1cMvPeKo
+                - paragraph [ref=e193]: "Flipkart Minutes : Ice-Cream at ₹1 Using Supercoins (12 Noon - 1 PM)"
+              - generic [ref=e197]:
+                - img [ref=e198]
+                - text: 2 hr
+              - generic [ref=e201]:
+                - link "amazon" [ref=e203] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/flipkart
+                  - img "amazon" [ref=e204]
+                - button "Buy" [ref=e207] [cursor=pointer]:
+                  - img [ref=e208]
+                  - text: Buy
+          - generic [ref=e211]:
+            - generic [ref=e212]:
+              - link "Cetaphil Gentle Exfoliating SA Cleanser - 29ml":
+                - /url: https://www.dealsmagnet.com/deal/cetaphil-gentle-exfoliating-sa-cleanser-29ml-daily-1cmWs5x8
+                - img "Cetaphil Gentle Exfoliating SA Cleanser - 29ml" [ref=e213] [cursor=pointer]
+              - generic [ref=e214]:
+                - text: 51%
+                - generic [ref=e215]: "off"
+            - generic [ref=e216]:
+              - link "Cetaphil Gentle Exfoliating SA Cleanser - 29ml" [ref=e217] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/cetaphil-gentle-exfoliating-sa-cleanser-29ml-daily-1cmWs5x8
+                - paragraph [ref=e218]: Cetaphil Gentle Exfoliating SA Cleanser - 29ml
+              - generic [ref=e220]:
+                - generic [ref=e221]: ₹99 ₹200
+                - generic [ref=e222]:
+                  - img [ref=e223]
+                  - text: 2 hr
+              - generic [ref=e226]:
+                - link "amazon" [ref=e228] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e229]
+                - button "Buy" [ref=e232] [cursor=pointer]:
+                  - img [ref=e233]
+                  - text: Buy
+          - generic [ref=e236]:
+            - generic [ref=e237]:
+              - link "Cetaphil Gentle Exfoliating SA Lotion - 29ml":
+                - /url: https://www.dealsmagnet.com/deal/cetaphil-gentle-exfoliating-sa-lotion-29ml-1c517dxo
+                - img "Cetaphil Gentle Exfoliating SA Lotion - 29ml" [ref=e238] [cursor=pointer]
+              - generic [ref=e239]:
+                - text: 58%
+                - generic [ref=e240]: "off"
+            - generic [ref=e241]:
+              - link "Cetaphil Gentle Exfoliating SA Lotion - 29ml" [ref=e242] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/cetaphil-gentle-exfoliating-sa-lotion-29ml-1c517dxo
+                - paragraph [ref=e243]: Cetaphil Gentle Exfoliating SA Lotion - 29ml
+              - generic [ref=e245]:
+                - generic [ref=e246]: ₹94 ₹224
+                - generic [ref=e247]:
+                  - img [ref=e248]
+                  - text: 2 hr
+              - generic [ref=e251]:
+                - link "amazon" [ref=e253] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e254]
+                - button "Buy" [ref=e257] [cursor=pointer]:
+                  - img [ref=e258]
+                  - text: Buy
+          - generic [ref=e261]:
+            - generic [ref=e262]:
+              - 'link "Amazon Loot: UP TO 81% OFF - Electrical Wire Cable"':
+                - /url: https://www.dealsmagnet.com/deal/amazon-loot-up-to-81-off-electrical-wires-1cLUpcWV
+                - 'img "Amazon Loot: UP TO 81% OFF - Electrical Wire Cable" [ref=e263] [cursor=pointer]'
+            - generic [ref=e264]:
+              - 'link "Amazon Loot: UP TO 81% OFF - Electrical Wire Cable" [ref=e265] [cursor=pointer]':
+                - /url: https://www.dealsmagnet.com/deal/amazon-loot-up-to-81-off-electrical-wires-1cLUpcWV
+                - paragraph [ref=e266]: "Amazon Loot: UP TO 81% OFF - Electrical Wire Cable"
+              - generic [ref=e270]:
+                - img [ref=e271]
+                - text: 2 hr
+              - generic [ref=e274]:
+                - link "amazon" [ref=e276] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e277]
+                - button "Buy" [ref=e280] [cursor=pointer]:
+                  - img [ref=e281]
+                  - text: Buy
+          - generic [ref=e284]:
+            - generic [ref=e285]:
+              - link "Noise Icon Arc 2.01\" Immersive Curved Display Smartwatch, 10-Day Battery, 1ATM Water Resistant (Silver Grey)":
+                - /url: https://www.dealsmagnet.com/deal/noise-icon-arc-2-01-immersive-curved-display-smart-1bEUbkuH
+                - img "Noise Icon Arc 2.01\" Immersive Curved Display Smartwatch, 10-Day Battery, 1ATM Water Resistant (Silver Grey)" [ref=e286] [cursor=pointer]
+              - generic [ref=e287]:
+                - text: 83%
+                - generic [ref=e288]: "off"
+            - generic [ref=e289]:
+              - link "Noise Icon Arc 2.01\" Immersive Curved Display Smartwatch, 10-Day Battery, 1ATM Water Resistant (Silver Grey)" [ref=e290] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/noise-icon-arc-2-01-immersive-curved-display-smart-1bEUbkuH
+                - paragraph [ref=e291]: Noise Icon Arc 2.01" Immersive Curved Display Smartwatch, 10-Day Battery, 1ATM Water Resistant (Silver Grey)
+              - generic [ref=e293]:
+                - generic [ref=e294]: ₹999 ₹5999
+                - generic [ref=e295]:
+                  - img [ref=e296]
+                  - text: 2 hr
+              - generic [ref=e299]:
+                - link "amazon" [ref=e301] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e302]
+                - button "Buy" [ref=e305] [cursor=pointer]:
+                  - img [ref=e306]
+                  - text: Buy
+          - generic [ref=e309]:
+            - generic [ref=e310]:
+              - link "Noise Twist Round Dial Smart Watch with Bluetooth Calling":
+                - /url: https://www.dealsmagnet.com/deal/noise-twist-round-dial-smart-watch-18S0e4yo
+                - img "Noise Twist Round Dial Smart Watch with Bluetooth Calling" [ref=e311] [cursor=pointer]
+              - generic [ref=e312]:
+                - text: 80%
+                - generic [ref=e313]: "off"
+            - generic [ref=e314]:
+              - link "Noise Twist Round Dial Smart Watch with Bluetooth Calling" [ref=e315] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/noise-twist-round-dial-smart-watch-18S0e4yo
+                - paragraph [ref=e316]: Noise Twist Round Dial Smart Watch with Bluetooth Calling
+              - generic [ref=e318]:
+                - generic [ref=e319]: ₹999 ₹4999
+                - generic [ref=e320]:
+                  - img [ref=e321]
+                  - text: 2 hr
+              - generic [ref=e324]:
+                - link "amazon" [ref=e326] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e327]
+                - button "Buy" [ref=e330] [cursor=pointer]:
+                  - img [ref=e331]
+                  - text: Buy
+          - generic [ref=e334]:
+            - generic [ref=e335]:
+              - link "MarQ by Flipkart Ultimo Wet & Dry High Pressure Washer":
+                - /url: https://www.dealsmagnet.com/deal/marq-by-flipkart-ultimo-wet-dry-high-pressure-wash-1blj629H
+                - img "MarQ by Flipkart Ultimo Wet & Dry High Pressure Washer" [ref=e336] [cursor=pointer]
+              - generic [ref=e337]:
+                - text: 79%
+                - generic [ref=e338]: "off"
+            - generic [ref=e339]:
+              - link "MarQ by Flipkart Ultimo Wet & Dry High Pressure Washer" [ref=e340] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/marq-by-flipkart-ultimo-wet-dry-high-pressure-wash-1blj629H
+                - paragraph [ref=e341]: MarQ by Flipkart Ultimo Wet & Dry High Pressure Washer
+              - generic [ref=e343]:
+                - generic [ref=e344]: ₹1682 ₹7999
+                - generic [ref=e345]:
+                  - img [ref=e346]
+                  - text: 2 hr
+              - generic [ref=e349]:
+                - link "amazon" [ref=e351] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/flipkart
+                  - img "amazon" [ref=e352]
+                - button "Buy" [ref=e355] [cursor=pointer]:
+                  - img [ref=e356]
+                  - text: Buy
+          - generic [ref=e359]:
+            - generic [ref=e360]:
+              - link "Killer, Wildcraft & Integriti Raincoats Starting @ ₹310":
+                - /url: https://www.dealsmagnet.com/deal/Killer-Wildcraft-Integriti-RaincoatsStarting249-18Trof4G
+                - img "Killer, Wildcraft & Integriti Raincoats Starting @ ₹310" [ref=e361] [cursor=pointer]
+            - generic [ref=e362]:
+              - link "Killer, Wildcraft & Integriti Raincoats Starting @ ₹310" [ref=e363] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/Killer-Wildcraft-Integriti-RaincoatsStarting249-18Trof4G
+                - paragraph [ref=e364]: Killer, Wildcraft & Integriti Raincoats Starting @ ₹310
+              - generic [ref=e368]:
+                - img [ref=e369]
+                - text: 2 hr
+              - generic [ref=e372]:
+                - link "amazon" [ref=e374] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/flipkart
+                  - img "amazon" [ref=e375]
+                - button "Buy" [ref=e378] [cursor=pointer]:
+                  - img [ref=e379]
+                  - text: Buy
+          - generic [ref=e382]:
+            - generic [ref=e383]:
+              - link "Toyzone Panther Electric Jeep (Red) | 12V Rechargeable Ride on with 5Ah Battery | 6M Battery Warranty | Age 3-10 Years, Upto 50 kg":
+                - /url: https://www.dealsmagnet.com/deal/toyzone-panther-electric-jeep-red-12v-rechargeable-1cM6fdr5
+                - img "Toyzone Panther Electric Jeep (Red) | 12V Rechargeable Ride on with 5Ah Battery | 6M Battery Warranty | Age 3-10 Years, Upto 50 kg" [ref=e384] [cursor=pointer]
+              - generic [ref=e385]:
+                - text: 72%
+                - generic [ref=e386]: "off"
+            - generic [ref=e387]:
+              - link "Toyzone Panther Electric Jeep (Red) | 12V Rechargeable Ride on with 5Ah Battery | 6M Battery Warranty | Age 3-10 Years, Upto 50 kg" [ref=e388] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/toyzone-panther-electric-jeep-red-12v-rechargeable-1cM6fdr5
+                - paragraph [ref=e389]: Toyzone Panther Electric Jeep (Red) | 12V Rechargeable Ride on with 5Ah Battery | 6M Battery Warranty | Age 3-10 Years, Upto 50 kg
+              - generic [ref=e390]: 699/- OFF Via SBI CC - EMI
+              - generic [ref=e391]:
+                - generic [ref=e392]: ₹6476 ₹22999
+                - generic [ref=e393]:
+                  - img [ref=e394]
+                  - text: 2 hr
+              - generic [ref=e397]:
+                - link "amazon" [ref=e399] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e400]
+                - button "Buy" [ref=e403] [cursor=pointer]:
+                  - img [ref=e404]
+                  - text: Buy
+          - generic [ref=e407]:
+            - generic [ref=e408]:
+              - link "Gillette Mach 3, Shaving Razor For Men":
+                - /url: https://www.dealsmagnet.com/deal/gillette-mach3-new-blade-razor-1-count-1bgMwwq0
+                - img "Gillette Mach 3, Shaving Razor For Men" [ref=e409] [cursor=pointer]
+              - generic [ref=e410]:
+                - text: 55%
+                - generic [ref=e411]: "off"
+            - generic [ref=e412]:
+              - link "Gillette Mach 3, Shaving Razor For Men" [ref=e413] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/gillette-mach3-new-blade-razor-1-count-1bgMwwq0
+                - paragraph [ref=e414]: Gillette Mach 3, Shaving Razor For Men
+              - generic [ref=e415]: Apply 50% Coupon
+              - generic [ref=e416]:
+                - generic [ref=e417]: ₹123 ₹275
+                - generic [ref=e418]:
+                  - img [ref=e419]
+                  - text: 3 hr
+              - generic [ref=e422]:
+                - link "amazon" [ref=e424] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e425]
+                - button "Buy" [ref=e428] [cursor=pointer]:
+                  - img [ref=e429]
+                  - text: Buy
+          - generic [ref=e432]:
+            - generic [ref=e433]:
+              - link "Zebronics-Companion 114 Wireless Keyboard and Mouse Combo":
+                - /url: https://www.dealsmagnet.com/deal/zebronics-companion114-wireless-keyboard-and-mouse-1cCJi7pc
+                - img "Zebronics-Companion 114 Wireless Keyboard and Mouse Combo" [ref=e434] [cursor=pointer]
+              - generic [ref=e435]:
+                - text: 71%
+                - generic [ref=e436]: "off"
+            - generic [ref=e437]:
+              - link "Zebronics-Companion 114 Wireless Keyboard and Mouse Combo" [ref=e438] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/zebronics-companion114-wireless-keyboard-and-mouse-1cCJi7pc
+                - paragraph [ref=e439]: Zebronics-Companion 114 Wireless Keyboard and Mouse Combo
+              - generic [ref=e441]:
+                - generic [ref=e442]: ₹589 ₹1999
+                - generic [ref=e443]:
+                  - img [ref=e444]
+                  - text: 3 hr
+              - generic [ref=e447]:
+                - link "amazon" [ref=e449] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e450]
+                - button "Buy" [ref=e453] [cursor=pointer]:
+                  - img [ref=e454]
+                  - text: Buy
+          - generic [ref=e457]:
+            - generic [ref=e458]:
+              - link "realme TechLife 7 kg In-built Heater with ExpertWash Fully Automatic Front Load with In-built Heater Grey (RMFL705NHIJG)":
+                - /url: https://www.dealsmagnet.com/deal/realme-techlife-7-kg-in-built-heater-with-expertwa-1cM7seSA
+                - img "realme TechLife 7 kg In-built Heater with ExpertWash Fully Automatic Front Load with In-built Heater Grey (RMFL705NHIJG)" [ref=e459] [cursor=pointer]
+              - generic [ref=e460]:
+                - text: 53%
+                - generic [ref=e461]: "off"
+            - generic [ref=e462]:
+              - link "realme TechLife 7 kg In-built Heater with ExpertWash Fully Automatic Front Load with In-built Heater Grey (RMFL705NHIJG)" [ref=e463] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/realme-techlife-7-kg-in-built-heater-with-expertwa-1cM7seSA
+                - paragraph [ref=e464]: realme TechLife 7 kg In-built Heater with ExpertWash Fully Automatic Front Load with In-built Heater Grey (RMFL705NHIJG)
+              - generic [ref=e465]: 2,500/- OFF Via HDFC CC
+              - generic [ref=e466]:
+                - generic [ref=e467]: ₹18990 ₹39990
+                - generic [ref=e468]:
+                  - img [ref=e469]
+                  - text: 3 hr
+              - generic [ref=e472]:
+                - link "amazon" [ref=e474] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/flipkart
+                  - img "amazon" [ref=e475]
+                - button "Buy" [ref=e478] [cursor=pointer]:
+                  - img [ref=e479]
+                  - text: Buy
+          - generic [ref=e482]:
+            - generic [ref=e483]:
+              - link "Amazon Brand - Jam & Honey Ride-on Car for Kids | for 24+ Months | Push Car with Backrest | BIS Approved | Safe and Fun Toy (Blue)":
+                - /url: https://www.dealsmagnet.com/deal/amazon-brand-jam-honey-ride-on-car-for-kids-for-24-1cM8egbt
+                - img "Amazon Brand - Jam & Honey Ride-on Car for Kids | for 24+ Months | Push Car with Backrest | BIS Approved | Safe and Fun Toy (Blue)" [ref=e484] [cursor=pointer]
+              - generic [ref=e485]:
+                - text: 70%
+                - generic [ref=e486]: "off"
+            - generic [ref=e487]:
+              - link "Amazon Brand - Jam & Honey Ride-on Car for Kids | for 24+ Months | Push Car with Backrest | BIS Approved | Safe and Fun Toy (Blue)" [ref=e488] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/amazon-brand-jam-honey-ride-on-car-for-kids-for-24-1cM8egbt
+                - paragraph [ref=e489]: Amazon Brand - Jam & Honey Ride-on Car for Kids | for 24+ Months | Push Car with Backrest | BIS Approved | Safe and Fun Toy (Blue)
+              - generic [ref=e491]:
+                - generic [ref=e492]: ₹899 ₹2999
+                - generic [ref=e493]:
+                  - img [ref=e494]
+                  - text: 3 hr
+              - generic [ref=e497]:
+                - link "amazon" [ref=e499] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e500]
+                - button "Buy" [ref=e503] [cursor=pointer]:
+                  - img [ref=e504]
+                  - text: Buy
+          - generic [ref=e507]:
+            - generic [ref=e508]:
+              - link "Mivi Nex 450 Soundbar [New Launch], 450W 5.1 Channel System with 3 in-Built Speakers, 2 Satellite Speakers and a Subwoofer":
+                - /url: https://www.dealsmagnet.com/deal/mivi-nex-450-soundbar-new-launch-450w-5-1-channel--1cM5zpy6
+                - img "Mivi Nex 450 Soundbar [New Launch], 450W 5.1 Channel System with 3 in-Built Speakers, 2 Satellite Speakers and a Subwoofer" [ref=e509] [cursor=pointer]
+              - generic [ref=e510]:
+                - text: 84%
+                - generic [ref=e511]: "off"
+            - generic [ref=e512]:
+              - link "Mivi Nex 450 Soundbar [New Launch], 450W 5.1 Channel System with 3 in-Built Speakers, 2 Satellite Speakers and a Subwoofer" [ref=e513] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/mivi-nex-450-soundbar-new-launch-450w-5-1-channel--1cM5zpy6
+                - paragraph [ref=e514]: Mivi Nex 450 Soundbar [New Launch], 450W 5.1 Channel System with 3 in-Built Speakers, 2 Satellite Speakers and a Subwoofer
+              - generic [ref=e515]: 619/- OFF Via SBI CC - EMI
+              - generic [ref=e516]:
+                - generic [ref=e517]: ₹5736 ₹35999
+                - generic [ref=e518]:
+                  - img [ref=e519]
+                  - text: 3 hr
+              - generic [ref=e522]:
+                - link "amazon" [ref=e524] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e525]
+                - button "Buy" [ref=e528] [cursor=pointer]:
+                  - img [ref=e529]
+                  - text: Buy
+          - generic [ref=e532]:
+            - generic [ref=e533]:
+              - link "LAKMÉ Shimmery Elle18 Eyedrama Palette 01Sassy, 1 Count":
+                - /url: https://www.dealsmagnet.com/deal/lakm-shimmery-elle18-eyedrama-palette-01sassy-1-co-1bYio2mF
+                - img "LAKMÉ Shimmery Elle18 Eyedrama Palette 01Sassy, 1 Count" [ref=e534] [cursor=pointer]
+              - generic [ref=e535]:
+                - text: 80%
+                - generic [ref=e536]: "off"
+            - generic [ref=e537]:
+              - link "LAKMÉ Shimmery Elle18 Eyedrama Palette 01Sassy, 1 Count" [ref=e538] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/lakm-shimmery-elle18-eyedrama-palette-01sassy-1-co-1bYio2mF
+                - paragraph [ref=e539]: LAKMÉ Shimmery Elle18 Eyedrama Palette 01Sassy, 1 Count
+              - generic [ref=e541]:
+                - generic [ref=e542]: ₹59 ₹295
+                - generic [ref=e543]:
+                  - img [ref=e544]
+                  - text: 3 hr
+              - generic [ref=e547]:
+                - link "amazon" [ref=e549] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e550]
+                - button "Buy" [ref=e553] [cursor=pointer]:
+                  - img [ref=e554]
+                  - text: Buy
+          - generic [ref=e557]:
+            - generic [ref=e558]:
+              - link "DABUR Gluco-C Instant Powder Energy Glucose (Mango Flavour) - 1Kg":
+                - /url: https://www.dealsmagnet.com/deal/dabur-gluco-c-instant-powder-energy-glucose-mango--1cn7xjDK
+                - img "DABUR Gluco-C Instant Powder Energy Glucose (Mango Flavour) - 1Kg" [ref=e559] [cursor=pointer]
+              - generic [ref=e560]:
+                - text: 50%
+                - generic [ref=e561]: "off"
+            - generic [ref=e562]:
+              - link "DABUR Gluco-C Instant Powder Energy Glucose (Mango Flavour) - 1Kg" [ref=e563] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/dabur-gluco-c-instant-powder-energy-glucose-mango--1cn7xjDK
+                - paragraph [ref=e564]: DABUR Gluco-C Instant Powder Energy Glucose (Mango Flavour) - 1Kg
+              - generic [ref=e566]:
+                - generic [ref=e567]: ₹204 ₹409
+                - generic [ref=e568]:
+                  - img [ref=e569]
+                  - text: 3 hr
+              - generic [ref=e572]:
+                - link "amazon" [ref=e574] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e575]
+                - button "Buy" [ref=e578] [cursor=pointer]:
+                  - img [ref=e579]
+                  - text: Buy
+          - generic [ref=e582]:
+            - generic [ref=e583]:
+              - link "pTron Studio w/ 60Hrs Playtime, Wireless Over-Ear Headphones":
+                - /url: https://www.dealsmagnet.com/deal/ptron-studio-w-wireless-over-ear-headphones-1c7uu130
+                - img "pTron Studio w/ 60Hrs Playtime, Wireless Over-Ear Headphones" [ref=e584] [cursor=pointer]
+              - generic [ref=e585]:
+                - text: 75%
+                - generic [ref=e586]: "off"
+            - generic [ref=e587]:
+              - link "pTron Studio w/ 60Hrs Playtime, Wireless Over-Ear Headphones" [ref=e588] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/ptron-studio-w-wireless-over-ear-headphones-1c7uu130
+                - paragraph [ref=e589]: pTron Studio w/ 60Hrs Playtime, Wireless Over-Ear Headphones
+              - generic [ref=e591]:
+                - generic [ref=e592]: ₹649 ₹2599
+                - generic [ref=e593]:
+                  - img [ref=e594]
+                  - text: 3 hr
+              - generic [ref=e597]:
+                - link "amazon" [ref=e599] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e600]
+                - button "Buy" [ref=e603] [cursor=pointer]:
+                  - img [ref=e604]
+                  - text: Buy
+          - generic [ref=e607]:
+            - generic [ref=e608]:
+              - link "pTron Tangent Evolve w/ 50Hrs Playtime, HD Mic, Pristine Sound, 14mm Drivers, Bluetooth V5.3 w/Dual-Device Pairing Wireless Neckband, Magnetic Buds, Voice Assistant,Type-C Fast Charging & IPX4(Black)":
+                - /url: https://www.dealsmagnet.com/deal/ptron-tangent-evolve-w-50hrs-playtime-hd-mic-prist-1cMuX2wu
+                - img "pTron Tangent Evolve w/ 50Hrs Playtime, HD Mic, Pristine Sound, 14mm Drivers, Bluetooth V5.3 w/Dual-Device Pairing Wireless Neckband, Magnetic Buds, Voice Assistant,Type-C Fast Charging & IPX4(Black)" [ref=e609] [cursor=pointer]
+              - generic [ref=e610]:
+                - text: 77%
+                - generic [ref=e611]: "off"
+            - generic [ref=e612]:
+              - link "pTron Tangent Evolve w/ 50Hrs Playtime, HD Mic, Pristine Sound, 14mm Drivers, Bluetooth V5.3 w/Dual-Device Pairing Wireless Neckband, Magnetic Buds, Voice Assistant,Type-C Fast Charging & IPX4(Black)" [ref=e613] [cursor=pointer]:
+                - /url: https://www.dealsmagnet.com/deal/ptron-tangent-evolve-w-50hrs-playtime-hd-mic-prist-1cMuX2wu
+                - paragraph [ref=e614]: pTron Tangent Evolve w/ 50Hrs Playtime, HD Mic, Pristine Sound, 14mm Drivers, Bluetooth V5.3 w/Dual-Device Pairing Wireless Neckband, Magnetic Buds, Voice Assistant,Type-C Fast Charging & IPX4(Black)
+              - generic [ref=e616]:
+                - generic [ref=e617]: ₹455 ₹1999
+                - generic [ref=e618]:
+                  - img [ref=e619]
+                  - text: 3 hr
+              - generic [ref=e622]:
+                - link "amazon" [ref=e624] [cursor=pointer]:
+                  - /url: https://www.dealsmagnet.com/offers/amazon
+                  - img "amazon" [ref=e625]
+                - button "Buy" [ref=e628] [cursor=pointer]:
+                  - img [ref=e629]
+                  - text: Buy
+          - link "View More" [ref=e632] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/new?page=2
+            - text: View More
+            - img [ref=e633]
+      - generic [ref=e640]:
+        - link "pantry" [ref=e642] [cursor=pointer]:
+          - /url: https://www.dealsmagnet.com/RedirectTo/?url=https%3A%2F%2Fwww.flipkart.com%2Fsasa-lele-sale-store%3Fparam%3D63377382&key=homepage_banner
+          - img "pantry" [ref=e643]
+        - generic [ref=e644]: ❮
+        - generic [ref=e645]: ❯
+      - generic [ref=e652]:
+        - heading "Deal Finder | Find your own deals" [level=3] [ref=e654]
+        - generic [ref=e655]:
+          - generic [ref=e657]:
+            - generic [ref=e658]: Search Keyword
+            - textbox "Search for Products, Brands or Categories" [ref=e660]
+          - generic [ref=e661]:
+            - separator [ref=e662]
+            - generic [ref=e663]: OR
+          - generic [ref=e665]:
+            - generic [ref=e666]: Select Category
+            - combobox [ref=e667]:
+              - option "All" [selected]
+              - option "Baby Products"
+              - option "Beauty & Skin Care Products"
+              - option "Books"
+              - option "Business, Industrial & Scientific Products"
+              - option "Collectibles & Fine Art"
+              - option "Computers & Accessories"
+              - option "Electronics"
+              - option "Fashion"
+              - option "Garden & Outdoor Living"
+              - option "Gift Cards"
+              - option "Grocery & Gourmet Foods"
+              - option "Health Household & Personal Care"
+              - option "Home & Kitchen"
+              - option "Kindle eBooks"
+              - option "Luxury Beauty"
+              - option "Men"
+              - option "Movies & TV Shows"
+              - option "Music"
+              - option "Musical Instruments"
+              - option "Pet Supplies"
+              - option "Software"
+              - option "Sports, Fitness & Outdoors"
+              - option "Stationery & Office Products"
+              - option "Toys & Games"
+              - option "Vehicle Parts & Accessories"
+          - generic [ref=e668]:
+            - generic [ref=e669]: Discount Percentage
+            - generic [ref=e670]: discount between 20% and 80%
+            - generic [ref=e671]:
+              - generic [ref=e672]:
+                - generic [ref=e678]: "20"
+                - generic [ref=e679]: "80"
+              - slider: "20"
+              - slider: "80"
+        - generic [ref=e680]:
+          - generic [ref=e682]:
+            - generic [ref=e683]: Price Range
+            - spinbutton [ref=e685]
+            - spinbutton [ref=e687]
+          - generic [ref=e689]:
+            - generic [ref=e690]: Sort By
+            - combobox [ref=e691]:
+              - option "Relevance" [selected]
+              - option "Avg. Customer Review"
+              - option "Price Low to High"
+              - option "Price High to Low"
+              - option "Newest Arrival"
+          - img "Amazon Prime Deals" [ref=e697]
+          - button "Find Deals on Amazon" [ref=e701]
+    - button "+ About Dealsmagnet" [ref=e704] [cursor=pointer]:
+      - generic [ref=e705]: +
+      - heading "About Dealsmagnet" [level=2] [ref=e706]
+  - group "Basic example" [ref=e708]:
+    - button "Just In" [ref=e709] [cursor=pointer]:
+      - link "Just In" [ref=e710]:
+        - /url: https://www.dealsmagnet.com/new
+        - generic [ref=e711]:
+          - img [ref=e713]
+          - generic [ref=e715]: Just In
+    - button "Deal Finder" [ref=e716] [cursor=pointer]:
+      - link "Deal Finder" [ref=e717]:
+        - /url: https://www.dealsmagnet.com/amazon-deal-finder?ref=ft
+        - generic [ref=e718]:
+          - img [ref=e720]
+          - generic [ref=e726]: Deal Finder
+    - button "Quiz" [ref=e727] [cursor=pointer]:
+      - link "Quiz" [ref=e728]:
+        - /url: https://www.dealsmagnet.com/quiz?ref=ft
+        - generic [ref=e729]:
+          - img [ref=e731]
+          - generic [ref=e733]: Quiz
+    - button "Coupon" [ref=e734] [cursor=pointer]:
+      - link "Coupon" [ref=e735]:
+        - /url: https://www.dealsmagnet.com/coupons?ref=ft
+        - generic [ref=e736]:
+          - img [ref=e738]
+          - generic [ref=e741]: Coupon
+  - contentinfo [ref=e742]:
+    - generic [ref=e743]:
+      - generic [ref=e744]:
+        - generic [ref=e745]:
+          - link "Dealsmagnet ®" [ref=e746] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/
+            - generic [ref=e747]:
+              - text: Dealsmagnet
+              - superscript [ref=e748]: ®
+          - paragraph [ref=e749]: Deals, Discounts, Offers, Freebies and Saving in Online Shopping - Dealsmagnet
+          - paragraph [ref=e750]:
+            - link "Get it on Google Play" [ref=e751] [cursor=pointer]:
+              - /url: https://www.dealsmagnet.com/Redirect/?url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.dealsmagnet.deals%26referrer%3Dutm_source%253Ddealsmagnet%2526utm_medium%253Dfooter&key=Dealsmagnet_App_Footer
+              - img "Get it on Google Play" [ref=e752]
+        - generic [ref=e754]:
+          - link "Live Deals" [ref=e755] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/new
+          - link "Hot Deals" [ref=e756] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/hotdeals
+          - link "Coupons" [ref=e757] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/coupons
+          - link "Quiz Answers" [ref=e758] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/quiz
+          - link "Blog" [ref=e759] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/blog
+          - link "Deals Finder" [ref=e760] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/amazon-deal-finder
+          - link "Flipkart Big Billion Days" [ref=e761] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/flipkart-big-billion-days
+          - link "Amazon Great Indian Festival" [ref=e762] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/blog/amazon-great-indian-festival-sale
+        - generic [ref=e764]:
+          - link "About Us" [ref=e765] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Aboutus
+          - link "Contact Us" [ref=e766] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Contact
+          - link "Bug Report" [ref=e767] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Redirect/?url=https%3A%2F%2Fforms.gle%2FBArujXoMC97reJ5s9&key=BugReport&ref=ft
+          - link "Privacy Policy" [ref=e768] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/PrivacyPolicy
+          - link "Terms of Service" [ref=e769] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/ToS
+          - link "Credits" [ref=e770] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Credits
+          - link "Site Navigation" [ref=e771] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/sitemap
+          - link "Disclaimer" [ref=e772] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Disclaimer
+        - generic [ref=e774]:
+          - link "Amazon" [ref=e775] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/amazon
+          - link "Flipkart" [ref=e776] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/flipkart
+          - link "Myntra" [ref=e777] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/Redirect/?url=https%3A%2F%2Fforms.gle%2FBArujXoMC97reJ5s9&key=BugReport&ref=ft
+          - link "Ajio" [ref=e778] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/ajio
+          - link "Croma" [ref=e779] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/croma
+          - link "Dominos Coupons" [ref=e780] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/coupons/dominos
+          - link "Swiggy Coupons" [ref=e781] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/coupons/swiggy
+          - link "Zomato Coupons" [ref=e782] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/coupons/zomato
+          - link "JioMart Coupons" [ref=e783] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/coupons/jiomart
+          - link "Bookmyshow Coupons" [ref=e784] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/coupons/bookmyshow
+        - generic [ref=e786]:
+          - link "Mobile Phones" [ref=e787] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/mobile-phones
+          - link "Laptops Deals" [ref=e788] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/laptops
+          - link "Refrigerator Deals" [ref=e789] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/refrigerator
+          - link "Washing Machines" [ref=e790] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/washing-machines
+          - link "Televisions" [ref=e791] [cursor=pointer]:
+            - /url: https://www.dealsmagnet.com/offers/televisions
+      - separator [ref=e792]
+      - list [ref=e793]:
+        - listitem [ref=e794]:
+          - strong [ref=e795]:
+            - text: By Using This Site, you Agree to the
+            - link "Terms of Service" [ref=e796] [cursor=pointer]:
+              - /url: https://www.dealsmagnet.com/ToS
+            - text: and
+            - link "Privacy Policy" [ref=e797] [cursor=pointer]:
+              - /url: https://www.dealsmagnet.com/PrivacyPolicy
+            - text: of Dealsmagnet. Website in in Devlopment Stage, user shall use website with Caution.
+      - generic [ref=e799]:
+        - text: © 2026 | Dealsmagnet
+        - superscript [ref=e800]: ®
+        - text: Proudly, Made in India with
+        - img [ref=e801]

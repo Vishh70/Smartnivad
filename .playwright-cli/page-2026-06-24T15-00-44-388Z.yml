@@ -1,0 +1,312 @@
+- generic [ref=e2]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - link "TechDeals AI" [ref=e8] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e9]:
+        - button "Categories ▾" [ref=e11]:
+          - img [ref=e12]
+          - text: Categories ▾
+        - link "Deals" [ref=e15] [cursor=pointer]:
+          - /url: /deals
+          - img [ref=e16]
+          - text: Deals
+        - link "Coupons" [ref=e19] [cursor=pointer]:
+          - /url: /coupons
+          - img [ref=e20]
+          - text: Coupons
+        - link "Stores" [ref=e23] [cursor=pointer]:
+          - /url: /store
+          - img [ref=e24]
+          - text: Stores
+        - link "Quiz Answers" [ref=e28] [cursor=pointer]:
+          - /url: /quiz-answers
+          - img [ref=e29]
+          - text: Quiz Answers
+        - link "Blog" [ref=e32] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e33]
+          - text: Blog
+        - link "Compare" [ref=e35] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e36]
+          - text: Compare
+      - generic [ref=e39]:
+        - button [ref=e41]:
+          - img [ref=e42]
+        - link "📲 WhatsApp" [ref=e45] [cursor=pointer]:
+          - /url: "#"
+  - main [ref=e46]:
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - img [ref=e52]
+            - text: Deal of the Day
+          - heading "Smarter Tech Buying Powered by AI." [level=1] [ref=e54]:
+            - text: Smarter Tech Buying
+            - text: Powered by AI.
+          - paragraph [ref=e55]: We track thousands of products to surface genuine discounts, verify reviews, and help you choose the best tech.
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]:
+              - generic [ref=e61]:
+                - img [ref=e62]
+                - text: 21% OFF
+              - generic [ref=e66]: Top Pick
+            - heading "Nothing Phone 2a clean Android midrange deal" [level=2] [ref=e67]
+            - generic [ref=e68]:
+              - generic [ref=e69]: ₹21999
+              - generic [ref=e70]: ₹27999
+            - generic [ref=e71]:
+              - link "Claim Deal" [ref=e72] [cursor=pointer]:
+                - /url: "#"
+                - button "Claim Deal" [ref=e73]:
+                  - text: Claim Deal
+                  - img [ref=e74]
+              - link "AI Review" [ref=e76] [cursor=pointer]:
+                - /url: /product/nothing-phone-2a-clean-android-midrange-deal
+                - button "AI Review" [ref=e77]
+          - img "Nothing Phone 2a clean Android midrange deal" [ref=e79]
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - heading "Deal Feed" [level=2] [ref=e83]
+            - paragraph [ref=e84]: Real-time verified discounts across top stores.
+          - generic [ref=e87]:
+            - generic [ref=e89]:
+              - button "🟢 Live Deals (4)" [ref=e90]:
+                - text: 🟢 Live Deals
+                - generic [ref=e91]: (4)
+              - button "🔥 Hot Deals (2)" [ref=e92]:
+                - text: 🔥 Hot Deals
+                - generic [ref=e93]: (2)
+              - button "📈 Trending (4)" [ref=e94]:
+                - text: 📈 Trending
+                - generic [ref=e95]: (4)
+            - generic [ref=e96]:
+              - generic [ref=e98]:
+                - generic [ref=e99]: "-21%"
+                - generic [ref=e100]: LIVE
+                - generic [ref=e101]:
+                  - button "Save to wishlist" [ref=e102]:
+                    - img [ref=e103]
+                  - button "Share deal" [ref=e105]:
+                    - img [ref=e106]
+                - link "Nothing Phone 2a clean Android midrange deal Nothing Phone 2a clean Android midrange deal 4.4 ₹21,999 ₹27,999 6 hr ago" [ref=e112] [cursor=pointer]:
+                  - /url: /product/nothing-phone-2a-clean-android-midrange-deal
+                  - img "Nothing Phone 2a clean Android midrange deal" [ref=e114]
+                  - heading "Nothing Phone 2a clean Android midrange deal" [level=3] [ref=e115]
+                  - generic [ref=e116]:
+                    - img [ref=e117]
+                    - img [ref=e119]
+                    - img [ref=e121]
+                    - img [ref=e123]
+                    - img [ref=e125]
+                    - generic [ref=e127]: "4.4"
+                  - generic [ref=e128]:
+                    - generic [ref=e129]: ₹21,999
+                    - generic [ref=e130]: ₹27,999
+                  - generic [ref=e131]:
+                    - img [ref=e132]
+                    - generic [ref=e135]: 6 hr ago
+                - link "Get Deal" [ref=e137] [cursor=pointer]:
+                  - /url: "#"
+                  - button "Get Deal" [ref=e138]
+              - generic [ref=e140]:
+                - generic [ref=e141]: "-27%"
+                - generic [ref=e142]: LIVE
+                - generic [ref=e143]:
+                  - button "Save to wishlist" [ref=e144]:
+                    - img [ref=e145]
+                  - button "Share deal" [ref=e147]:
+                    - img [ref=e148]
+                - link "Logitech MX Master 3S productivity mouse deal Logitech MX Master 3S productivity mouse deal 4.7 ₹7,995 ₹10,995 6 hr ago" [ref=e154] [cursor=pointer]:
+                  - /url: /product/logitech-mx-master-3s-productivity-mouse-deal
+                  - img "Logitech MX Master 3S productivity mouse deal" [ref=e156]
+                  - heading "Logitech MX Master 3S productivity mouse deal" [level=3] [ref=e157]
+                  - generic [ref=e158]:
+                    - img [ref=e159]
+                    - img [ref=e161]
+                    - img [ref=e163]
+                    - img [ref=e165]
+                    - img [ref=e167]
+                    - generic [ref=e169]: "4.7"
+                  - generic [ref=e170]:
+                    - generic [ref=e171]: ₹7,995
+                    - generic [ref=e172]: ₹10,995
+                  - generic [ref=e173]:
+                    - img [ref=e174]
+                    - generic [ref=e177]: 6 hr ago
+                - link "Get Deal" [ref=e179] [cursor=pointer]:
+                  - /url: "#"
+                  - button "Get Deal" [ref=e180]
+              - generic [ref=e182]:
+                - generic [ref=e183]: "-18%"
+                - generic [ref=e184]: LIVE
+                - generic [ref=e185]:
+                  - button "Save to wishlist" [ref=e186]:
+                    - img [ref=e187]
+                  - button "Share deal" [ref=e189]:
+                    - img [ref=e190]
+                - link "ASUS ROG Zephyrus G14 creator gaming deal ASUS ROG Zephyrus G14 creator gaming deal 4.5 ₹1,39,990 ₹1,69,990 6 hr ago" [ref=e196] [cursor=pointer]:
+                  - /url: /product/asus-rog-zephyrus-g14-creator-gaming-deal
+                  - img "ASUS ROG Zephyrus G14 creator gaming deal" [ref=e198]
+                  - heading "ASUS ROG Zephyrus G14 creator gaming deal" [level=3] [ref=e199]
+                  - generic [ref=e200]:
+                    - img [ref=e201]
+                    - img [ref=e203]
+                    - img [ref=e205]
+                    - img [ref=e207]
+                    - img [ref=e209]
+                    - generic [ref=e211]: "4.5"
+                  - generic [ref=e212]:
+                    - generic [ref=e213]: ₹1,39,990
+                    - generic [ref=e214]: ₹1,69,990
+                  - generic [ref=e215]:
+                    - img [ref=e216]
+                    - generic [ref=e219]: 6 hr ago
+                - link "Get Deal" [ref=e221] [cursor=pointer]:
+                  - /url: "#"
+                  - button "Get Deal" [ref=e222]
+              - generic [ref=e224]:
+                - generic [ref=e225]: "-29%"
+                - generic [ref=e226]: LIVE
+                - generic [ref=e227]:
+                  - button "Save to wishlist" [ref=e228]:
+                    - img [ref=e229]
+                  - button "Share deal" [ref=e231]:
+                    - img [ref=e232]
+                - link "Sony WH-1000XM5 work and travel headphone deal Sony WH-1000XM5 work and travel headphone deal 4.8 ₹24,990 ₹34,990 6 hr ago" [ref=e238] [cursor=pointer]:
+                  - /url: /product/sony-wh-1000xm5-work-travel-audio-deal
+                  - img "Sony WH-1000XM5 work and travel headphone deal" [ref=e240]
+                  - heading "Sony WH-1000XM5 work and travel headphone deal" [level=3] [ref=e241]
+                  - generic [ref=e242]:
+                    - img [ref=e243]
+                    - img [ref=e245]
+                    - img [ref=e247]
+                    - img [ref=e249]
+                    - img [ref=e251]
+                    - generic [ref=e253]: "4.8"
+                  - generic [ref=e254]:
+                    - generic [ref=e255]: ₹24,990
+                    - generic [ref=e256]: ₹34,990
+                  - generic [ref=e257]:
+                    - img [ref=e258]
+                    - generic [ref=e261]: 6 hr ago
+                - link "Get Deal" [ref=e263] [cursor=pointer]:
+                  - /url: "#"
+                  - button "Get Deal" [ref=e264]
+          - link "View All Deals" [ref=e266] [cursor=pointer]:
+            - /url: /deals
+            - button "View All Deals" [ref=e267]
+        - generic [ref=e268]:
+          - generic [ref=e269]:
+            - heading "Shop by Category" [level=2] [ref=e270]
+            - paragraph [ref=e271]: Browse deals by your favorite tech categories.
+          - generic [ref=e273]:
+            - link "Audio Explore deals" [ref=e274] [cursor=pointer]:
+              - /url: /deals?category=audio
+              - generic [ref=e276]:
+                - img [ref=e278]
+                - generic [ref=e280]:
+                  - heading "Audio" [level=3] [ref=e281]
+                  - paragraph [ref=e282]:
+                    - text: Explore deals
+                    - img [ref=e283]
+            - link "Gaming Explore deals" [ref=e285] [cursor=pointer]:
+              - /url: /deals?category=gaming
+              - generic [ref=e287]:
+                - img [ref=e289]
+                - generic [ref=e291]:
+                  - heading "Gaming" [level=3] [ref=e292]
+                  - paragraph [ref=e293]:
+                    - text: Explore deals
+                    - img [ref=e294]
+            - link "Laptops Explore deals" [ref=e296] [cursor=pointer]:
+              - /url: /deals?category=laptops
+              - generic [ref=e298]:
+                - img [ref=e300]
+                - generic [ref=e302]:
+                  - heading "Laptops" [level=3] [ref=e303]
+                  - paragraph [ref=e304]:
+                    - text: Explore deals
+                    - img [ref=e305]
+            - link "Smartphones Explore deals" [ref=e307] [cursor=pointer]:
+              - /url: /deals?category=smartphones
+              - generic [ref=e309]:
+                - img [ref=e311]
+                - generic [ref=e313]:
+                  - heading "Smartphones" [level=3] [ref=e314]
+                  - paragraph [ref=e315]:
+                    - text: Explore deals
+                    - img [ref=e316]
+        - generic [ref=e319]:
+          - generic [ref=e321]: 📬
+          - heading "Never Miss a Price Drop" [level=2] [ref=e322]
+          - paragraph [ref=e323]: Join 50,000+ tech enthusiasts. Get the best AI-verified deals and tech buying guides delivered weekly.
+          - generic [ref=e324]:
+            - textbox "your@email.com" [ref=e325]
+            - button "Subscribe" [ref=e326]
+  - contentinfo [ref=e327]:
+    - generic [ref=e328]:
+      - generic [ref=e329]:
+        - generic [ref=e330]:
+          - heading "TechDeals AI" [level=3] [ref=e331]
+          - paragraph [ref=e332]: Discover AI-curated tech deals. We analyse thousands of products daily and surface only the best value for money.
+          - generic [ref=e333]:
+            - link "📲 WhatsApp" [ref=e334] [cursor=pointer]:
+              - /url: "#"
+            - link "✈️ Telegram" [ref=e335] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e336]:
+          - heading "Deals" [level=4] [ref=e337]
+          - list [ref=e338]:
+            - listitem [ref=e339]:
+              - link "All Deals" [ref=e340] [cursor=pointer]:
+                - /url: /deals
+            - listitem [ref=e341]:
+              - link "Hot Deals" [ref=e342] [cursor=pointer]:
+                - /url: /deals?type=HOT
+            - listitem [ref=e343]:
+              - link "Coupons" [ref=e344] [cursor=pointer]:
+                - /url: /coupons
+            - listitem [ref=e345]:
+              - link "Compare" [ref=e346] [cursor=pointer]:
+                - /url: /compare
+        - generic [ref=e347]:
+          - heading "Content" [level=4] [ref=e348]
+          - list [ref=e349]:
+            - listitem [ref=e350]:
+              - link "Blog" [ref=e351] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e352]:
+              - link "Quiz Answers" [ref=e353] [cursor=pointer]:
+                - /url: /quiz-answers
+            - listitem [ref=e354]:
+              - link "Stores" [ref=e355] [cursor=pointer]:
+                - /url: /store
+            - listitem [ref=e356]:
+              - link "Brands" [ref=e357] [cursor=pointer]:
+                - /url: /brand
+        - generic [ref=e358]:
+          - heading "Legal" [level=4] [ref=e359]
+          - list [ref=e360]:
+            - listitem [ref=e361]:
+              - link "About Us" [ref=e362] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e363]:
+              - link "Contact" [ref=e364] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e365]:
+              - link "Privacy Policy" [ref=e366] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e367]:
+              - link "Terms of Service" [ref=e368] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e369]:
+              - link "Disclaimer" [ref=e370] [cursor=pointer]:
+                - /url: /disclaimer
+      - generic [ref=e371]:
+        - paragraph [ref=e372]: As an Amazon Associate and affiliate partner, we earn from qualifying purchases.
+        - paragraph [ref=e373]: © 2026 TechDeals AI. All rights reserved.

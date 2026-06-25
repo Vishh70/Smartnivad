@@ -6,61 +6,366 @@ datasource db {
   provider = "postgresql"
 }
 
-enum AffiliateNetwork {
-  AMAZON
-  FLIPKART
-  IMPACT
-  CJ
-  CLICKBANK
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
 }
 
-model Product {
-  id               String           @id @default(uuid()) @db.Uuid
-  title            String
-  slug             String           @unique
-  description      String
-  shortSummary     String?
-  image            String
-  categoryId       String           @db.Uuid
-  category         Category         @relation(fields: [categoryId], references: [id])
-  affiliateLink    String
-  affiliateNetwork AffiliateNetwork
-  price            Decimal
-  rating           Float            @default(0)
-  pros             String[]
-  cons             String[]
-  specifications   Json?
-  featured         Boolean          @default(false)
-  seoTitle         String?
-  seoDescription   String?
-  seoKeywords      String[]
-  views            Int              @default(0)
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+enum DealType {
+  LIVE
+  HOT
+  EXPIRED
+}
+
+enum QuizPlatform {
+  AMAZON
+  FLIPKART
+  OTHER
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+// ─── Core Models ──────────────────────────────────────────────────────────────
+
+model Deal {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  title         String
+  description   String?       @db.Text
+  aiSummary     String?       @db.Text
+  aiComparison  String?       @db.Text
+  aiKeywords    String[]
+  pros          String?       @db.Text
+  cons          String?       @db.Text
+  imageUrl      String
+  affiliateUrl  String
+  currentPrice  Float
+  originalPrice Float
+  discount      Int           @default(0)
+  dealType      DealType      @default(LIVE)
+  status        PublishStatus @default(PUBLISHED)
+  isFeatured    Boolean       @default(false)
+  isTrending    Boolean       @default(false)
+  isPinned      Boolean       @default(false)
+  expiresAt     DateTime?
+  rating        Float         @default(0)
+  views         Int           @default(0)
+  clicks        Int           @default(0)
+  tags          String[]
+  seoTitle      String?
+  seoDesc       String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  categoryId    String
+  storeId       String
+  brandId       String?
+
+  category      Category      @relation(fields: [categoryId], references: [id])
+  store         Store         @relation(fields: [storeId], references: [id])
+  brand         Brand?        @relation(fields: [brandId], references: [id])
+  couponLinks   Coupon[]
+  wishlistedBy  WishlistItem[]
+  priceHistory  PriceHistory[]
+  clickEvents   DealClick[]
+
+  viewHistory   ViewHistory[]
+  automationLogs AutomationLog[]
 
   @@index([slug])
   @@index([categoryId])
+  @@index([storeId])
+  @@index([brandId])
+  @@index([isFeatured])
+  @@index([isTrending])
+  @@index([dealType])
+  @@index([status])
+  @@index([discount])
+  @@index([clicks])
+  @@index([createdAt])
 }
 
 model Category {
-  id       String    @id @default(uuid()) @db.Uuid
-  name     String
-  slug     String    @unique
-  products Product[]
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  icon        String?
+  description String?   @db.Text
+  seoTitle    String?
+  seoDesc     String?   @db.Text
+  deals       Deal[]
+  coupons     Coupon[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([slug])
 }
 
-model AdminUser {
-  id        String   @id @default(uuid()) @db.Uuid
+model Store {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  logoUrl     String?
+  website     String?
+  affiliateBaseUrl String?
+  description String?   @db.Text
+  seoTitle    String?
+  seoDesc     String?   @db.Text
+  deals       Deal[]
+  coupons     Coupon[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+}
+
+model Brand {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  logoUrl     String?
+  description String?   @db.Text
+  seoTitle    String?
+  seoDesc     String?   @db.Text
+  deals       Deal[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+}
+
+model Coupon {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  title        String
+  code         String?
+  discountText String
+  description  String?       @db.Text
+  terms        String?       @db.Text
+  affiliateUrl String
+  status       PublishStatus @default(PUBLISHED)
+  expiresAt    DateTime?
+  clicks       Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  storeId      String
+  categoryId   String?
+  dealId       String?
+
+  store        Store         @relation(fields: [storeId], references: [id])
+  category     Category?     @relation(fields: [categoryId], references: [id])
+  deal         Deal?         @relation(fields: [dealId], references: [id])
+
+  @@index([slug])
+  @@index([storeId])
+  @@index([categoryId])
+}
+
+model PriceHistory {
+  id            String   @id @default(cuid())
+  dealId        String
+  deal          Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  price         Float
+  originalPrice Float?
+  discount      Int?
+  capturedAt    DateTime @default(now())
+
+  @@index([dealId])
+  @@index([capturedAt])
+}
+
+model DealClick {
+  id        String   @id @default(cuid())
+  dealId    String?
+  deal      Deal?    @relation(fields: [dealId], references: [id], onDelete: SetNull)
+  source    String?
+  path      String?
+  userAgent String?  @db.Text
+  referrer  String?  @db.Text
+  ipHash    String?
+  createdAt DateTime @default(now())
+
+  @@index([dealId])
+  @@index([createdAt])
+}
+
+model QuizPost {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  platform    QuizPlatform
+  quizDate    DateTime      @default(now())
+  status      PublishStatus @default(PUBLISHED)
+  qaPairs     Json
+  prize       String?
+  seoTitle    String?
+  seoDesc     String?       @db.Text
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([platform])
+  @@index([quizDate])
+}
+
+model BlogPost {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  excerpt     String?       @db.Text
+  content     String        @db.Text
+  coverImage  String?
+  tags        String[]
+  status      PublishStatus @default(DRAFT)
+  seoTitle    String?
+  seoDesc     String?       @db.Text
+  views       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ─── User & Auth ──────────────────────────────────────────────────────────────
+
+model Admin {
+  id        String   @id @default(cuid())
   email     String   @unique
-  name      String
+  name      String?
   image     String?
   createdAt DateTime @default(now())
 }
 
 model NewsletterSubscriber {
-  id           String   @id @default(uuid()) @db.Uuid
+  id           String   @id @default(cuid())
   email        String   @unique
+  name         String?
+  source       String?
+  active       Boolean  @default(true)
   subscribedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  wishlist      WishlistItem[]
+
+  viewHistory   ViewHistory[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── User Engagement ──────────────────────────────────────────────────────────
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dealId    String
+  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, dealId])
+  @@index([userId])
+}
+
+model AutomationLog {
+  id           String   @id @default(cuid())
+  dealId       String
+  store        String
+  status       String
+  oldPrice     Float?
+  newPrice     Float?
+  duration     Float?
+  checkedAt    DateTime @default(now())
+  errorMessage String?  @db.Text
+
+  deal         Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([dealId])
+  @@index([status])
+  @@index([checkedAt])
+}
+
+model ViewHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  dealId    String
+  viewedAt  DateTime @default(now())
+
+  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([dealId])
+  @@index([viewedAt])
+}
+
+model ComparisonSEO {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  product1Id  String
+  product2Id  String
+  aiResult    Json
+  winnerId    String?
+  seoTitle    String?
+  seoDesc     String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([product1Id])
+  @@index([product2Id])
 }

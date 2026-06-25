@@ -3,7 +3,7 @@ import { withAuth } from "next-auth/middleware";
 export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token;
-    if (req.nextUrl.pathname.startsWith("/admin") && (token as any)?.role !== "admin") {
+    if (req.nextUrl.pathname.startsWith("/admin") && token?.role !== "admin") {
       return Response.redirect(new URL("/access-denied", req.url));
     }
   },
