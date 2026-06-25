@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/sections/ProductCard";
 import Image from "next/image";
-import { Bell, Heart, History, Trash2 } from "lucide-react";
+import { Heart, History } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 export const metadata = {
@@ -74,7 +74,7 @@ export default async function DashboardPage() {
           </div>
           {savedDeals.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-              {savedDeals.map((item: any) => (
+              {savedDeals.map((item: { id: string, deal: any }) => (
                 <div key={item.id} className="h-full">
                   <ProductCard product={item.deal} initialSaved={true} />
                 </div>
@@ -98,7 +98,7 @@ export default async function DashboardPage() {
               <h2 className="text-2xl font-bold text-gray-900">Recently Viewed</h2>
             </div>
             <div className="flex overflow-x-auto snap-x hide-scrollbar gap-6 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-              {viewHistory.map((historyItem: any) => (
+              {viewHistory.map((historyItem: { id: string, deal: any }) => (
                 <div key={historyItem.id} className="shrink-0 w-[280px] snap-center h-full">
                   <ProductCard product={historyItem.deal} />
                 </div>
