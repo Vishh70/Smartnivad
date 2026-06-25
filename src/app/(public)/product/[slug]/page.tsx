@@ -75,6 +75,35 @@ export default async function ProductPage({
 
   return (
     <div className="min-h-screen py-10 pb-36 lg:pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            name: product.title,
+            image: product.imageUrl,
+            description: product.aiSummary ?? product.description,
+            brand: {
+              "@type": "Brand",
+              name: product.brand?.name ?? "Unknown",
+            },
+            offers: {
+              "@type": "Offer",
+              url: product.affiliateUrl,
+              priceCurrency: "INR",
+              price: product.currentPrice,
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: product.rating,
+              bestRating: "5",
+              worstRating: "1",
+              ratingCount: product.views || 1,
+            },
+          }),
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Image (Sticky on Desktop) */}

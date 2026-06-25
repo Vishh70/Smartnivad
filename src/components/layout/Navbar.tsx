@@ -21,7 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { PrismaCategory } from "@/types";
 
@@ -222,7 +222,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                         </Link>
                         {session.user?.role === "ADMIN" && (
                           <Link
-                            href="/admin"
+                            href="/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a"
                             className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                           >
                             <Store size={18} /> Admin Dashboard
@@ -237,14 +237,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                       </div>
                     )}
                   </>
-                ) : (
-                  <button
-                    onClick={() => signIn("google")}
-                    className="gradient-btn px-5 py-2.5 rounded-xl text-sm font-bold shadow-sm hidden sm:block min-h-[44px]"
-                  >
-                    Log In
-                  </button>
-                )}
+                ) : null}
               </div>
 
               {/* Mobile Menu Toggle */}
@@ -284,15 +277,6 @@ export function Navbar({ categories = [] }: NavbarProps) {
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-16 z-40 bg-white/95 backdrop-blur-xl lg:hidden overflow-y-auto">
           <div className="p-4 space-y-2">
-            {!session && (
-              <button
-                onClick={() => signIn("google")}
-                className="w-full gradient-btn py-3 rounded-xl font-bold mb-4"
-              >
-                Log In / Sign Up
-              </button>
-            )}
-
             <div className="py-2">
               <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-4">
                 Browse

@@ -6,7 +6,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { DealScore } from "@/components/ui/DealScore";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { formatNumber } from "@/lib/format";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { toggleSavedDeal } from "@/app/(public)/actions";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
@@ -57,7 +57,7 @@ export function ProductCard({
   const handleSave = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!session) {
-      signIn("google");
+      window.location.href = "/login";
       return;
     }
     setIsSaved(!isSaved);

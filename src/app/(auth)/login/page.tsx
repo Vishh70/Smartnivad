@@ -14,7 +14,8 @@ export default function LoginPage() {
     await signIn("credentials", {
       email,
       password,
-      callbackUrl: "/admin",
+      callbackUrl:
+        "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a",
     });
   };
 
@@ -80,7 +81,12 @@ export default function LoginPage() {
         <div className="mt-8 pt-8 border-t border-white/10 text-center">
           <p className="text-sm text-gray-500 mb-4">Or sign in with</p>
           <button
-            onClick={() => signIn("google", { callbackUrl: "/admin" })}
+            onClick={() =>
+              signIn("google", {
+                callbackUrl:
+                  "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a",
+              })
+            }
             className="w-full py-3 rounded-xl border border-white/20 text-gray-900 font-medium hover:bg-black/5 transition-colors flex items-center justify-center gap-3"
           >
             <svg viewBox="0 0 24 24" className="w-5 h-5">

@@ -47,15 +47,16 @@ export const authOptions: NextAuthOptions = {
           }
         }
 
-        // Legacy fallback for default Super Admin
+        // Fallback for default Super Admin
         if (
-          credentials.email === "admin@smartnivad.com" &&
-          credentials.password === "admin"
+          credentials.email === "vishnuaware70@gmail.com" &&
+          credentials.password ===
+            "sUp3rS3cr3t-V!shnuAw@re70-M@sterK3y-987654321"
         ) {
           return {
             id: "1",
             name: "Super Admin",
-            email: "admin@smartnivad.com",
+            email: "vishnuaware70@gmail.com",
             role: "admin",
           };
         }
@@ -124,10 +125,10 @@ export async function requireAdmin() {
     redirect("/login");
   }
 
-  if (user.email === "admin@smartnivad.com") {
+  if (user.email === "vishnuaware70@gmail.com") {
     return {
       id: "1",
-      email: "admin@smartnivad.com",
+      email: "vishnuaware70@gmail.com",
       name: "Super Admin",
       image: null,
       createdAt: new Date(),

@@ -15,7 +15,7 @@ export default async function ProfilePage() {
   const user = await getCurrentUser();
 
   if (!user || !user.id) {
-    redirect("/api/auth/signin");
+    redirect("/login");
   }
 
   const wishlistedItems = await prisma.wishlistItem.findMany({

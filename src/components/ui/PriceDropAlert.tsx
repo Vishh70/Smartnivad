@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Bell, CheckCircle2 } from "lucide-react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { GlassCard } from "./GlassCard";
 
 interface PriceDropAlertProps {
@@ -20,7 +20,7 @@ export function PriceDropAlert({ dealId, currentPrice }: PriceDropAlertProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!session) {
-      signIn("google");
+      window.location.href = "/login";
       return;
     }
 

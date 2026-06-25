@@ -21,14 +21,46 @@ export function AdminSidebar({ adminName, adminEmail }: AdminSidebarProps) {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: "Dashboard", href: "/admin", icon: <LayoutDashboard size={20} /> },
-    { name: "Deals", href: "/admin/deals", icon: <Tags size={20} /> },
-    { name: "Categories", href: "/admin/categories", icon: <List size={20} /> },
-    { name: "Stores", href: "/admin/stores", icon: <List size={20} /> },
-    { name: "Brands", href: "/admin/brands", icon: <List size={20} /> },
-    { name: "Quizzes", href: "/admin/quizzes", icon: <HelpCircle size={20} /> },
-    { name: "Blog", href: "/admin/blog", icon: <FileText size={20} /> },
-    { name: "Settings", href: "/admin/settings", icon: <Settings size={20} /> },
+    {
+      name: "Dashboard",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a",
+      icon: <LayoutDashboard size={20} />,
+    },
+    {
+      name: "Deals",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/deals",
+      icon: <Tags size={20} />,
+    },
+    {
+      name: "Categories",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/categories",
+      icon: <List size={20} />,
+    },
+    {
+      name: "Stores",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/stores",
+      icon: <List size={20} />,
+    },
+    {
+      name: "Brands",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/brands",
+      icon: <List size={20} />,
+    },
+    {
+      name: "Quizzes",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/quizzes",
+      icon: <HelpCircle size={20} />,
+    },
+    {
+      name: "Blog",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/blog",
+      icon: <FileText size={20} />,
+    },
+    {
+      name: "Settings",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/settings",
+      icon: <Settings size={20} />,
+    },
   ];
 
   return (
@@ -43,7 +75,9 @@ export function AdminSidebar({ adminName, adminEmail }: AdminSidebarProps) {
         {navLinks.map((link) => {
           const isActive =
             pathname === link.href ||
-            (link.href !== "/admin" && pathname?.startsWith(link.href));
+            (link.href !==
+              "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a" &&
+              pathname?.startsWith(link.href));
           return (
             <Link
               key={link.name}

@@ -44,3 +44,57 @@ export async function toggleSavedDeal(dealId: string) {
     return { success: false, error: "An unexpected error occurred." };
   }
 }
+
+export async function subscribeToNewsletter(
+  prevState: { success: boolean; message: string } | null,
+  formData: FormData,
+) {
+  try {
+    const email = formData.get("email");
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+      return {
+        success: false,
+        message: "Please provide a valid email address.",
+      };
+    }
+
+    const existing = await prisma.newsletterSubscriber.findUnique({
+      where: { email },
+    });
+
+    if (existing) {
+      if (!existing.active) {
+        await prisma.newsletterSubscriber.update({
+          where: { email },
+          data: { active: true },
+        });
+        return {
+          success: true,
+          message: "Welcome back! You've been resubscribed.",
+        };
+      }
+      return {
+        success: false,
+        message: "You are already subscribed to the newsletter!",
+      };
+    }
+
+    await prisma.newsletterSubscriber.create({
+      data: {
+        email,
+        source: "footer_form",
+      },
+    });
+
+    return {
+      success: true,
+      message: "Thanks for subscribing! We'll send you the best deals.",
+    };
+  } catch (error) {
+    console.error("Newsletter subscription error:", error);
+    return {
+      success: false,
+      message: "An error occurred while subscribing. Please try again.",
+    };
+  }
+}
