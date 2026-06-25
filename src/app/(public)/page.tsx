@@ -233,7 +233,7 @@ export default async function HomePage() {
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-[14px] sm:gap-6 mt-6 sm:mt-10">
                 {flashDeals.map((deal, idx) => (
                   <ScrollReveal key={deal.id} delay={idx * 100}>
-                    <div className="flash-deal rounded-3xl h-full min-h-[330px]">
+                    <div className="flash-deal rounded-3xl h-full">
                       <ProductCard product={deal} />
                     </div>
                   </ScrollReveal>
@@ -258,7 +258,7 @@ export default async function HomePage() {
                   <ScrollReveal
                     key={deal.id}
                     delay={idx * 100}
-                    className="min-h-[330px]"
+                    className="h-full"
                   >
                     <ProductCard product={deal} />
                   </ScrollReveal>
@@ -330,27 +330,30 @@ export default async function HomePage() {
                     delay={idx * 100}
                     className="h-full"
                   >
-                    <GlassCard className="!p-5 hover:border-blue-200 transition-all flex flex-col h-full justify-between">
+                    <GlassCard className="!p-3 sm:!p-5 hover:border-blue-200 transition-all flex flex-col h-full justify-between">
                       <div>
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 text-xs font-black">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                          <span className="px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg bg-blue-50 text-blue-600 text-[10px] sm:text-xs font-black">
                             {coupon.discountText}
                           </span>
                           {coupon.store && (
-                            <span className="text-xs text-gray-500 font-medium">
+                            <span className="text-[10px] sm:text-xs text-gray-500 font-medium truncate max-w-[70px] sm:max-w-none">
                               {coupon.store.name}
                             </span>
                           )}
                         </div>
-                        <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2">
+                        <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-2 line-clamp-2 leading-snug">
                           {coupon.title}
                         </h3>
                       </div>
-                      <div className="mt-4">
+                      <div className="mt-2 sm:mt-4">
                         {coupon.code ? (
-                          <div className="flex items-center gap-2 bg-gray-50 rounded-xl p-3 border border-dashed border-gray-300">
-                            <TagIcon size={14} className="text-gray-400" />
-                            <code className="text-sm font-black text-gray-800 flex-1">
+                          <div className="flex items-center gap-1.5 sm:gap-2 bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-3 border border-dashed border-gray-300">
+                            <TagIcon
+                              size={12}
+                              className="text-gray-400 sm:w-3.5 sm:h-3.5 shrink-0"
+                            />
+                            <code className="text-[11px] sm:text-sm font-black text-gray-800 flex-1 truncate">
                               {coupon.code}
                             </code>
                           </div>
@@ -360,9 +363,9 @@ export default async function HomePage() {
                               href={coupon.affiliateUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block text-center gradient-btn py-2.5 rounded-xl text-sm font-bold"
+                              className="block text-center gradient-btn py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[12px] sm:text-sm font-bold"
                             >
-                              Activate Deal
+                              Activate
                             </a>
                           </MagneticButton>
                         )}

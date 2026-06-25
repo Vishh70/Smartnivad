@@ -12,12 +12,12 @@ export function SectionHeading({
   const HeadingTag = as;
 
   return (
-    <div className="flex flex-col items-center justify-center text-center space-y-4 py-8">
-      <HeadingTag className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
+    <div className="flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4 py-6 sm:py-8">
+      <HeadingTag className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-gray-900 px-4">
         {title}
       </HeadingTag>
       {subtitle && (
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-lg md:text-xl text-gray-600 max-w-[280px] sm:max-w-2xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}
