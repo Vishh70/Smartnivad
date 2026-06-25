@@ -15,6 +15,7 @@ export default defineConfig({
   reporter: process.env.CI
     ? [
         ["html", { outputFolder: "reports/playwright", open: "never" }],
+        ["github"],
         ["line"],
       ]
     : [["html", { outputFolder: "reports/playwright" }], ["list"]],

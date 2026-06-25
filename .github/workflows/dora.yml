@@ -1,0 +1,22 @@
+name: DORA Metrics
+
+on:
+  schedule:
+    # Run daily at midnight
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  dora-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calculate DORA Metrics
+        uses: jcantosz/dora-metrics-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          # In a real environment, you'd output this to a reporting dashboard like Datadog, Prometheus, or a GSheet
+          output_format: "markdown"
+
+      - name: Output Metrics
+        run: cat dora-metrics.md
