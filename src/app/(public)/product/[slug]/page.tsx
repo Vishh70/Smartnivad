@@ -78,9 +78,9 @@ export default async function ProductPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Image (Sticky on Desktop) */}
-          <div className="lg:col-span-5 h-fit lg:sticky lg:top-24 space-y-6">
-            <div className="relative aspect-square rounded-3xl overflow-hidden bg-white/60 border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.06)] group p-8 flex items-center justify-center backdrop-blur-xl">
-              <div className="absolute top-4 left-4 bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md z-10 flex items-center gap-1">
+          <div className="lg:col-span-5 h-fit lg:sticky lg:top-24 space-y-4 sm:space-y-6">
+            <div className="relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden bg-white/60 border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.06)] group p-4 sm:p-8 flex items-center justify-center backdrop-blur-xl">
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-red-50 text-red-600 border border-red-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-md z-10 flex items-center gap-1">
                 <Tag size={12} /> {product.dealType ?? "Deal"}
               </div>
               <button
@@ -126,7 +126,7 @@ export default async function ProductPage({
 
           {/* Right Column: Details */}
           <div className="lg:col-span-7 flex flex-col pt-4">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight tracking-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 leading-tight tracking-tight">
               {product.title}
             </h1>
 
@@ -343,7 +343,7 @@ export default async function ProductPage({
       </div>
 
       {/* Sticky Bottom CTA */}
-      <div className="fixed bottom-16 lg:bottom-0 left-0 w-full z-[60] bg-white/90 backdrop-blur-2xl border-t border-gray-200 p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      <div className="fixed bottom-[70px] lg:bottom-0 left-0 w-full z-[60] bg-white/90 backdrop-blur-2xl border-t border-gray-200 p-3 sm:p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="hidden sm:flex items-center gap-4">
             <div className="w-12 h-12 relative rounded-xl overflow-hidden bg-gray-50">
