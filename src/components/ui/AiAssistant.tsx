@@ -110,7 +110,7 @@ export function AiAssistant() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-[90px] right-[18px] lg:bottom-6 lg:right-6 z-[90] w-[60px] h-[60px] rounded-full gradient-btn shadow-xl flex items-center justify-center hover:scale-110 transition-all duration-300 group"
+          className="fixed bottom-[90px] right-[16px] lg:bottom-[24px] lg:right-[24px] z-[40] w-[60px] h-[60px] rounded-full gradient-btn shadow-[0_15px_40px_rgba(59,130,246,.35)] flex items-center justify-center hover:scale-[1.02] transition-all duration-300 group"
           aria-label="Open AI Assistant"
         >
           <Sparkles
@@ -125,7 +125,7 @@ export function AiAssistant() {
       {isOpen && (
         <div
           ref={panelRef}
-          className="fixed bottom-[90px] right-[18px] lg:bottom-6 lg:right-6 z-[90] w-[380px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100dvh-8rem)] flex flex-col bg-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl shadow-2xl overflow-hidden"
+          className="fixed bottom-[90px] right-[16px] lg:bottom-[24px] lg:right-[24px] z-[90] w-[380px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100dvh-8rem)] flex flex-col bg-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl shadow-[0_15px_40px_rgba(59,130,246,.35)] overflow-hidden"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50">

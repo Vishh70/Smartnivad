@@ -16,10 +16,10 @@ export function BottomNav() {
 
   return (
     <nav
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-2xl border-t border-white/50 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_30px_rgba(0,0,0,0.04)]"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] backdrop-blur-[20px] bg-[rgba(255,255,255,.92)] border-t border-[rgba(0,0,0,.08)] pb-[env(safe-area-inset-bottom)]"
       style={{ touchAction: "none" }}
     >
-      <div className="flex items-center justify-around h-[72px] px-2 max-w-md mx-auto">
+      <div className="flex items-center justify-around h-[70px] px-2 max-w-md mx-auto">
         {links.map((link) => {
           const isActive =
             pathname === link.href ||
@@ -30,18 +30,36 @@ export function BottomNav() {
               key={link.href}
               href={link.href}
               className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all duration-300 ${
-                isActive
-                  ? "text-blue-600 scale-110"
-                  : "text-gray-400 hover:text-gray-900"
+                isActive ? "scale-110" : "hover:text-gray-900"
               }`}
             >
-              <div
-                className={`relative p-2 rounded-2xl ${isActive ? "bg-blue-50" : ""}`}
-              >
-                <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+              <div className="relative p-1">
+                {isActive ? (
+                  <>
+                    <svg width="0" height="0">
+                      <linearGradient
+                        id="active-icon-grad"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop stopColor="#2563EB" offset="0%" />
+                        <stop stopColor="#3B82F6" offset="100%" />
+                      </linearGradient>
+                    </svg>
+                    <Icon
+                      size={24}
+                      strokeWidth={2.5}
+                      stroke="url(#active-icon-grad)"
+                    />
+                  </>
+                ) : (
+                  <Icon size={24} strokeWidth={2} className="text-gray-400" />
+                )}
               </div>
               <span
-                className={`text-[10px] ${isActive ? "font-bold text-blue-600" : "font-medium text-gray-500"}`}
+                className={`text-[12px] ${isActive ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text font-bold" : "font-medium text-gray-500"}`}
               >
                 {link.label}
               </span>
