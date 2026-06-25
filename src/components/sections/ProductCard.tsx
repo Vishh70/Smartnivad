@@ -102,7 +102,6 @@ export function ProductCard({ product, initialSaved = false }: DealCardProps & {
           </div>
         )}
 
-        {/* Wishlist */}
         <div className="absolute top-9 sm:top-12 right-2 sm:right-3 z-30 flex gap-1">
           <button
             aria-label="Save to wishlist"
@@ -110,7 +109,11 @@ export function ProductCard({ product, initialSaved = false }: DealCardProps & {
             onClick={handleSave}
             disabled={isPending}
           >
-            <Heart size={13} className={isSaved ? "fill-current" : ""} />
+            {isPending ? (
+              <span className="w-3 h-3 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <Heart size={13} className={isSaved ? "fill-current" : ""} />
+            )}
           </button>
         </div>
 
@@ -125,6 +128,8 @@ export function ProductCard({ product, initialSaved = false }: DealCardProps & {
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                 className="object-contain p-2"
                 loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoKAAoAAgA0p3DdpsW0r+QA/v2oP/5wB/84A/78IAAA"
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-xs font-medium">
