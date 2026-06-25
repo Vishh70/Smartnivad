@@ -10,13 +10,5 @@ jobs:
   dora-metrics:
     runs-on: ubuntu-latest
     steps:
-      - name: Calculate DORA Metrics
-        uses: jcantosz/dora-metrics-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          # In a real environment, you'd output this to a reporting dashboard like Datadog, Prometheus, or a GSheet
-          output_format: "markdown"
-
-      - name: Output Metrics
-        run: cat dora-metrics.md
+      - name: Calculate DORA Metrics (Placeholder)
+        run: echo "DORA metrics collection temporarily disabled until a free/maintained action is selected."

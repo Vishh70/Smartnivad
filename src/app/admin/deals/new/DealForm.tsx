@@ -61,6 +61,35 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
 
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [isGeneratingSeo, setIsGeneratingSeo] = useState(false);
+  const [scrapeUrl, setScrapeUrl] = useState("");
+  const [isScraping, setIsScraping] = useState(false);
+
+  const handleScrape = async () => {
+    if (!scrapeUrl) return alert("Please enter a URL to scrape.");
+    setIsScraping(true);
+    try {
+      const res = await fetch(
+        `/api/admin/scrape?url=${encodeURIComponent(scrapeUrl)}`,
+      );
+      if (!res.ok) throw new Error("Failed to scrape URL");
+      const data = await res.json();
+
+      if (data.title) setTitle(data.title);
+      if (data.description) setDescription(data.description);
+      if (data.image) setImageUrl(data.image);
+      if (data.price) {
+        setCurrentPrice(data.price.toString());
+        setOriginalPrice(data.price.toString());
+      }
+    } catch (err: unknown) {
+      alert(
+        "Scraping failed: " +
+          (err instanceof Error ? err.message : "Unknown error"),
+      );
+    } finally {
+      setIsScraping(false);
+    }
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -143,6 +172,38 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
         {initialData && (
           <input type="hidden" name="dealId" value={initialData.id} />
         )}
+
+        <div className="bg-blue-500/10 border border-blue-500/20 p-6 rounded-2xl mb-8">
+          <h3 className="text-lg font-semibold text-blue-900 mb-2 flex items-center gap-2">
+            <Sparkles size={18} className="text-blue-500" />
+            Auto-Fill from Link
+          </h3>
+          <p className="text-sm text-blue-700 mb-4">
+            Paste an Amazon or Flipkart URL to automatically extract the title,
+            description, and images.
+          </p>
+          <div className="flex gap-3">
+            <input
+              type="url"
+              placeholder="https://amazon.in/..."
+              value={scrapeUrl}
+              onChange={(e) => setScrapeUrl(e.target.value)}
+              className="flex-1 px-4 py-3 rounded-xl bg-white border border-blue-200 text-gray-900 focus:border-blue-500 outline-none"
+            />
+            <button
+              type="button"
+              onClick={handleScrape}
+              disabled={isScraping}
+              className="px-6 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2"
+            >
+              {isScraping ? (
+                <Loader2 size={18} className="animate-spin" />
+              ) : (
+                "Scrape Deal"
+              )}
+            </button>
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">

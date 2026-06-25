@@ -41,6 +41,14 @@ export async function GET(request: Request) {
       let newPrice: number | null = null;
 
       try {
+        if (
+          !deal.affiliateUrl ||
+          deal.affiliateUrl === "#" ||
+          !deal.affiliateUrl.startsWith("http")
+        ) {
+          throw new Error("Invalid URL");
+        }
+
         newPrice = await scrapePrice(deal.affiliateUrl, deal.store.name);
 
         if (newPrice && newPrice !== deal.currentPrice) {

@@ -266,6 +266,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   wishlist      WishlistItem[]
+  wishlistFolders WishlistFolder[]
+  notifications Notification[]
 
   viewHistory   ViewHistory[]
   createdAt     DateTime  @default(now())
@@ -309,16 +311,47 @@ model VerificationToken {
 
 // ─── User Engagement ──────────────────────────────────────────────────────────
 
+model WishlistFolder {
+  id        String   @id @default(cuid())
+  name      String
+  isPublic  Boolean  @default(false)
+  slug      String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     WishlistItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
 model WishlistItem {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   dealId    String
   deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  folderId  String?
+  folder    WishlistFolder? @relation(fields: [folderId], references: [id], onDelete: SetNull)
   createdAt DateTime @default(now())
 
   @@unique([userId, dealId])
   @@index([userId])
+  @@index([folderId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String   @db.Text
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model AutomationLog {

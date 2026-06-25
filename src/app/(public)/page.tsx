@@ -1,3 +1,5 @@
+export const revalidate = 3600; // 1 hour ISR caching
+
 import Link from "next/link";
 import {
   ChevronRight,

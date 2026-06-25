@@ -3,7 +3,7 @@ import { Settings, Shield, User as UserIcon } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin Settings | TechDeals AI",
+  title: "Admin Settings | SmartNivad",
 };
 
 export default async function AdminSettingsPage() {

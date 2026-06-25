@@ -3,6 +3,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { getBrands, getDeals } from "@/lib/data";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "All Brands — TechDeals AI",
   description: "Browse deals from all major tech brands.",

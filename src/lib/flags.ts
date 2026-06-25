@@ -42,6 +42,8 @@ async function checkPostHogFlag(
   flag: FeatureFlag,
   user?: UserContext,
 ): Promise<boolean> {
+  void flag;
+  void user;
   // Example PostHog integration:
   // const client = new PostHog(process.env.POSTHOG_API_KEY!);
   // return await client.isFeatureEnabled(flag, user?.id || 'anonymous');
@@ -53,6 +55,8 @@ async function checkLaunchDarklyFlag(
   flag: FeatureFlag,
   user?: UserContext,
 ): Promise<boolean> {
+  void flag;
+  void user;
   // Example LaunchDarkly integration:
   // const client = await initLaunchDarkly();
   // return await client.variation(flag, user, false);

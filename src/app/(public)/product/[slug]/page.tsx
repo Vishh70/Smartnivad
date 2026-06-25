@@ -1,3 +1,5 @@
+export const revalidate = 3600; // 1 hour ISR caching
+
 import { notFound } from "next/navigation";
 import { Star, CheckCircle, XCircle, Share2, Info, Tag } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";

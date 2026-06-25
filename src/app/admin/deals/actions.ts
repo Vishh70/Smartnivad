@@ -6,11 +6,15 @@ import { redirect } from "next/navigation";
 
 export async function createDeal(formData: FormData) {
   const title = formData.get("title") as string;
-  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
   const description = formData.get("description") as string;
   const currentPrice = parseFloat(formData.get("currentPrice") as string);
   const originalPrice = parseFloat(formData.get("originalPrice") as string);
-  const discount = Math.round(((originalPrice - currentPrice) / originalPrice) * 100) || 0;
+  const discount =
+    Math.round(((originalPrice - currentPrice) / originalPrice) * 100) || 0;
   const affiliateUrl = formData.get("affiliateUrl") as string;
   const imageUrl = formData.get("imageUrl") as string;
   const categoryId = formData.get("categoryId") as string;
@@ -24,9 +28,26 @@ export async function createDeal(formData: FormData) {
   const seoTitle = formData.get("seoTitle") as string;
   const seoDesc = formData.get("seoDesc") as string;
 
-  const pros = prosText ? prosText.split("\n").map(s => s.trim()).filter(Boolean).join("||") : null;
-  const cons = consText ? consText.split("\n").map(s => s.trim()).filter(Boolean).join("||") : null;
-  const tags = tagsText ? tagsText.split(",").map(s => s.trim()).filter(Boolean) : [];
+  const pros = prosText
+    ? prosText
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .join("||")
+    : null;
+  const cons = consText
+    ? consText
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .join("||")
+    : null;
+  const tags = tagsText
+    ? tagsText
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
 
   await prisma.deal.create({
     data: {
@@ -63,7 +84,8 @@ export async function updateDeal(formData: FormData) {
   const description = formData.get("description") as string;
   const currentPrice = parseFloat(formData.get("currentPrice") as string);
   const originalPrice = parseFloat(formData.get("originalPrice") as string);
-  const discount = Math.round(((originalPrice - currentPrice) / originalPrice) * 100) || 0;
+  const discount =
+    Math.round(((originalPrice - currentPrice) / originalPrice) * 100) || 0;
   const affiliateUrl = formData.get("affiliateUrl") as string;
   const imageUrl = formData.get("imageUrl") as string;
   const categoryId = formData.get("categoryId") as string;
@@ -77,9 +99,26 @@ export async function updateDeal(formData: FormData) {
   const seoTitle = formData.get("seoTitle") as string;
   const seoDesc = formData.get("seoDesc") as string;
 
-  const pros = prosText ? prosText.split("\n").map(s => s.trim()).filter(Boolean).join("||") : null;
-  const cons = consText ? consText.split("\n").map(s => s.trim()).filter(Boolean).join("||") : null;
-  const tags = tagsText ? tagsText.split(",").map(s => s.trim()).filter(Boolean) : [];
+  const pros = prosText
+    ? prosText
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .join("||")
+    : null;
+  const cons = consText
+    ? consText
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .join("||")
+    : null;
+  const tags = tagsText
+    ? tagsText
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
 
   await prisma.deal.update({
     where: { id: dealId },
@@ -112,6 +151,19 @@ export async function updateDeal(formData: FormData) {
 export async function deleteDeal(formData: FormData) {
   const dealId = formData.get("dealId") as string;
   await prisma.deal.delete({ where: { id: dealId } });
+  revalidatePath("/admin/deals");
+  revalidatePath("/");
+}
+
+export async function toggleDealStatus(formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  const currentStatus = formData.get("currentStatus") as string;
+  const newStatus = currentStatus === "PUBLISHED" ? "DRAFT" : "PUBLISHED";
+
+  await prisma.deal.update({
+    where: { id: dealId },
+    data: { status: newStatus },
+  });
   revalidatePath("/admin/deals");
   revalidatePath("/");
 }

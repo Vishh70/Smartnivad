@@ -56,3 +56,40 @@ export async function generateWithFallback(prompt: string, isJson = false) {
     ? lastError
     : new Error("All AI models failed");
 }
+
+export interface DealInsights {
+  summary: string;
+  pros: string[];
+  cons: string[];
+}
+
+export async function generateDealInsights(
+  productTitle: string,
+  description: string,
+  price: number,
+): Promise<DealInsights> {
+  const prompt = `
+    Analyze this product deal:
+    Title: ${productTitle}
+    Description: ${description}
+    Price: ${price}
+
+    Return a JSON object with:
+    1. summary (1-2 sentences)
+    2. pros (array of 3 short strings)
+    3. cons (array of 2 short strings)
+  `;
+
+  try {
+    const jsonStr = await generateWithFallback(prompt, true);
+    return JSON.parse(jsonStr) as DealInsights;
+  } catch (error) {
+    console.error("[AI] Deal insights generation failed:", error);
+    return {
+      summary:
+        "AI generation is currently unavailable due to high API demand. This is a fallback summary.",
+      pros: ["Fallback feature 1", "Fallback feature 2"],
+      cons: ["AI currently overloaded", "Cannot fetch true details"],
+    };
+  }
+}
