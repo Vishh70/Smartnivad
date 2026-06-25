@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { ProductCard } from "@/components/sections/ProductCard";
 import Image from "next/image";
 import { Heart, History } from "lucide-react";
@@ -74,7 +75,7 @@ export default async function DashboardPage() {
           </div>
           {savedDeals.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-              {savedDeals.map((item: { id: string, deal: any }) => (
+              {savedDeals.map((item: { id: string, deal: Prisma.DealGetPayload<{ include: { store: true, brand: true } }> }) => (
                 <div key={item.id} className="h-full">
                   <ProductCard product={item.deal} initialSaved={true} />
                 </div>
@@ -98,7 +99,7 @@ export default async function DashboardPage() {
               <h2 className="text-2xl font-bold text-gray-900">Recently Viewed</h2>
             </div>
             <div className="flex overflow-x-auto snap-x hide-scrollbar gap-6 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-              {viewHistory.map((historyItem: { id: string, deal: any }) => (
+              {viewHistory.map((historyItem: { id: string, deal: Prisma.DealGetPayload<{ include: { store: true, brand: true } }> }) => (
                 <div key={historyItem.id} className="shrink-0 w-[280px] snap-center h-full">
                   <ProductCard product={historyItem.deal} />
                 </div>
