@@ -5,6 +5,7 @@ import { prisma } from "./prisma";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -20,9 +21,36 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null;
+
+        // Check for admin in the database first
+        const dbAdmin = await prisma.admin.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (dbAdmin) {
+          // If admin has a hashed password in DB, verify it
+          if (dbAdmin.password) {
+            const valid = await bcrypt.compare(
+              credentials.password,
+              dbAdmin.password,
+            );
+            if (valid) {
+              return {
+                id: dbAdmin.id,
+                name: dbAdmin.name || "Admin",
+                email: dbAdmin.email,
+                role: "admin",
+              };
+            }
+            return null;
+          }
+        }
+
+        // Legacy fallback for default Super Admin
         if (
-          credentials?.email === "admin@smartnivad.com" &&
-          credentials?.password === "admin"
+          credentials.email === "admin@smartnivad.com" &&
+          credentials.password === "admin"
         ) {
           return {
             id: "1",
@@ -31,6 +59,7 @@ export const authOptions: NextAuthOptions = {
             role: "admin",
           };
         }
+
         return null;
       },
     }),

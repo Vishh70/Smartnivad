@@ -29,6 +29,7 @@ export default async function AdminDashboard() {
     totalFailed,
     recentLogs,
     topDeals,
+    recentActivity,
   ] = await Promise.all([
     prisma.deal.count(),
     prisma.category.count(),
@@ -63,6 +64,13 @@ export default async function AdminDashboard() {
       orderBy: { clicks: "desc" },
       take: 5,
       select: { id: true, title: true, clicks: true, affiliateUrl: true },
+    }),
+
+    // Recent Activity (newest deals)
+    prisma.deal.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: { id: true, title: true, createdAt: true, status: true },
     }),
   ]);
 
@@ -109,9 +117,9 @@ export default async function AdminDashboard() {
         {stats.map((stat) => (
           <GlassCard
             key={stat.label}
-            className="flex items-center gap-4 bg-white"
+            className="flex items-center gap-4 bg-white hover:shadow-lg transition-shadow duration-300 group cursor-default"
           >
-            <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-gray-50 group-hover:bg-blue-50 flex items-center justify-center transition-colors duration-300">
               {stat.icon}
             </div>
             <div>
@@ -123,17 +131,42 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <GlassCard className="bg-white">
+        <GlassCard className="bg-white hover:shadow-md transition-shadow">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="text-[var(--color-primary)]" />
             <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
           </div>
-          <p className="text-gray-500 text-sm">
-            No recent activity to display.
-          </p>
+          {recentActivity.length > 0 ? (
+            <div className="space-y-4">
+              {recentActivity.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100 hover:border-blue-200 transition-colors"
+                >
+                  <div className="flex-1 min-w-0 pr-4">
+                    <p className="text-sm font-bold text-gray-900 truncate">
+                      New Deal: {activity.title}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(activity.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <span
+                    className={`px-2 py-1 rounded text-xs font-bold whitespace-nowrap flex-shrink-0 ${activity.status === "PUBLISHED" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}
+                  >
+                    {activity.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm">
+              No recent activity to display.
+            </p>
+          )}
         </GlassCard>
 
-        <GlassCard className="bg-white">
+        <GlassCard className="bg-white hover:shadow-md transition-shadow">
           <div className="flex items-center gap-2 mb-6">
             <Eye className="text-[var(--color-primary)]" />
             <h2 className="text-xl font-bold text-gray-900">

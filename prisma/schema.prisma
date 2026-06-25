@@ -241,6 +241,7 @@ model Admin {
   email     String   @unique
   name      String?
   image     String?
+  password  String?
   createdAt DateTime @default(now())
 }
 
@@ -401,4 +402,11 @@ model ComparisonSEO {
   @@index([slug])
   @@index([product1Id])
   @@index([product2Id])
+}
+
+model PlatformSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
 }

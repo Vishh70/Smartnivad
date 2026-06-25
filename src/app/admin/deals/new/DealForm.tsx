@@ -215,7 +215,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             />
           </div>
 
@@ -229,7 +229,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               required
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             />
           </div>
 
@@ -244,7 +244,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               value={currentPrice}
               onChange={(e) => setCurrentPrice(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             />
           </div>
 
@@ -259,7 +259,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               value={originalPrice}
               onChange={(e) => setOriginalPrice(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             />
           </div>
 
@@ -272,7 +272,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               name="affiliateUrl"
               defaultValue={initialData?.affiliateUrl}
               required
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             />
           </div>
 
@@ -284,7 +284,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               name="categoryId"
               defaultValue={initialData?.categoryId}
               required
-              className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             >
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -302,7 +302,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               name="storeId"
               defaultValue={initialData?.storeId}
               required
-              className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             >
               {stores.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -320,7 +320,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
               name="dealType"
               defaultValue={initialData?.dealType || "LIVE"}
               required
-              className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
             >
               <option value="LIVE">Live Deal</option>
               <option value="HOT">Hot Deal</option>
@@ -343,7 +343,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
             </label>
           </div>
 
-          <div className="col-span-2 mt-4 p-6 border border-dashed border-white/20 rounded-xl bg-black/5">
+          <div className="col-span-2 mt-4 p-6 border border-dashed border-gray-300 rounded-xl bg-gray-50">
             <label className="block text-sm font-medium text-gray-700 mb-4">
               Product Image
             </label>
@@ -385,7 +385,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 mt-8 space-y-6">
+        <div className="border-t border-gray-200 pt-8 mt-8 space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-semibold text-gray-900">
               AI Enhanced Details
@@ -415,7 +415,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
                 value={aiSummary}
                 onChange={(e) => setAiSummary(e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
               />
             </div>
 
@@ -428,7 +428,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
                 value={pros}
                 onChange={(e) => setPros(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
                 placeholder="Great battery life\nStunning display"
               />
             </div>
@@ -442,7 +442,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
                 value={cons}
                 onChange={(e) => setCons(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
                 placeholder="Expensive\nNo charger included"
               />
             </div>
@@ -456,14 +456,14 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
                 name="tags"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
                 placeholder="smartphone, apple, 5g"
               />
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 mt-8 space-y-6">
+        <div className="border-t border-gray-200 pt-8 mt-8 space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-semibold text-gray-900">
               SEO Metadata
@@ -493,7 +493,7 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
                 name="seoTitle"
                 value={seoTitle}
                 onChange={(e) => setSeoTitle(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
               />
             </div>
             <div>
@@ -505,13 +505,13 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
                 value={seoDesc}
                 onChange={(e) => setSeoDesc(e.target.value)}
                 rows={2}
-                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[var(--color-primary)] outline-none"
               />
             </div>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-white/10 flex justify-end">
+        <div className="pt-6 border-t border-gray-200 flex justify-end">
           <GlowButton type="submit" variant="primary">
             {initialData ? "Update Deal" : "Publish Deal"}
           </GlowButton>

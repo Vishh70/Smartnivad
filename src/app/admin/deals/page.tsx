@@ -1,15 +1,39 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Power, Plus, Edit2, Trash2, ExternalLink, List } from "lucide-react";
+import { Power, Plus, Edit2, Trash2, ExternalLink } from "lucide-react";
 import { deleteDeal, toggleDealStatus } from "./actions";
+import { DealsTableFilter } from "./DealsTableFilter";
 
 export const metadata = {
   title: "Manage Deals | Admin",
 };
 
-export default async function AdminDealsPage() {
+interface AdminDealsPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function AdminDealsPage({
+  searchParams,
+}: AdminDealsPageProps) {
+  const resolvedParams = await searchParams;
+  const status =
+    typeof resolvedParams.status === "string" ? resolvedParams.status : "ALL";
+  const query = typeof resolvedParams.q === "string" ? resolvedParams.q : "";
+  const whereClause: import("@prisma/client").Prisma.DealWhereInput = {};
+  if (status !== "ALL" && (status === "PUBLISHED" || status === "DRAFT")) {
+    whereClause.status = status;
+  }
+  if (query) {
+    whereClause.OR = [
+      { title: { contains: query, mode: "insensitive" } },
+      { store: { name: { contains: query, mode: "insensitive" } } },
+      { category: { name: { contains: query, mode: "insensitive" } } },
+    ];
+  }
+
   const deals = await prisma.deal.findMany({
+    where: whereClause,
     orderBy: { createdAt: "desc" },
     include: { category: true, store: true },
   });
@@ -34,27 +58,7 @@ export default async function AdminDealsPage() {
       </div>
 
       <GlassCard className="!p-0 overflow-hidden border-gray-200">
-        <div className="p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-          <div className="flex gap-2">
-            <button className="px-3 py-1.5 text-xs font-medium bg-white text-gray-900 border border-gray-200 rounded-md hover:bg-gray-100 transition shadow-sm">
-              All Deals
-            </button>
-            <button className="px-3 py-1.5 text-xs font-medium text-gray-500 border border-transparent hover:text-gray-900 transition">
-              Published
-            </button>
-            <button className="px-3 py-1.5 text-xs font-medium text-gray-500 border border-transparent hover:text-gray-900 transition">
-              Drafts
-            </button>
-          </div>
-          <div className="flex gap-2 text-gray-500">
-            <button
-              className="p-1.5 border border-gray-200 bg-white rounded hover:bg-gray-100 transition shadow-sm"
-              title="Filter"
-            >
-              <List size={16} />
-            </button>
-          </div>
-        </div>
+        <DealsTableFilter />
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-gray-700">
             <thead className="bg-white text-xs uppercase text-gray-500 border-b border-gray-200">
