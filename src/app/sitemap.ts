@@ -1,16 +1,23 @@
 import { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import { getSiteUrl } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const baseUrl = getSiteUrl();
 
   // Fetch dynamic content
   const [deals, categories, stores, brands, posts] = await Promise.all([
-    prisma.deal.findMany({ select: { slug: true, updatedAt: true }, where: { status: "PUBLISHED" } }),
+    prisma.deal.findMany({
+      select: { slug: true, updatedAt: true },
+      where: { status: "PUBLISHED" },
+    }),
     prisma.category.findMany({ select: { slug: true, updatedAt: true } }),
     prisma.store.findMany({ select: { slug: true, updatedAt: true } }),
     prisma.brand.findMany({ select: { slug: true, updatedAt: true } }),
-    prisma.blogPost.findMany({ select: { slug: true, updatedAt: true }, where: { status: "PUBLISHED" } }),
+    prisma.blogPost.findMany({
+      select: { slug: true, updatedAt: true },
+      where: { status: "PUBLISHED" },
+    }),
   ]);
 
   const dealUrls = deals.map((deal) => ({

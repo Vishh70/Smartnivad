@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 export async function toggleSavedDeal(dealId: string) {
   try {
     const user = await getCurrentUser();
-    
+
     if (!user || !user.id) {
       return { success: false, error: "You must be logged in to save deals." };
     }
@@ -39,7 +39,7 @@ export async function toggleSavedDeal(dealId: string) {
       revalidatePath("/profile");
       return { success: true, saved: true };
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Toggle saved deal error:", error);
     return { success: false, error: "An unexpected error occurred." };
   }

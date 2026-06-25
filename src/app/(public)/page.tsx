@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { ChevronRight, Percent, CheckCircle2, Zap, Tag as TagIcon } from "lucide-react";
+import {
+  ChevronRight,
+  Percent,
+  CheckCircle2,
+  Tag as TagIcon,
+} from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { HomeFeedTabs } from "@/components/sections/HomeFeedTabs";
@@ -7,7 +12,16 @@ import { BrandMarquee } from "@/components/sections/BrandMarquee";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { DealScore } from "@/components/ui/DealScore";
 import { ProductCard } from "@/components/sections/ProductCard";
-import { getFeaturedDeals, getHotDeals, getLiveDeals, getTrendingDeals, getCategories, getFlashDeals, getCouponsPreview, getStoresWithLogos } from "@/lib/data";
+import {
+  getFeaturedDeals,
+  getHotDeals,
+  getLiveDeals,
+  getTrendingDeals,
+  getCategories,
+  getFlashDeals,
+  getCouponsPreview,
+  getStoresWithLogos,
+} from "@/lib/data";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -17,11 +31,21 @@ import { Particles } from "@/components/ui/Particles";
 
 export const metadata = {
   title: "SmartNivad — Find the Best Deals. Save More.",
-  description: "AI-curated tech deals, reviews, and buying guides. Save money on laptops, phones, gaming, and more.",
+  description:
+    "AI-curated tech deals, reviews, and buying guides. Save money on laptops, phones, gaming, and more.",
 };
 
 export default async function HomePage() {
-  const [featured, hot, live, trending, categories, flashDeals, coupons, stores] = await Promise.all([
+  const [
+    featured,
+    hot,
+    live,
+    trending,
+    categories,
+    flashDeals,
+    coupons,
+    stores,
+  ] = await Promise.all([
     getFeaturedDeals(),
     getHotDeals(),
     getLiveDeals(),
@@ -52,19 +76,18 @@ export default async function HomePage() {
           {/* Left: Copy & CTA */}
           <div className="text-center lg:text-left z-10">
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 mb-4 sm:mb-6 tracking-tighter leading-[1.1]">
-              <ScrollReveal delay={200}>
-                Find the Best Deals.
-              </ScrollReveal>
+              <ScrollReveal delay={200}>Find the Best Deals.</ScrollReveal>{" "}
               <ScrollReveal delay={400}>
                 <span className="gradient-text">Save More.</span>
               </ScrollReveal>
             </h1>
             <ScrollReveal delay={600}>
               <p className="text-sm sm:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 mb-6 sm:mb-10 font-medium">
-                AI-powered product discovery, price tracking, and deal recommendations.
+                AI-powered product discovery, price tracking, and deal
+                recommendations.
               </p>
             </ScrollReveal>
-            
+
             <ScrollReveal delay={800}>
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-12">
                 <Link href="/deals" className="w-full sm:w-auto block">
@@ -91,21 +114,37 @@ export default async function HomePage() {
                   <CheckCircle2 size={18} className="text-green-500" />
                   <AnimatedCounter value={50000} suffix="+" /> Monthly Users
                 </div>
-                <div className="flex items-center gap-2"><CheckCircle2 size={18} className="text-green-500" /> Verified Deals</div>
-                <div className="flex items-center gap-2"><CheckCircle2 size={18} className="text-green-500" /> Amazon & Flipkart Partners</div>
-                <div className="flex items-center gap-2"><CheckCircle2 size={18} className="text-green-500" /> AI Powered</div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-green-500" /> Verified
+                  Deals
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-green-500" /> Amazon &
+                  Flipkart Partners
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-green-500" /> AI
+                  Powered
+                </div>
               </div>
             </ScrollReveal>
           </div>
 
           {/* Right: Featured Product Card */}
           {dealOfTheDay && (
-            <ScrollReveal delay={1200} className="relative z-10 flex justify-center lg:justify-end">
+            <ScrollReveal
+              delay={1200}
+              className="relative z-10 flex justify-center lg:justify-end"
+            >
               <div className="animate-float w-full max-w-md">
                 <GlassCard className="w-full p-6 sm:p-8 hover:shadow-[0_25px_60px_rgba(37,99,235,0.18)] transition-all duration-500 group border border-white/80">
                   <div className="relative h-64 mb-6 bg-white/40 rounded-2xl p-4 flex items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={dealOfTheDay.imageUrl} alt={dealOfTheDay.title} className="max-h-full object-contain drop-shadow-xl group-hover:scale-[1.08] transition-transform duration-400 will-change-transform" />
+                    <img
+                      src={dealOfTheDay.imageUrl}
+                      alt={dealOfTheDay.title}
+                      className="max-h-full object-contain drop-shadow-xl group-hover:scale-[1.08] transition-transform duration-400 will-change-transform"
+                    />
                     {dealOfTheDay.discount > 0 && (
                       <span className="absolute top-4 right-4 bg-green-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
                         <Percent size={14} /> {dealOfTheDay.discount}% OFF
@@ -123,11 +162,17 @@ export default async function HomePage() {
                       />
                     </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug">{dealOfTheDay.title}</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug">
+                    {dealOfTheDay.title}
+                  </h3>
                   <div className="flex items-end gap-3 mb-6">
-                    <span className="text-4xl font-black text-gray-900">₹{dealOfTheDay.currentPrice}</span>
+                    <span className="text-4xl font-black text-gray-900">
+                      ₹{dealOfTheDay.currentPrice}
+                    </span>
                     {dealOfTheDay.originalPrice > 0 && (
-                      <span className="text-lg text-gray-500 line-through mb-1 font-semibold">₹{dealOfTheDay.originalPrice}</span>
+                      <span className="text-lg text-gray-500 line-through mb-1 font-semibold">
+                        ₹{dealOfTheDay.originalPrice}
+                      </span>
                     )}
                   </div>
                   <Link href={`/product/${dealOfTheDay.slug}`}>
@@ -145,15 +190,21 @@ export default async function HomePage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-24 pb-16 sm:pb-32">
-
         {/* ═══════════════════════════════════════════════════════════════════ */}
         {/* 3. TRENDING DEALS (Tabbed Feed)                                   */}
         {/* ═══════════════════════════════════════════════════════════════════ */}
         <ScrollReveal>
           <section id="feed" className="pt-8">
-            <SectionHeading title="Trending Deals" subtitle="Real-time verified discounts across top stores." />
+            <SectionHeading
+              title="Trending Deals"
+              subtitle="Real-time verified discounts across top stores."
+            />
             <div className="mt-10">
-              <HomeFeedTabs hotDeals={hot} liveDeals={live} trendingDeals={trending} />
+              <HomeFeedTabs
+                hotDeals={hot}
+                liveDeals={live}
+                trendingDeals={trending}
+              />
             </div>
             <div className="text-center mt-12 flex justify-center">
               <Link href="/deals">
@@ -173,7 +224,10 @@ export default async function HomePage() {
         {flashDeals.length > 0 && (
           <ScrollReveal>
             <section id="flash-deals">
-              <SectionHeading title="⚡ Flash Deals" subtitle="These deals expire soon — grab them before they're gone!" />
+              <SectionHeading
+                title="⚡ Flash Deals"
+                subtitle="These deals expire soon — grab them before they're gone!"
+              />
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mt-6 sm:mt-10">
                 {flashDeals.map((deal, idx) => (
                   <ScrollReveal key={deal.id} delay={idx * 100}>
@@ -193,7 +247,10 @@ export default async function HomePage() {
         {featured.length > 0 && (
           <ScrollReveal>
             <section id="ai-picks">
-              <SectionHeading title="AI Recommendations" subtitle="Top picks selected by our AI based on value, quality, and trust." />
+              <SectionHeading
+                title="AI Recommendations"
+                subtitle="Top picks selected by our AI based on value, quality, and trust."
+              />
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mt-6 sm:mt-10">
                 {featured.slice(0, 8).map((deal, idx) => (
                   <ScrollReveal key={deal.id} delay={idx * 100}>
@@ -210,16 +267,28 @@ export default async function HomePage() {
         {/* ═══════════════════════════════════════════════════════════════════ */}
         <ScrollReveal>
           <section id="categories">
-            <SectionHeading title="Top Categories" subtitle="Browse deals by your favorite tech categories." />
+            <SectionHeading
+              title="Top Categories"
+              subtitle="Browse deals by your favorite tech categories."
+            />
             <div className="flex overflow-x-auto snap-x hide-scrollbar md:grid md:grid-cols-4 gap-6 mt-12 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
               {categories.map((category, idx) => (
-                <ScrollReveal key={category.id} delay={idx * 50} className="group shrink-0 w-[240px] md:w-auto snap-center h-full">
+                <ScrollReveal
+                  key={category.id}
+                  delay={idx * 50}
+                  className="group shrink-0 w-[240px] md:w-auto snap-center h-full"
+                >
                   <Link href={`/deals?category=${category.slug}`}>
                     <GlassCard className="text-center hover:border-blue-200 transition-all !p-8 h-full flex flex-col items-center justify-center gap-5">
                       <CategoryIcon iconName={category.icon} />
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{category.name}</h3>
-                        <p className="text-sm font-semibold text-gray-500">Explore deals <ChevronRight size={14} className="inline" /></p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                          {category.name}
+                        </h3>
+                        <p className="text-sm font-semibold text-gray-500">
+                          Explore deals{" "}
+                          <ChevronRight size={14} className="inline" />
+                        </p>
                       </div>
                     </GlassCard>
                   </Link>
@@ -242,27 +311,49 @@ export default async function HomePage() {
         {coupons.length > 0 && (
           <ScrollReveal>
             <section id="coupons">
-              <SectionHeading title="Latest Coupons" subtitle="Save even more with exclusive coupon codes." />
+              <SectionHeading
+                title="Latest Coupons"
+                subtitle="Save even more with exclusive coupon codes."
+              />
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mt-6 sm:mt-10">
                 {coupons.map((coupon, idx) => (
-                  <ScrollReveal key={coupon.id} delay={idx * 100} className="h-full">
+                  <ScrollReveal
+                    key={coupon.id}
+                    delay={idx * 100}
+                    className="h-full"
+                  >
                     <GlassCard className="!p-5 hover:border-blue-200 transition-all flex flex-col h-full justify-between">
                       <div>
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 text-xs font-black">{coupon.discountText}</span>
-                          {coupon.store && <span className="text-xs text-gray-500 font-medium">{coupon.store.name}</span>}
+                          <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 text-xs font-black">
+                            {coupon.discountText}
+                          </span>
+                          {coupon.store && (
+                            <span className="text-xs text-gray-500 font-medium">
+                              {coupon.store.name}
+                            </span>
+                          )}
                         </div>
-                        <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2">{coupon.title}</h3>
+                        <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2">
+                          {coupon.title}
+                        </h3>
                       </div>
                       <div className="mt-4">
                         {coupon.code ? (
                           <div className="flex items-center gap-2 bg-gray-50 rounded-xl p-3 border border-dashed border-gray-300">
                             <TagIcon size={14} className="text-gray-400" />
-                            <code className="text-sm font-black text-gray-800 flex-1">{coupon.code}</code>
+                            <code className="text-sm font-black text-gray-800 flex-1">
+                              {coupon.code}
+                            </code>
                           </div>
                         ) : (
                           <MagneticButton className="w-full">
-                            <a href={coupon.affiliateUrl} target="_blank" rel="noopener noreferrer" className="block text-center gradient-btn py-2.5 rounded-xl text-sm font-bold">
+                            <a
+                              href={coupon.affiliateUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-center gradient-btn py-2.5 rounded-xl text-sm font-bold"
+                            >
                               Activate Deal
                             </a>
                           </MagneticButton>
@@ -295,12 +386,16 @@ export default async function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-cyan-500/10 -z-20" />
               <div className="absolute inset-0 bg-white/40 backdrop-blur-md -z-10" />
               <Particles />
-              
+
               <div className="relative z-10">
                 <div className="text-5xl mb-6">📬</div>
-                <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Never Miss a Price Drop</h2>
+                <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
+                  Never Miss a Price Drop
+                </h2>
                 <p className="text-gray-600 mb-10 max-w-xl mx-auto text-lg font-medium">
-                  Join <AnimatedCounter value={50000} suffix="+" /> tech enthusiasts. Get the best AI-verified deals and tech buying guides delivered weekly.
+                  Join <AnimatedCounter value={50000} suffix="+" /> tech
+                  enthusiasts. Get the best AI-verified deals and tech buying
+                  guides delivered weekly.
                 </p>
                 <NewsletterForm />
               </div>

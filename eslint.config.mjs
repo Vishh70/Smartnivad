@@ -16,7 +16,8 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
-      "node_modules/**"
+      "node_modules/**",
+      "refactor_theme.js",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

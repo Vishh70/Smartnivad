@@ -20,14 +20,16 @@ export function AiAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionId] = useState(() => `sess_${Math.random().toString(36).slice(2)}`);
+  const [sessionId] = useState(
+    () => `sess_${Math.random().toString(36).slice(2)}`,
+  );
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Close on outside click
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
+    function handleClickOutside(e: Event) {
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
@@ -48,36 +50,54 @@ export function AiAssistant() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const sendMessage = useCallback(async (text: string) => {
-    if (!text.trim() || loading) return;
+  const sendMessage = useCallback(
+    async (text: string) => {
+      if (!text.trim() || loading) return;
 
-    const userMsg: Message = { role: "user", content: text.trim() };
-    setMessages(prev => [...prev, userMsg]);
-    setInput("");
-    setLoading(true);
+      const userMsg: Message = { role: "user", content: text.trim() };
+      setMessages((prev) => [...prev, userMsg]);
+      setInput("");
+      setLoading(true);
 
-    try {
-      const res = await fetch("/api/ai/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text.trim(), sessionId }),
-      });
+      try {
+        const res = await fetch("/api/ai/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text.trim(), sessionId }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (res.status === 429) {
-        setMessages(prev => [...prev, { role: "assistant", content: `⏳ ${data.message}` }]);
-      } else if (data.error) {
-        setMessages(prev => [...prev, { role: "assistant", content: `❌ ${data.message}` }]);
-      } else {
-        setMessages(prev => [...prev, { role: "assistant", content: data.response }]);
+        if (res.status === 429) {
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", content: `⏳ ${data.message}` },
+          ]);
+        } else if (data.error) {
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", content: `❌ ${data.message}` },
+          ]);
+        } else {
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", content: data.response },
+          ]);
+        }
+      } catch {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: "❌ Something went wrong. Please try again.",
+          },
+        ]);
+      } finally {
+        setLoading(false);
       }
-    } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "❌ Something went wrong. Please try again." }]);
-    } finally {
-      setLoading(false);
-    }
-  }, [loading, sessionId]);
+    },
+    [loading, sessionId],
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,7 +113,10 @@ export function AiAssistant() {
           className="fixed bottom-20 lg:bottom-6 right-6 z-[90] w-14 h-14 rounded-full gradient-btn shadow-xl flex items-center justify-center hover:scale-110 transition-all duration-300 group"
           aria-label="Open AI Assistant"
         >
-          <Sparkles size={24} className="text-white group-hover:rotate-12 transition-transform" />
+          <Sparkles
+            size={24}
+            className="text-white group-hover:rotate-12 transition-transform"
+          />
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse" />
         </button>
       )}
@@ -111,11 +134,18 @@ export function AiAssistant() {
                 <Sparkles size={18} className="text-white" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-gray-900">TechDeals AI</h3>
-                <p className="text-[10px] text-gray-500 font-medium">Your shopping assistant</p>
+                <h3 className="text-sm font-bold text-gray-900">
+                  TechDeals AI
+                </h3>
+                <p className="text-[10px] text-gray-500 font-medium">
+                  Your shopping assistant
+                </p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="p-2 rounded-xl hover:bg-black/5 text-gray-400 hover:text-gray-700 transition-colors">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 rounded-xl hover:bg-black/5 text-gray-400 hover:text-gray-700 transition-colors"
+            >
               <X size={18} />
             </button>
           </div>
@@ -127,8 +157,12 @@ export function AiAssistant() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center mx-auto mb-4">
                   <MessageCircle size={28} className="text-blue-600" />
                 </div>
-                <p className="text-sm font-bold text-gray-900 mb-1">How can I help?</p>
-                <p className="text-xs text-gray-500 mb-6">Ask me about deals, products, or recommendations</p>
+                <p className="text-sm font-bold text-gray-900 mb-1">
+                  How can I help?
+                </p>
+                <p className="text-xs text-gray-500 mb-6">
+                  Ask me about deals, products, or recommendations
+                </p>
                 <div className="grid grid-cols-1 gap-2">
                   {QUICK_PROMPTS.map((prompt) => (
                     <button
@@ -144,7 +178,10 @@ export function AiAssistant() {
             )}
 
             {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                key={i}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              >
                 <div
                   className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                     msg.role === "user"
@@ -173,7 +210,10 @@ export function AiAssistant() {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="p-3 border-t border-gray-100 bg-gray-50/50">
+          <form
+            onSubmit={handleSubmit}
+            className="p-3 border-t border-gray-100 bg-gray-50/50"
+          >
             <div className="flex items-center gap-2">
               <input
                 ref={inputRef}

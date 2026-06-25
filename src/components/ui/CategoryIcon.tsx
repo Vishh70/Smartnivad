@@ -1,12 +1,25 @@
-import { ReactNode } from "react";
-import { Laptop, Smartphone, Headphones, Gamepad2, Tag, Monitor, Watch, Camera, Cpu, Wifi } from "lucide-react";
+import {
+  Laptop,
+  Smartphone,
+  Headphones,
+  Gamepad2,
+  Tag,
+  Monitor,
+  Watch,
+  Camera,
+  Cpu,
+  Wifi,
+} from "lucide-react";
 
 interface CategoryIconProps {
   iconName: string | null;
   size?: number;
 }
 
-const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const ICON_MAP: Record<
+  string,
+  React.ComponentType<{ size?: number; className?: string }>
+> = {
   Laptop,
   Smartphone,
   Headphones,
@@ -38,12 +51,16 @@ export function CategoryIcon({ iconName, size = 28 }: CategoryIconProps) {
   const colorClasses = `bg-gradient-to-br ${gradient}`;
 
   return (
-    <div className={`relative w-16 h-16 rounded-2xl ${colorClasses} shadow-sm group-hover:shadow-lg transition-all duration-300 transform group-hover:scale-[1.12] group-hover:rotate-[8deg] flex items-center justify-center will-change-transform`}>
+    <div
+      className={`relative w-16 h-16 rounded-2xl ${colorClasses} shadow-sm group-hover:shadow-lg transition-all duration-300 transform group-hover:scale-[1.12] group-hover:rotate-[8deg] flex items-center justify-center will-change-transform`}
+    >
       {/* Inner glass reflection */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/0 to-white/40 opacity-50" />
-      <Icon size={28} className="text-white drop-shadow-md relative z-10" />
+      <Icon size={size} className="text-white drop-shadow-md relative z-10" />
       {/* Glow effect */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 -z-10 scale-150`} />
+      <div
+        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 -z-10 scale-150`}
+      />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { getSiteUrl } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,9 +15,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(getSiteUrl()),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   robots: {
     index: true,
@@ -24,34 +25,36 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   title: {
-    default: 'SmartNivad - Find the Best Deals. Save More.',
-    template: '%s | SmartNivad',
+    default: "SmartNivad - Find the Best Deals. Save More.",
+    template: "%s | SmartNivad",
   },
-  description: 'Discover best tech deals powered by AI. Compare products, read reviews, and save money on smartphones, laptops, audio, cameras & more.',
+  description:
+    "Discover best tech deals powered by AI. Compare products, read reviews, and save money on smartphones, laptops, audio, cameras & more.",
   openGraph: {
-    title: 'SmartNivad - Find the Best Deals. Save More.',
-    description: 'Discover best tech deals powered by AI. Compare products, read reviews, and save money.',
-    url: '/',
-    siteName: 'SmartNivad',
-    locale: 'en_US',
-    type: 'website',
+    title: "SmartNivad - Find the Best Deals. Save More.",
+    description:
+      "Discover best tech deals powered by AI. Compare products, read reviews, and save money.",
+    url: "/",
+    siteName: "SmartNivad",
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'SmartNivad',
-    description: 'Find the Best Deals. Save More.',
+    card: "summary_large_image",
+    title: "SmartNivad",
+    description: "Find the Best Deals. Save More.",
   },
 };
 
 export const viewport = {
-  themeColor: '#ffffff',
-  width: 'device-width',
+  themeColor: "#ffffff",
+  width: "device-width",
   initialScale: 1,
 };
 

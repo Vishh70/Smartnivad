@@ -5,12 +5,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export default function DesignPreview() {
   return (
-    <main className="min-min-h-screen p-8 md:p-16 lg:p-24 relative overflow-x-hidden">
+    <main className="min-h-screen p-8 md:p-16 lg:p-24 relative overflow-x-hidden">
       <AnimatedBackground />
 
-      <SectionHeading 
-        title="Design System Preview" 
-        subtitle="Premium Dark Glassmorphism Theme for TechDeals AI" 
+      <SectionHeading
+        title="Design System Preview"
+        subtitle="Premium Dark Glassmorphism Theme for TechDeals AI"
       />
 
       <section className="mt-16 space-y-8 max-w-7xl mx-auto">
@@ -19,16 +19,23 @@ export default function DesignPreview() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <GlassCard>
-            <h4 className="text-xl font-bold text-gray-900 mb-2">Standard Card</h4>
+            <h4 className="text-xl font-bold text-gray-900 mb-2">
+              Standard Card
+            </h4>
             <p className="text-gray-600">
-              This card features a backdrop blur, soft borders, and hover lift effects.
+              This card features a backdrop blur, soft borders, and hover lift
+              effects.
             </p>
           </GlassCard>
           <GlassCard className="h-48 flex items-center justify-center text-center">
-            <h4 className="text-xl font-bold text-gray-900">Centered Content</h4>
+            <h4 className="text-xl font-bold text-gray-900">
+              Centered Content
+            </h4>
           </GlassCard>
           <GlassCard>
-            <h4 className="text-xl font-bold text-[var(--color-primary)] mb-2">Accent Text</h4>
+            <h4 className="text-xl font-bold text-[var(--color-primary)] mb-2">
+              Accent Text
+            </h4>
             <p className="text-gray-600">
               Works perfectly with primary and secondary accent colors.
             </p>
@@ -48,9 +55,9 @@ export default function DesignPreview() {
       </section>
 
       <div className="mt-24">
-        <SectionHeading 
-          title="Another Section" 
-          subtitle="Showing that section headings are consistent and reusable." 
+        <SectionHeading
+          title="Another Section"
+          subtitle="Showing that section headings are consistent and reusable."
         />
       </div>
     </main>

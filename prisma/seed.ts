@@ -5,13 +5,16 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 config();
 
+import { Pool } from "pg";
+
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
   throw new Error("DATABASE_URL is required to seed the database.");
 }
 
-const adapter = new PrismaPg({ connectionString });
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 const categories = [

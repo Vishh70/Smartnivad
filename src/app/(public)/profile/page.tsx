@@ -31,17 +31,26 @@ export default async function ProfilePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-2">My Saved Deals</h1>
-        <p className="text-gray-600">Keep track of your favorite tech deals here.</p>
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-2">
+          My Saved Deals
+        </h1>
+        <p className="text-gray-600">
+          Keep track of your favorite tech deals here.
+        </p>
       </div>
 
       {savedDeals.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center bg-[var(--color-glass-surface)] border border-[var(--color-glass-border)] rounded-2xl">
           <HeartCrack size={48} className="text-gray-500 mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">No deals saved yet</h2>
-          <p className="text-gray-600 mb-6 max-w-md">You haven't added any deals to your wishlist. Start browsing and click the heart icon to save them here!</p>
-          <Link 
-            href="/deals" 
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            No deals saved yet
+          </h2>
+          <p className="text-gray-600 mb-6 max-w-md">
+            You haven&apos;t added any deals to your wishlist. Start browsing
+            and click the heart icon to save them here!
+          </p>
+          <Link
+            href="/deals"
             className="px-6 py-3 bg-[var(--color-primary)] text-black font-semibold rounded-full hover:scale-105 transition-transform"
           >
             Explore Deals

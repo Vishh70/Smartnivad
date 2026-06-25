@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, MouseEvent, ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -8,7 +8,11 @@ interface MagneticButtonProps {
   onClick?: () => void;
 }
 
-export function MagneticButton({ children, className = "", onClick }: MagneticButtonProps) {
+export function MagneticButton({
+  children,
+  className = "",
+  onClick,
+}: MagneticButtonProps) {
   return (
     <button
       onClick={onClick}

@@ -9,7 +9,10 @@ export async function GET(request: Request) {
   try {
     // 1. Verify Authentication
     const authHeader = request.headers.get("authorization");
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}` && process.env.NODE_ENV !== "development") {
+    if (
+      authHeader !== `Bearer ${process.env.CRON_SECRET}` &&
+      process.env.NODE_ENV !== "development"
+    ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -20,12 +23,12 @@ export async function GET(request: Request) {
     const deals = await prisma.deal.findMany({
       where: {
         status: "PUBLISHED",
-        dealType: { in: ["LIVE", "HOT"] }
+        dealType: { in: ["LIVE", "HOT"] },
       },
       include: {
-        store: true
+        store: true,
       },
-      take: 20 // Process 20 per run to stay under Vercel timeout
+      take: 20, // Process 20 per run to stay under Vercel timeout
     });
 
     const results = [];
@@ -39,16 +42,16 @@ export async function GET(request: Request) {
 
       try {
         newPrice = await scrapePrice(deal.affiliateUrl, deal.store.name);
-        
+
         if (newPrice && newPrice !== deal.currentPrice) {
-          // Price changed! 
-          
+          // Price changed!
+
           // Only log history if price actually dropped or changed significantly
           await prisma.$transaction(async (tx) => {
             // Update the deal
             await tx.deal.update({
               where: { id: deal.id },
-              data: { currentPrice: newPrice! }
+              data: { currentPrice: newPrice! },
             });
 
             // Add to price history
@@ -56,11 +59,11 @@ export async function GET(request: Request) {
               data: {
                 dealId: deal.id,
                 price: newPrice!,
-                createdAt: new Date()
-              }
+                capturedAt: new Date(),
+              },
             });
           });
-          
+
           status = "PriceUpdated";
         } else if (!newPrice) {
           status = "Failed";
@@ -68,9 +71,9 @@ export async function GET(request: Request) {
         } else {
           status = "Unchanged";
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         status = "Error";
-        errorMessage = error.message || "Unknown error";
+        errorMessage = error instanceof Error ? error.message : "Unknown error";
       }
 
       const duration = (performance.now() - startTime) / 1000;
@@ -84,8 +87,8 @@ export async function GET(request: Request) {
           oldPrice: deal.currentPrice,
           newPrice: newPrice || null,
           duration,
-          errorMessage
-        }
+          errorMessage,
+        },
       });
 
       results.push({
@@ -94,21 +97,26 @@ export async function GET(request: Request) {
         status,
         oldPrice: deal.currentPrice,
         newPrice,
-        duration: `${duration.toFixed(2)}s`
+        duration: `${duration.toFixed(2)}s`,
       });
-      
+
       // Add a small delay between requests to be polite to servers
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     return NextResponse.json({
       success: true,
       message: `Processed ${results.length} deals`,
-      results
+      results,
     });
-
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Cron execution failed:", error);
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
+    );
   }
 }

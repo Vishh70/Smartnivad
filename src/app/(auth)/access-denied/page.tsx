@@ -4,7 +4,7 @@ import { GlowButton } from "@/components/ui/GlowButton";
 
 export default function AccessDenied() {
   return (
-    <div className="min-min-h-screen flex items-center justify-center p-4 text-center">
+    <div className="min-h-screen flex items-center justify-center p-4 text-center">
       <div className="max-w-md w-full">
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center">
@@ -13,7 +13,8 @@ export default function AccessDenied() {
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
         <p className="text-gray-600 mb-8">
-          You do not have administrative privileges to access this area. If you believe this is an error, please contact the system administrator.
+          You do not have administrative privileges to access this area. If you
+          believe this is an error, please contact the system administrator.
         </p>
         <Link href="/">
           <GlowButton variant="secondary">Return to Homepage</GlowButton>

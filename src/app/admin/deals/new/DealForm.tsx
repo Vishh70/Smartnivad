@@ -6,10 +6,30 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { createDeal, updateDeal } from "../actions";
 import { Sparkles, Loader2 } from "lucide-react";
 
+interface DealFormInitialData {
+  id: string;
+  title: string;
+  description: string | null;
+  currentPrice: number;
+  originalPrice: number;
+  affiliateUrl: string;
+  categoryId: string;
+  storeId: string;
+  dealType: string;
+  isFeatured: boolean;
+  imageUrl: string | null;
+  aiSummary: string | null;
+  pros: string | null;
+  cons: string | null;
+  tags: string[];
+  seoTitle: string | null;
+  seoDesc: string | null;
+}
+
 interface DealFormProps {
   categories: { id: string; name: string }[];
   stores: { id: string; name: string }[];
-  initialData?: any;
+  initialData?: DealFormInitialData;
 }
 
 export function DealForm({ categories, stores, initialData }: DealFormProps) {
@@ -17,14 +37,24 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
   const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
 
   const [title, setTitle] = useState(initialData?.title || "");
-  const [description, setDescription] = useState(initialData?.description || "");
-  const [currentPrice, setCurrentPrice] = useState(initialData?.currentPrice || "");
-  const [originalPrice, setOriginalPrice] = useState(initialData?.originalPrice || "");
-  
+  const [description, setDescription] = useState(
+    initialData?.description || "",
+  );
+  const [currentPrice, setCurrentPrice] = useState(
+    initialData?.currentPrice || "",
+  );
+  const [originalPrice, setOriginalPrice] = useState(
+    initialData?.originalPrice || "",
+  );
+
   // AI fields
   const [aiSummary, setAiSummary] = useState(initialData?.aiSummary || "");
-  const [pros, setPros] = useState(initialData?.pros ? initialData.pros.split("||").join("\n") : "");
-  const [cons, setCons] = useState(initialData?.cons ? initialData.cons.split("||").join("\n") : "");
+  const [pros, setPros] = useState(
+    initialData?.pros ? initialData.pros.split("||").join("\n") : "",
+  );
+  const [cons, setCons] = useState(
+    initialData?.cons ? initialData.cons.split("||").join("\n") : "",
+  );
   const [tags, setTags] = useState(initialData?.tags?.join(", ") || "");
   const [seoTitle, setSeoTitle] = useState(initialData?.seoTitle || "");
   const [seoDesc, setSeoDesc] = useState(initialData?.seoDesc || "");
@@ -38,9 +68,11 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
 
     setUploading(true);
     // Simulate Cloudinary upload delay
-    await new Promise(r => setTimeout(r, 1500));
+    await new Promise((r) => setTimeout(r, 1500));
     // Provide a placeholder image URL for testing
-    setImageUrl("https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg");
+    setImageUrl(
+      "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
+    );
     setUploading(false);
   };
 
@@ -50,7 +82,10 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
     try {
       const res = await fetch("/api/ai/summarize", {
         method: "POST",
-        body: JSON.stringify({ productTitle: title, productDescription: description }),
+        body: JSON.stringify({
+          productTitle: title,
+          productDescription: description,
+        }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -60,7 +95,10 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
       setCons((data.cons || []).join("\n"));
       setTags((data.tags || []).join(", "));
     } catch (err: unknown) {
-      alert("AI Generation failed: " + (err instanceof Error ? err.message : "Unknown error"));
+      alert(
+        "AI Generation failed: " +
+          (err instanceof Error ? err.message : "Unknown error"),
+      );
     } finally {
       setIsSummarizing(false);
     }
@@ -72,7 +110,11 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
     try {
       const res = await fetch("/api/ai/seo", {
         method: "POST",
-        body: JSON.stringify({ productTitle: title, description: aiSummary || description, price: currentPrice }),
+        body: JSON.stringify({
+          productTitle: title,
+          description: aiSummary || description,
+          price: currentPrice,
+        }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -83,7 +125,10 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
         setTags(data.keywords.join(", "));
       }
     } catch (err: unknown) {
-      alert("AI SEO Generation failed: " + (err instanceof Error ? err.message : "Unknown error"));
+      alert(
+        "AI SEO Generation failed: " +
+          (err instanceof Error ? err.message : "Unknown error"),
+      );
     } finally {
       setIsGeneratingSeo(false);
     }
@@ -91,74 +136,187 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
 
   return (
     <GlassCard className="max-w-4xl">
-      <form action={initialData ? updateDeal : createDeal} className="space-y-8">
-        {initialData && <input type="hidden" name="dealId" value={initialData.id} />}
+      <form
+        action={initialData ? updateDeal : createDeal}
+        className="space-y-8"
+      >
+        {initialData && (
+          <input type="hidden" name="dealId" value={initialData.id} />
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Deal Title *</label>
-            <input type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} required className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Deal Title *
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            />
           </div>
 
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-            <textarea name="description" value={description} onChange={e => setDescription(e.target.value)} rows={3} required className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Description *
+            </label>
+            <textarea
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Current Price (₹) *</label>
-            <input type="number" step="0.01" name="currentPrice" value={currentPrice} onChange={e => setCurrentPrice(e.target.value)} required className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Current Price (₹) *
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              name="currentPrice"
+              value={currentPrice}
+              onChange={(e) => setCurrentPrice(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Original Price (₹) *</label>
-            <input type="number" step="0.01" name="originalPrice" value={originalPrice} onChange={e => setOriginalPrice(e.target.value)} required className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Original Price (₹) *
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              name="originalPrice"
+              value={originalPrice}
+              onChange={(e) => setOriginalPrice(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            />
           </div>
 
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Affiliate URL *</label>
-            <input type="url" name="affiliateUrl" defaultValue={initialData?.affiliateUrl} required className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Affiliate URL *
+            </label>
+            <input
+              type="url"
+              name="affiliateUrl"
+              defaultValue={initialData?.affiliateUrl}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-            <select name="categoryId" defaultValue={initialData?.categoryId} required className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none">
-              {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Category *
+            </label>
+            <select
+              name="categoryId"
+              defaultValue={initialData?.categoryId}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            >
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Store *</label>
-            <select name="storeId" defaultValue={initialData?.storeId} required className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none">
-              {stores.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Store *
+            </label>
+            <select
+              name="storeId"
+              defaultValue={initialData?.storeId}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            >
+              {stores.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Deal Type *</label>
-            <select name="dealType" defaultValue={initialData?.dealType || "LIVE"} required className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Deal Type *
+            </label>
+            <select
+              name="dealType"
+              defaultValue={initialData?.dealType || "LIVE"}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+            >
               <option value="LIVE">Live Deal</option>
               <option value="HOT">Hot Deal</option>
             </select>
           </div>
 
           <div className="flex items-center gap-3 pt-8">
-            <input type="checkbox" name="isFeatured" id="isFeatured" defaultChecked={initialData?.isFeatured} className="w-5 h-5 accent-[var(--color-primary)]" />
-            <label htmlFor="isFeatured" className="text-sm font-medium text-gray-700">Feature on Homepage</label>
+            <input
+              type="checkbox"
+              name="isFeatured"
+              id="isFeatured"
+              defaultChecked={initialData?.isFeatured}
+              className="w-5 h-5 accent-[var(--color-primary)]"
+            />
+            <label
+              htmlFor="isFeatured"
+              className="text-sm font-medium text-gray-700"
+            >
+              Feature on Homepage
+            </label>
           </div>
 
           <div className="col-span-2 mt-4 p-6 border border-dashed border-white/20 rounded-xl bg-black/5">
-            <label className="block text-sm font-medium text-gray-700 mb-4">Product Image</label>
+            <label className="block text-sm font-medium text-gray-700 mb-4">
+              Product Image
+            </label>
             {imageUrl ? (
               <div className="space-y-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imageUrl} alt="Uploaded preview" className="h-40 object-contain rounded" />
+                <img
+                  src={imageUrl}
+                  alt="Uploaded preview"
+                  className="h-40 object-contain rounded"
+                />
                 <input type="hidden" name="imageUrl" value={imageUrl} />
-                <button type="button" onClick={() => setImageUrl("")} className="text-sm text-red-400 hover:text-red-300">Remove Image</button>
+                <button
+                  type="button"
+                  onClick={() => setImageUrl("")}
+                  className="text-sm text-red-400 hover:text-red-300"
+                >
+                  Remove Image
+                </button>
               </div>
             ) : (
               <div className="flex items-center justify-center w-full relative">
-                <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                <GlowButton type="button" variant="secondary" disabled={uploading}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <GlowButton
+                  type="button"
+                  variant="secondary"
+                  disabled={uploading}
+                >
                   {uploading ? "Uploading to Cloudinary..." : "Upload Image"}
                 </GlowButton>
               </div>
@@ -168,63 +326,126 @@ export function DealForm({ categories, stores, initialData }: DealFormProps) {
 
         <div className="border-t border-white/10 pt-8 mt-8 space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold text-gray-900">AI Enhanced Details</h3>
-            <button 
-              type="button" 
+            <h3 className="text-xl font-semibold text-gray-900">
+              AI Enhanced Details
+            </h3>
+            <button
+              type="button"
               onClick={handleGenerateSummary}
               disabled={isSummarizing || !title}
               className="flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)]/20 text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary)]/30 transition-colors text-sm font-medium disabled:opacity-50"
             >
-              {isSummarizing ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+              {isSummarizing ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Sparkles size={16} />
+              )}
               Auto-Generate Details
             </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">AI Summary</label>
-              <textarea name="aiSummary" value={aiSummary} onChange={e => setAiSummary(e.target.value)} rows={3} className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Pros (one per line)</label>
-              <textarea name="pros" value={pros} onChange={e => setPros(e.target.value)} rows={4} className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" placeholder="Great battery life\nStunning display" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                AI Summary
+              </label>
+              <textarea
+                name="aiSummary"
+                value={aiSummary}
+                onChange={(e) => setAiSummary(e.target.value)}
+                rows={3}
+                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Cons (one per line)</label>
-              <textarea name="cons" value={cons} onChange={e => setCons(e.target.value)} rows={4} className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" placeholder="Expensive\nNo charger included" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Pros (one per line)
+              </label>
+              <textarea
+                name="pros"
+                value={pros}
+                onChange={(e) => setPros(e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                placeholder="Great battery life\nStunning display"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Cons (one per line)
+              </label>
+              <textarea
+                name="cons"
+                value={cons}
+                onChange={(e) => setCons(e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                placeholder="Expensive\nNo charger included"
+              />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tags (comma separated)</label>
-              <input type="text" name="tags" value={tags} onChange={e => setTags(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" placeholder="smartphone, apple, 5g" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Tags (comma separated)
+              </label>
+              <input
+                type="text"
+                name="tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+                placeholder="smartphone, apple, 5g"
+              />
             </div>
           </div>
         </div>
 
         <div className="border-t border-white/10 pt-8 mt-8 space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold text-gray-900">SEO Metadata</h3>
-            <button 
-              type="button" 
+            <h3 className="text-xl font-semibold text-gray-900">
+              SEO Metadata
+            </h3>
+            <button
+              type="button"
               onClick={handleGenerateSeo}
               disabled={isGeneratingSeo || !title}
               className="flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)]/20 text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary)]/30 transition-colors text-sm font-medium disabled:opacity-50"
             >
-              {isGeneratingSeo ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+              {isGeneratingSeo ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Sparkles size={16} />
+              )}
               Auto-Generate SEO
             </button>
           </div>
 
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SEO Title</label>
-              <input type="text" name="seoTitle" value={seoTitle} onChange={e => setSeoTitle(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                SEO Title
+              </label>
+              <input
+                type="text"
+                name="seoTitle"
+                value={seoTitle}
+                onChange={(e) => setSeoTitle(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SEO Description</label>
-              <textarea name="seoDesc" value={seoDesc} onChange={e => setSeoDesc(e.target.value)} rows={2} className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                SEO Description
+              </label>
+              <textarea
+                name="seoDesc"
+                value={seoDesc}
+                onChange={(e) => setSeoDesc(e.target.value)}
+                rows={2}
+                className="w-full px-4 py-3 rounded-xl bg-black/5 border border-white/10 text-gray-900 focus:border-[var(--color-primary)] outline-none"
+              />
             </div>
           </div>
         </div>
