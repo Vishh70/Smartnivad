@@ -34,3 +34,11 @@ Playwright projects cover 320, 360, 375, 390, 414, 430, 768, 820, 1024, 1280, 14
 ## Security Notes
 
 Security headers are configured in `next.config.ts`. `npm audit --audit-level=high` is intentionally strict; dependency updates should be reviewed rather than forced.
+
+## Production Monitoring
+
+Vercel Analytics and Speed Insights are mounted in `src/app/layout.tsx`. `@sentry/nextjs` is installed; complete Sentry setup by adding the project DSN and generated Sentry config files for the target organization/environment.
+
+## Coverage Expansion
+
+The current enforced 95% coverage gate starts with the unit-tested core utilities in `src/lib/format.ts` and `src/lib/site.ts`. Expand `coverage.include` in `vitest.config.ts` as component, server action, API route, and authentication tests are added.

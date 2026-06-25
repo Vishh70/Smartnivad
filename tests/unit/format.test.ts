@@ -26,6 +26,9 @@ describe("format utilities", () => {
     expect(formatRelativeTime(new Date("2026-06-25T09:00:00.000Z"))).toBe(
       "3 hr ago",
     );
+    expect(formatRelativeTime(new Date("2026-06-24T12:00:00.000Z"))).toBe(
+      "1 day ago",
+    );
     expect(formatRelativeTime(new Date("2026-06-23T12:00:00.000Z"))).toBe(
       "2 days ago",
     );
