@@ -76,6 +76,7 @@ model Deal {
 
   viewHistory   ViewHistory[]
   automationLogs AutomationLog[]
+  socialPostQueue SocialPostQueue[]
 
   @@index([slug])
   @@index([categoryId])
@@ -409,4 +410,56 @@ model PlatformSetting {
   key       String   @unique
   value     String   @db.Text
   updatedAt DateTime @updatedAt
+}
+
+// ─── Social Publishing ────────────────────────────────────────────────────────
+
+enum SocialPlatform {
+  TELEGRAM
+  INSTAGRAM
+  FACEBOOK
+  TWITTER
+  LINKEDIN
+  WHATSAPP
+  DISCORD
+  PINTEREST
+}
+
+enum PostStatus {
+  PENDING
+  POSTING
+  SUCCESS
+  FAILED
+}
+
+model SocialPostQueue {
+  id           String         @id @default(cuid())
+  dealId       String
+  platform     SocialPlatform
+  status       PostStatus     @default(PENDING)
+  retryCount   Int            @default(0)
+  errorMessage String?        @db.Text
+  scheduledAt  DateTime       @default(now())
+  postedAt     DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  deal         Deal           @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([status, scheduledAt])
+  @@index([dealId])
+}
+
+model SocialLog {
+  id           String         @id @default(cuid())
+  platform     SocialPlatform
+  dealId       String
+  status       PostStatus
+  request      Json?
+  response     Json?
+  error        String?        @db.Text
+  createdAt    DateTime       @default(now())
+
+  @@index([dealId])
+  @@index([createdAt])
 }
