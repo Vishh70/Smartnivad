@@ -4,17 +4,9 @@ import { processSocialQueue } from "@/lib/social/worker";
 export async function GET(request: Request) {
   try {
     // Vercel Cron Authentication
-    // Verify the Authorization header is set by Vercel
     const authHeader = request.headers.get("Authorization");
-    if (
-      process.env.CRON_SECRET &&
-      authHeader !== `Bearer ${process.env.CRON_SECRET}`
-    ) {
-      // Return 401 if unauthorized, but in local dev we might want to bypass or allow manual triggering
-      // For now, let's enforce it only if CRON_SECRET is actually set.
-      if (process.env.NODE_ENV === "production") {
-        return new NextResponse("Unauthorized", { status: 401 });
-      }
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const result = await processSocialQueue();

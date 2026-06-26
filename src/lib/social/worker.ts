@@ -1,9 +1,19 @@
 import { prisma } from "@/lib/prisma";
-import { publishToTelegram } from "./providers/telegram";
+import { SocialPlatform } from "@prisma/client";
+import { TelegramProvider } from "./providers/telegram";
+import { SocialProvider, ProviderResult } from "./providers/interface";
 import { getNextRetryTime } from "./retry";
 
+function getProvider(platform: SocialPlatform): SocialProvider | null {
+  switch (platform) {
+    case "TELEGRAM":
+      return new TelegramProvider();
+    default:
+      return null;
+  }
+}
+
 export async function processSocialQueue() {
-  // 1. Fetch pending or retrying posts that are due
   const pendingPosts = await prisma.socialPostQueue.findMany({
     where: {
       status: {
@@ -16,7 +26,7 @@ export async function processSocialQueue() {
     include: {
       deal: true,
     },
-    take: 10, // Process in batches to avoid Vercel function timeouts
+    take: 10,
   });
 
   if (pendingPosts.length === 0) return { processed: 0 };
@@ -24,20 +34,20 @@ export async function processSocialQueue() {
   let processedCount = 0;
 
   for (const post of pendingPosts) {
-    // 2. Mark as POSTING
     await prisma.socialPostQueue.update({
       where: { id: post.id },
       data: { status: "POSTING" },
     });
 
-    let result: { success: boolean; data?: unknown; error?: string };
+    const startTime = Date.now();
+    let result: ProviderResult;
 
-    // 3. Route to the correct provider
+    const provider = getProvider(post.platform);
+
     try {
-      if (post.platform === "TELEGRAM") {
-        result = await publishToTelegram(post.deal);
+      if (provider) {
+        result = await provider.publish(post.deal, post);
       } else {
-        // Fallback for unimplemented platforms
         result = {
           success: false,
           error: `Platform ${post.platform} is not implemented yet.`,
@@ -49,7 +59,8 @@ export async function processSocialQueue() {
       result = { success: false, error: message };
     }
 
-    // 4. Handle result and Logging
+    const durationMs = Date.now() - startTime;
+
     if (result.success) {
       await prisma.$transaction([
         prisma.socialPostQueue.update({
@@ -66,29 +77,32 @@ export async function processSocialQueue() {
             dealId: post.dealId,
             status: "SUCCESS",
             response: result.data || {},
+            durationMs,
           },
         }),
       ]);
     } else {
       const nextRetry = getNextRetryTime(post.retryCount);
       const isFinalFailure = !nextRetry;
+      const finalStatus = isFinalFailure ? "FAILED_PERMANENT" : "FAILED";
 
       await prisma.$transaction([
         prisma.socialPostQueue.update({
           where: { id: post.id },
           data: {
-            status: isFinalFailure ? "FAILED" : "PENDING", // Keep PENDING if retrying
+            status: finalStatus,
             retryCount: post.retryCount + 1,
             errorMessage: result.error,
-            scheduledAt: nextRetry || post.scheduledAt, // Update schedule for next retry
+            scheduledAt: nextRetry || post.scheduledAt,
           },
         }),
         prisma.socialLog.create({
           data: {
             platform: post.platform,
             dealId: post.dealId,
-            status: "FAILED",
+            status: finalStatus,
             error: result.error,
+            durationMs,
           },
         }),
       ]);

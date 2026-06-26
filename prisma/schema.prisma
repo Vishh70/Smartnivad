@@ -430,6 +430,7 @@ enum PostStatus {
   POSTING
   SUCCESS
   FAILED
+  FAILED_PERMANENT
 }
 
 model SocialPostQueue {
@@ -448,6 +449,7 @@ model SocialPostQueue {
 
   @@index([status, scheduledAt])
   @@index([dealId])
+  @@index([platform])
 }
 
 model SocialLog {
@@ -458,6 +460,7 @@ model SocialLog {
   request      Json?
   response     Json?
   error        String?        @db.Text
+  durationMs   Int?
   createdAt    DateTime       @default(now())
 
   @@index([dealId])
