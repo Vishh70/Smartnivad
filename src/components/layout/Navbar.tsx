@@ -117,6 +117,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                   <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-gray-100 p-2 w-48">
                     <Link
                       href="/deals"
+                      data-testid="nav-deals"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 rounded-xl transition-colors"
                     >
                       All Deals
@@ -283,6 +284,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
               </h3>
               <Link
                 href="/deals"
+                data-testid="nav-deals-mobile"
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-blue-50 font-medium"
               >
                 <Tag size={18} className="text-blue-500" /> All Deals
