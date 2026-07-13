@@ -20,7 +20,6 @@ function buildCaptionData(deal: Deal, siteUrl: string): CaptionData {
   const url = `${siteUrl}/product/${deal.slug}`;
   const tagList = [
     "#SmartNivad",
-    "#TechDeals",
     ...deal.tags.map((t) => `#${t.replace(/\s+/g, "")}`),
   ];
 
@@ -73,19 +72,27 @@ export function generateTelegramCaption(deal: Deal, siteUrl: string): string {
 export function generateInstagramCaption(deal: Deal, siteUrl: string): string {
   const d = buildCaptionData(deal, siteUrl);
 
+  const savingsAmt = deal.originalPrice - deal.currentPrice;
+  const formattedSavings = savingsAmt > 0 ? `₹${formatNumber(savingsAmt)}` : "";
+
   const lines = [
-    d.isHot ? `🚨 HOT DEAL ALERT! 🚨` : `🔥 New Deal! 🔥`,
+    d.isHot ? `🚨 HOT DEAL ALERT! 🚨` : `🔥 Deal Alert!`,
     "",
     d.title,
     "",
-    `💰 Price: ${d.price}`,
-    d.discount > 0 ? `🏷️ Save ${d.discount}% (Was ${d.originalPrice})` : "",
-    d.rating > 0 ? `⭐ Rating: ${d.rating}/5` : "",
+    `💰 ${d.price}`,
+    formattedSavings ? `🏷️ Save ${formattedSavings}` : "",
+    d.rating > 0 ? `⭐ ${d.rating} Rating` : "",
     "",
-    `🔗 Link in bio`,
+    `🚀 Limited Time`,
     "",
-    d.hashtags,
-    "#AmazonDeals #FlipkartDeals #OnlineShopping #BestDeals",
+    `👉 ${d.url}`,
+    "",
+    `#SmartNivad`,
+    `#AmazonDeals`,
+    `#FlipkartDeals`,
+    `#SmartNivad`,
+    ...deal.tags.map((t) => `#${t.replace(/\s+/g, "")}`),
   ].filter(Boolean);
 
   return lines.join("\n");

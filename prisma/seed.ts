@@ -325,7 +325,7 @@ async function main() {
       update: {},
       create: {
         email: adminEmail,
-        name: "TechDeals Admin",
+        name: "SmartNivad Admin",
       },
     });
   }
