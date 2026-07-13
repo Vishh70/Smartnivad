@@ -22,10 +22,11 @@ export function useRecentlyViewed() {
         setRecentDeals(JSON.parse(stored));
       }
     } catch (e) {
-      console.error(
-        "Failed to parse recently viewed deals from local storage",
+      console.warn(
+        "Failed to parse recently viewed deals from local storage. Clearing corrupted data.",
         e,
       );
+      localStorage.removeItem("recentlyViewed");
     }
   }, []);
 
