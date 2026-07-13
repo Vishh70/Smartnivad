@@ -10,8 +10,29 @@ export async function GET(request: Request) {
   }
 
   try {
+    const parsedUrl = new URL(targetUrl);
+
+    // SSRF Protection: Restrict protocols
+    if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+      return NextResponse.json({ error: "Invalid protocol" }, { status: 400 });
+    }
+
+    // SSRF Protection: Prevent requests to local or internal IPs/hostnames
+    const hostname = parsedUrl.hostname;
+    const isInternal =
+      /^(localhost|127\.0\.0\.1|::1|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)$/i.test(
+        hostname,
+      ) || hostname.endsWith(".local");
+
+    if (isInternal) {
+      return NextResponse.json(
+        { error: "Internal hostnames are not allowed" },
+        { status: 403 },
+      );
+    }
+
     // Basic user-agent to avoid being blocked immediately by standard anti-bot protection
-    const response = await fetch(targetUrl, {
+    const response = await fetch(parsedUrl.toString(), {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",

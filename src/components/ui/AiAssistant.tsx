@@ -20,9 +20,7 @@ export function AiAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionId] = useState(
-    () => `sess_${Math.random().toString(36).slice(2)}`,
-  );
+  const [sessionId] = useState(() => `sess_${crypto.randomUUID()}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
