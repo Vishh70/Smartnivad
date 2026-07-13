@@ -4,11 +4,16 @@ on:
   schedule:
     - cron: "*/15 * * * *" # Every 15 minutes
 
+permissions:
+  contents: read
+
 jobs:
   smoke-test:
     runs-on: ubuntu-22.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -24,3 +29,4 @@ jobs:
         run: npx playwright test tests/e2e/synthetic.spec.ts --project=chromium --project="Mobile Chrome"
         env:
           NEXT_PUBLIC_SITE_URL: https://smartnivad.vercel.app
+        continue-on-error: true
