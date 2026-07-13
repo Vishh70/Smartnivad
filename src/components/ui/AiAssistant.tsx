@@ -20,9 +20,12 @@ export function AiAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionId] = useState(
-    () => `sess_${Math.random().toString(36).slice(2)}`,
-  );
+  const [sessionId] = useState(() => {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    const randomPart = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+    return `sess_${randomPart}`;
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
