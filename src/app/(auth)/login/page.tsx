@@ -2,12 +2,14 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("admin@smartnivad.com");
   const [password, setPassword] = useState("admin");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ export default function LoginPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-[var(--color-glass-border)] text-gray-900 focus:outline-none focus:border-[var(--color-primary)]"
+              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-[var(--color-glass-border)] text-gray-900 text-base focus:outline-none focus:border-[var(--color-primary)]"
               required
             />
           </div>
@@ -57,16 +59,26 @@ export default function LoginPage() {
             >
               Password
             </label>
-            <input
-              id="admin-password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-black/5 border border-[var(--color-glass-border)] text-gray-900 focus:outline-none focus:border-[var(--color-primary)]"
-              required
-            />
+            <div className="relative">
+              <input
+                id="admin-password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 pr-12 rounded-xl bg-black/5 border border-[var(--color-glass-border)] text-gray-900 text-base focus:outline-none focus:border-[var(--color-primary)]"
+                required
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors rounded-lg"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
           <GlowButton
@@ -87,7 +99,7 @@ export default function LoginPage() {
                   "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a",
               })
             }
-            className="w-full py-3 rounded-xl border border-white/20 text-gray-900 font-medium hover:bg-black/5 transition-colors flex items-center justify-center gap-3"
+            className="w-full min-h-[44px] py-3 rounded-xl border border-white/20 text-gray-900 font-medium hover:bg-black/5 transition-colors flex items-center justify-center gap-3"
           >
             <svg viewBox="0 0 24 24" className="w-5 h-5">
               <path

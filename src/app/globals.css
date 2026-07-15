@@ -5,6 +5,9 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-bg: var(--bg);
+  --color-glass-border: var(--glass-border);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-surface: var(--glass-surface);
   --font-inter: var(--font-inter);
   --font-grotesk: var(--font-grotesk);
 }
@@ -18,6 +21,7 @@
   --text-secondary: #6b7280;
   --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-surface: rgba(255, 255, 255, 0.45);
 }
 
 body {
@@ -97,9 +101,15 @@ h6 {
   transition: all 0.3s ease;
 }
 
-.gradient-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+@media (hover: hover) and (pointer: fine) {
+  .gradient-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+  }
+}
+
+.gradient-btn:active {
+  transform: scale(0.98);
 }
 
 /* Product Card Interactions */

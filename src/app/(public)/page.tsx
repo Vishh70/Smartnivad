@@ -30,6 +30,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { Particles } from "@/components/ui/Particles";
+import { SafeImage } from "@/components/ui/SafeImage";
 
 export const metadata = {
   title: "SmartNivad — Find the Best Deals. Save More.",
@@ -141,11 +142,13 @@ export default async function HomePage() {
               <div className="animate-float w-full max-w-md">
                 <GlassCard className="w-full p-6 sm:p-8 hover:shadow-[0_25px_60px_rgba(37,99,235,0.18)] transition-all duration-500 group border border-white/80">
                   <div className="relative h-64 mb-6 bg-white/40 rounded-2xl p-4 flex items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <SafeImage
                       src={dealOfTheDay.imageUrl}
                       alt={dealOfTheDay.title}
-                      className="max-h-full object-contain drop-shadow-xl group-hover:scale-[1.08] transition-transform duration-400 will-change-transform"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className="object-contain p-4 drop-shadow-xl group-hover:scale-[1.08] transition-transform duration-400 will-change-transform"
+                      priority
                     />
                     {dealOfTheDay.discount > 0 && (
                       <span className="absolute top-4 right-4 bg-green-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">

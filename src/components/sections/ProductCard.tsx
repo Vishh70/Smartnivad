@@ -96,16 +96,16 @@ export function ProductCard({
         <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-30 flex gap-1">
           <button
             aria-label="Save to wishlist"
-            className={`bg-white/90 backdrop-blur-md p-1.5 w-8 h-8 sm:p-2 sm:w-9 sm:h-9 flex items-center justify-center rounded-full shadow-sm transition-colors duration-300 ${isSaved ? "text-red-500" : "text-gray-400"}`}
+            className={`bg-white/90 backdrop-blur-md w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center rounded-full shadow-sm transition-colors duration-300 ${isSaved ? "text-red-500" : "text-gray-400"}`}
             onClick={handleSave}
             disabled={isPending}
             title="Save to wishlist"
           >
             {isPending ? (
-              <span className="w-3 h-3 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+              <span className="w-3.5 h-3.5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
             ) : (
               <Heart
-                size={14}
+                size={16}
                 className={isSaved ? "fill-current text-red-500" : ""}
               />
             )}
@@ -209,7 +209,7 @@ export function ProductCard({
         {/* CTA Button */}
         <div className="mt-auto">
           {affiliateUrl === "#" ? (
-            <span className="flex items-center justify-center w-full h-[38px] sm:h-[48px] rounded-[10px] sm:rounded-[14px] bg-gray-50 text-[13px] sm:text-[14px] font-semibold text-gray-400">
+            <span className="flex items-center justify-center w-full h-11 sm:h-12 rounded-[10px] sm:rounded-[14px] bg-gray-50 text-[13px] sm:text-[14px] font-semibold text-gray-400">
               Unavailable
             </span>
           ) : (
@@ -217,7 +217,7 @@ export function ProductCard({
               href={affiliateUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-full h-[38px] sm:h-[48px] rounded-[10px] sm:rounded-[14px] bg-gradient-to-b from-[#4F46E5] to-[#2563EB] text-white text-[13px] sm:text-[15px] font-bold shadow-[0_8px_20px_rgba(37,99,235,0.2)] hover:scale-[1.02] transition-transform"
+              className="flex items-center justify-center w-full h-11 sm:h-12 rounded-[10px] sm:rounded-[14px] bg-gradient-to-b from-[#4F46E5] to-[#2563EB] text-white text-[13px] sm:text-[15px] font-bold shadow-[0_8px_20px_rgba(37,99,235,0.2)] active:scale-[0.98] md:hover:scale-[1.02] transition-transform"
             >
               Get Deal
             </a>

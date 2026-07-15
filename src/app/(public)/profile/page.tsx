@@ -51,7 +51,7 @@ export default async function ProfilePage() {
           </p>
           <Link
             href="/deals"
-            className="px-6 py-3 bg-[var(--color-primary)] text-black font-semibold rounded-full hover:scale-105 transition-transform"
+            className="px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-full hover:scale-105 transition-transform"
           >
             Explore Deals
           </Link>

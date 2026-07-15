@@ -238,7 +238,16 @@ export function Navbar({ categories = [] }: NavbarProps) {
                       </div>
                     )}
                   </>
-                ) : null}
+                ) : (
+                  <Link
+                    href="/login"
+                    className="w-11 h-11 flex items-center justify-center rounded-xl text-gray-600 hover:bg-gray-100 hover:text-[#2563EB] transition-colors"
+                    aria-label="Sign In"
+                    title="Sign In"
+                  >
+                    <UserCircle size={24} />
+                  </Link>
+                )}
               </div>
 
               {/* Mobile Menu Toggle */}
@@ -256,7 +265,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
 
       {/* Search Bar Overlay */}
       {searchOpen && (
-        <div className="fixed top-16 left-0 w-full bg-white/90 backdrop-blur-2xl border-b border-gray-200 z-40 p-4 shadow-sm animate-in slide-in-from-top-2">
+        <div className="fixed top-[calc(4rem+env(safe-area-inset-top))] left-0 w-full bg-white/90 backdrop-blur-2xl border-b border-gray-200 z-40 p-4 shadow-sm animate-in slide-in-from-top-2">
           <form onSubmit={handleSearch} className="max-w-3xl mx-auto relative">
             <Search
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
@@ -276,7 +285,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-white/95 backdrop-blur-xl lg:hidden overflow-y-auto">
+        <div className="fixed inset-0 top-[calc(4rem+env(safe-area-inset-top))] z-40 bg-white/95 backdrop-blur-xl lg:hidden overflow-y-auto">
           <div className="p-4 space-y-2">
             <div className="py-2">
               <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-4">

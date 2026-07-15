@@ -9,15 +9,22 @@ import {
   HelpCircle,
   FileText,
   Settings,
+  X,
 } from "lucide-react";
 import { SignOutButton } from "@/components/admin/SignOutButton";
 
 interface AdminSidebarProps {
   adminName: string;
   adminEmail: string;
+  /** When provided (mobile drawer), renders a close button */
+  onClose?: () => void;
 }
 
-export function AdminSidebar({ adminName, adminEmail }: AdminSidebarProps) {
+export function AdminSidebar({
+  adminName,
+  adminEmail,
+  onClose,
+}: AdminSidebarProps) {
   const pathname = usePathname();
 
   const navLinks = [
@@ -64,11 +71,20 @@ export function AdminSidebar({ adminName, adminEmail }: AdminSidebarProps) {
   ];
 
   return (
-    <aside className="w-64 border-r border-gray-200 bg-white hidden md:flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-      <div className="p-6 border-b border-gray-100 bg-gradient-to-b from-gray-50/50 to-white">
+    <aside className="w-64 border-r border-gray-200 bg-white flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] h-full">
+      <div className="p-6 border-b border-gray-100 bg-gradient-to-b from-gray-50/50 to-white flex items-center justify-between">
         <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">
           SmartNivad Pro
         </h2>
+        {onClose && (
+          <button
+            aria-label="Close navigation menu"
+            onClick={onClose}
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">

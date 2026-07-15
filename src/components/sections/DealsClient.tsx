@@ -160,7 +160,7 @@ export function DealsClient({
             id="deal-search"
             name="q"
             placeholder="Keyword, brand, tag…"
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-black/5 border border-[var(--color-glass-border)] text-gray-900 text-sm placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-black/5 border border-[var(--color-glass-border)] text-gray-900 text-base lg:text-sm placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
           />
         </div>
       </div>
@@ -175,7 +175,7 @@ export function DealsClient({
             <button
               key={t}
               onClick={() => setDealType(t)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${dealType === t ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-gray-900" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${dealType === t ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
             >
               {t || "All"}
             </button>
@@ -370,7 +370,7 @@ export function DealsClient({
             <button
               key={c.id}
               onClick={() => setCategory(category === c.id ? "" : c.id)}
-              className={`shrink-0 snap-center flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${category === c.id ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-gray-900" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
+              className={`shrink-0 snap-center flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${category === c.id ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
             >
               {getIcon(c.icon)} {c.name}
             </button>

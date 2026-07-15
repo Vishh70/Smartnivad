@@ -19,6 +19,22 @@ export function BottomNav() {
       className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] backdrop-blur-[20px] bg-[rgba(255,255,255,.92)] border-t border-[rgba(0,0,0,.08)] pb-[env(safe-area-inset-bottom)]"
       style={{ touchAction: "none" }}
     >
+      {/* Define SVG gradient once for active state icons */}
+      <svg width="0" height="0" className="absolute pointer-events-none">
+        <defs>
+          <linearGradient
+            id="active-icon-grad"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop stopColor="#2563EB" offset="0%" />
+            <stop stopColor="#3B82F6" offset="100%" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       <div className="flex items-center justify-around h-[70px] px-2 max-w-md mx-auto">
         {links.map((link) => {
           const isActive =
@@ -35,31 +51,17 @@ export function BottomNav() {
             >
               <div className="relative p-1">
                 {isActive ? (
-                  <>
-                    <svg width="0" height="0">
-                      <linearGradient
-                        id="active-icon-grad"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop stopColor="#2563EB" offset="0%" />
-                        <stop stopColor="#3B82F6" offset="100%" />
-                      </linearGradient>
-                    </svg>
-                    <Icon
-                      size={24}
-                      strokeWidth={2.5}
-                      stroke="url(#active-icon-grad)"
-                    />
-                  </>
+                  <Icon
+                    size={24}
+                    strokeWidth={2.5}
+                    stroke="url(#active-icon-grad)"
+                  />
                 ) : (
                   <Icon size={24} strokeWidth={2} className="text-gray-400" />
                 )}
               </div>
               <span
-                className={`text-[12px] ${isActive ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text font-bold" : "font-medium text-gray-500"}`}
+                className={`text-[12px] ${isActive ? "text-blue-600 font-bold" : "font-medium text-gray-500"}`}
               >
                 {link.label}
               </span>

@@ -127,7 +127,7 @@ function CouponCard({
             href={coupon.affiliateUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-11 rounded-xl bg-[var(--color-primary)] hover:bg-purple-500 text-gray-900 transition-colors"
+            className="flex items-center justify-center w-11 rounded-xl bg-[var(--color-primary)] hover:bg-purple-500 text-white transition-colors"
           >
             <ExternalLink size={16} />
           </a>
@@ -185,7 +185,7 @@ export function CouponsClient({
         <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => setActiveStore("")}
-            className={`px-5 py-2 rounded-full text-sm font-medium border transition-colors ${!activeStore ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-gray-900" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
+            className={`px-5 py-2 rounded-full text-sm font-medium border transition-colors ${!activeStore ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
           >
             All Stores
           </button>
@@ -193,7 +193,7 @@ export function CouponsClient({
             <button
               key={s.id}
               onClick={() => setActiveStore(activeStore === s.id ? "" : s.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium border transition-colors ${activeStore === s.id ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-gray-900" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
+              className={`px-5 py-2 rounded-full text-sm font-medium border transition-colors ${activeStore === s.id ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
             >
               {s.name}
             </button>
@@ -209,7 +209,7 @@ export function CouponsClient({
         <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => setActiveCategory("")}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${!activeCategory ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-gray-900" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${!activeCategory ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
           >
             <Tag size={13} /> All
           </button>
@@ -219,7 +219,7 @@ export function CouponsClient({
               onClick={() =>
                 setActiveCategory(activeCategory === c.id ? "" : c.id)
               }
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${activeCategory === c.id ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-gray-900" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${activeCategory === c.id ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "bg-black/5 border-[var(--color-glass-border)] text-gray-700 hover:text-gray-900"}`}
             >
               {getIcon(c.icon)} {c.name}
             </button>
