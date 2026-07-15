@@ -3,7 +3,7 @@ import { generateTelegramCaption } from "../captions";
 import { SocialProvider, ProviderResult } from "./interface";
 
 export class TelegramProvider implements SocialProvider {
-  async publish(deal: Deal, job: SocialPostQueue): Promise<ProviderResult> {
+  async publish(deal: Deal, _job: SocialPostQueue): Promise<ProviderResult> {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const channelId = process.env.TELEGRAM_CHANNEL_ID;
     const siteUrl =
