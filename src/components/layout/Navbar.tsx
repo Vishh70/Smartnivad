@@ -19,11 +19,13 @@ import {
   LogOut,
   ChevronDown,
   Zap,
+  Heart,
 } from "lucide-react";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { PrismaCategory } from "@/types";
+import { useWishlist } from "@/context/WishlistContext";
 
 interface NavbarProps {
   categories?: PrismaCategory[];
@@ -45,6 +47,8 @@ export function Navbar({ categories = [] }: NavbarProps) {
         { slug: "audio", name: "Audio", icon: "Headphones" },
         { slug: "gaming", name: "Gaming", icon: "Gamepad2" },
       ];
+
+  const { totalSaved } = useWishlist();
 
   const getCategoryIcon = (icon: string | null | undefined) => {
     switch (icon) {
@@ -192,6 +196,19 @@ export function Navbar({ categories = [] }: NavbarProps) {
               >
                 {searchOpen ? <X size={22} /> : <Search size={22} />}
               </button>
+
+              <Link
+                href="/wishlist"
+                className="relative w-11 h-11 flex items-center justify-center rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-500 transition-colors"
+                aria-label="Wishlist"
+              >
+                <Heart size={22} />
+                {totalSaved > 0 && (
+                  <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm ring-2 ring-white">
+                    {totalSaved}
+                  </span>
+                )}
+              </Link>
 
               <div className="relative">
                 {status === "loading" ? (

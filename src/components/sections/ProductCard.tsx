@@ -1,16 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Star, Clock, Heart } from "lucide-react";
+import { Star, Clock } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { DealScore } from "@/components/ui/DealScore";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { formatNumber } from "@/lib/format";
-import { useSession } from "next-auth/react";
-import { useState, useTransition } from "react";
-import { toggleSavedDeal } from "@/app/(public)/actions";
+
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { SafeImage } from "@/components/ui/SafeImage";
+import { WishlistButton } from "@/components/ui/WishlistButton";
 
 interface DealCardProps {
   product: {
@@ -46,29 +45,7 @@ function freshness(createdAt?: Date | string): string {
   return `${Math.floor(hr / 24)} d ago`;
 }
 
-export function ProductCard({
-  product,
-  initialSaved = false,
-}: DealCardProps & { initialSaved?: boolean }) {
-  const { data: session } = useSession();
-  const [isSaved, setIsSaved] = useState(initialSaved);
-  const [isPending, startTransition] = useTransition();
-
-  const handleSave = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!session) {
-      window.location.href = "/login";
-      return;
-    }
-    setIsSaved(!isSaved);
-    startTransition(async () => {
-      const res = await toggleSavedDeal(product.id);
-      if (!res?.success) {
-        setIsSaved(isSaved);
-      }
-    });
-  };
-
+export function ProductCard({ product }: DealCardProps) {
   const imageUrl = product.imageUrl || product.image_url || "";
   const affiliateUrl = product.affiliateUrl || product.affiliate_link || "#";
   const priceLabel = product.currentPrice
@@ -94,22 +71,10 @@ export function ProductCard({
 
         {/* Absolute Top Left - Wishlist */}
         <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-30 flex gap-1">
-          <button
-            aria-label="Save to wishlist"
-            className={`bg-white/90 backdrop-blur-md w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center rounded-full shadow-sm transition-colors duration-300 ${isSaved ? "text-red-500" : "text-gray-400"}`}
-            onClick={handleSave}
-            disabled={isPending}
-            title="Save to wishlist"
-          >
-            {isPending ? (
-              <span className="w-3.5 h-3.5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <Heart
-                size={16}
-                className={isSaved ? "fill-current text-red-500" : ""}
-              />
-            )}
-          </button>
+          <WishlistButton
+            dealId={product.id}
+            className="bg-white/90 backdrop-blur-md w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center rounded-full shadow-sm"
+          />
         </div>
 
         <Link

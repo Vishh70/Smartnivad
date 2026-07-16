@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Tag, Tags, Cpu } from "lucide-react";
+import { Home, Tag, Tags, Cpu, Heart } from "lucide-react";
+import { useWishlist } from "@/context/WishlistContext";
 
 export function BottomNav() {
   const pathname = usePathname();
+  const { totalSaved } = useWishlist();
 
   const links = [
     { href: "/", label: "Home", icon: Home },
     { href: "/deals", label: "Deals", icon: Tag },
+    { href: "/wishlist", label: "Wishlist", icon: Heart },
     { href: "/coupons", label: "Coupons", icon: Tags },
     { href: "/compare", label: "Compare", icon: Cpu },
   ];
@@ -58,6 +61,11 @@ export function BottomNav() {
                   />
                 ) : (
                   <Icon size={24} strokeWidth={2} className="text-gray-400" />
+                )}
+                {link.href === "/wishlist" && totalSaved > 0 && (
+                  <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm ring-2 ring-white">
+                    {totalSaved}
+                  </span>
                 )}
               </div>
               <span

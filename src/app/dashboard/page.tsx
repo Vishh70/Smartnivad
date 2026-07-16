@@ -92,7 +92,7 @@ export default async function DashboardPage() {
                   }>;
                 }) => (
                   <div key={item.id} className="h-full">
-                    <ProductCard product={item.deal} initialSaved={true} />
+                    <ProductCard product={item.deal} />
                   </div>
                 ),
               )}
