@@ -9,6 +9,7 @@ import { DealScoreDetailed } from "@/components/ui/DealScore";
 import dynamic from "next/dynamic";
 import { PriceDropAlert } from "@/components/ui/PriceDropAlert";
 import { SafeImage } from "@/components/ui/SafeImage";
+import { WishlistButton } from "@/components/ui/WishlistButton";
 
 const PriceHistoryChart = dynamic(() =>
   import("@/components/ui/PriceHistoryChart").then(
@@ -112,12 +113,18 @@ export default async function ProductPage({
               <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-red-50 text-red-600 border border-red-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-md z-10 flex items-center gap-1">
                 <Tag size={12} /> {product.dealType ?? "Deal"}
               </div>
-              <button
-                aria-label="Share deal"
-                className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-500 hover:text-blue-600 p-3 rounded-full backdrop-blur-md transition-all z-10 shadow-sm"
-              >
-                <Share2 size={20} />
-              </button>
+              <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+                <WishlistButton
+                  dealId={product.id}
+                  className="bg-white/80 hover:bg-white text-gray-500 hover:text-red-500 w-11 h-11 rounded-full backdrop-blur-md shadow-sm"
+                />
+                <button
+                  aria-label="Share deal"
+                  className="bg-white/80 hover:bg-white text-gray-500 hover:text-blue-600 w-11 h-11 flex items-center justify-center rounded-full backdrop-blur-md transition-all shadow-sm"
+                >
+                  <Share2 size={20} />
+                </button>
+              </div>
               {product.imageUrl?.startsWith("http") ? (
                 <div className="relative w-full h-full transform transition-transform duration-500 group-hover:scale-105">
                   <SafeImage
