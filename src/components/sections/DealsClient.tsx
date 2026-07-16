@@ -325,7 +325,7 @@ export function DealsClient({
         >
           Max Price{" "}
           <span className="text-[var(--color-primary)]">
-            ₹{maxPrice.toLocaleString()}
+            ₹{maxPrice.toLocaleString("en-IN")}
           </span>
         </label>
         <input

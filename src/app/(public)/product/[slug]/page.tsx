@@ -125,7 +125,7 @@ export default async function ProductPage({
                   <Share2 size={20} />
                 </button>
               </div>
-              {product.imageUrl?.startsWith("http") ? (
+              {product.imageUrl ? (
                 <div className="relative w-full h-full transform transition-transform duration-500 group-hover:scale-105">
                   <SafeImage
                     src={product.imageUrl}

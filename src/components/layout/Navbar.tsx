@@ -323,6 +323,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
               </h3>
               <Link
                 href="/deals"
+                onClick={() => setMobileMenuOpen(false)}
                 data-testid="nav-deals-mobile"
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-blue-50 font-medium"
               >
@@ -330,12 +331,14 @@ export function Navbar({ categories = [] }: NavbarProps) {
               </Link>
               <Link
                 href="/deals?type=HOT"
+                onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-red-50 font-medium"
               >
                 <Zap size={18} className="text-red-500" /> Hot Deals
               </Link>
               <Link
                 href="/store"
+                onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-gray-50 font-medium"
               >
                 <Store size={18} className="text-purple-500" /> Stores
@@ -350,6 +353,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                 <Link
                   key={category.slug}
                   href={`/deals?category=${category.slug}`}
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-gray-50 font-medium"
                 >
                   <span className="text-gray-400">
@@ -366,12 +370,14 @@ export function Navbar({ categories = [] }: NavbarProps) {
               </h3>
               <Link
                 href="/blog"
+                onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-gray-50 font-medium"
               >
                 <BookOpen size={18} className="text-cyan-500" /> Blog
               </Link>
               <Link
                 href="/quiz-answers"
+                onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-900 hover:bg-gray-50 font-medium"
               >
                 <HelpCircle size={18} className="text-amber-500" /> Quiz Answers
