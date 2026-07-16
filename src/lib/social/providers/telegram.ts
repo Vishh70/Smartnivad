@@ -3,6 +3,7 @@ import { generateTelegramCaption } from "../captions";
 import { SocialProvider, ProviderResult } from "./interface";
 
 export class TelegramProvider implements SocialProvider {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async publish(deal: Deal, _job: SocialPostQueue): Promise<ProviderResult> {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const channelId = process.env.TELEGRAM_CHANNEL_ID;

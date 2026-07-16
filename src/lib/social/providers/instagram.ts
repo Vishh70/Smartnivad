@@ -8,6 +8,7 @@ async function sleep(ms: number) {
 }
 
 export class InstagramProvider implements SocialProvider {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async publish(deal: Deal, _job: SocialPostQueue): Promise<ProviderResult> {
     const accountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID;
     const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
