@@ -23,9 +23,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import type { PrismaCategory } from "@/types";
 import { useWishlist } from "@/context/WishlistContext";
+import { GlobalSearchModal } from "@/components/ui/GlobalSearchModal";
 
 interface NavbarProps {
   categories?: PrismaCategory[];
@@ -34,10 +34,8 @@ interface NavbarProps {
 export function Navbar({ categories = [] }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQ, setSearchQ] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const router = useRouter();
   const { data: session, status } = useSession();
   const hardwareCategories = categories.length
     ? categories.slice(0, 4)
@@ -73,13 +71,23 @@ export function Navbar({ categories = [] }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQ.trim()) {
-      router.push(`/deals?q=${encodeURIComponent(searchQ)}`);
-      setSearchOpen(false);
-    }
-  };
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLSelectElement
+      ) {
+        return;
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -190,11 +198,17 @@ export function Navbar({ categories = [] }: NavbarProps) {
             {/* Actions */}
             <div className="flex items-center gap-1 sm:gap-3">
               <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="w-11 h-11 flex items-center justify-center rounded-xl text-gray-600 hover:bg-gray-100 hover:text-[#2563EB] transition-colors"
+                onClick={() => setSearchOpen(true)}
+                className="group flex items-center justify-center gap-2 h-11 px-3 sm:px-4 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-blue-600 transition-colors border border-transparent hover:border-gray-200"
                 aria-label="Search"
               >
-                {searchOpen ? <X size={22} /> : <Search size={22} />}
+                <Search
+                  size={20}
+                  className="group-hover:scale-110 transition-transform"
+                />
+                <span className="hidden sm:flex items-center text-xs font-semibold px-1.5 py-0.5 rounded-md bg-white border border-gray-200 shadow-sm text-gray-400">
+                  <span className="text-[10px] mr-0.5">⌘</span>K
+                </span>
               </button>
 
               <Link
@@ -280,25 +294,10 @@ export function Navbar({ categories = [] }: NavbarProps) {
         </div>
       </nav>
 
-      {/* Search Bar Overlay */}
-      {searchOpen && (
-        <div className="fixed top-[calc(4rem+env(safe-area-inset-top))] left-0 w-full bg-white/90 backdrop-blur-2xl border-b border-gray-200 z-40 p-4 shadow-sm animate-in slide-in-from-top-2">
-          <form onSubmit={handleSearch} className="max-w-3xl mx-auto relative">
-            <Search
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-              size={20}
-            />
-            <input
-              type="text"
-              placeholder="Search laptops, smartphones, stores..."
-              className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl text-gray-900 text-base focus:outline-none focus:bg-white focus:border-blue-500 transition-all font-medium"
-              value={searchQ}
-              onChange={(e) => setSearchQ(e.target.value)}
-              autoFocus
-            />
-          </form>
-        </div>
-      )}
+      <GlobalSearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
