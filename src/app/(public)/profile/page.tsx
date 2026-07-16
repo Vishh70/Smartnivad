@@ -21,7 +21,13 @@ export default async function ProfilePage() {
   const wishlistedItems = await prisma.wishlistItem.findMany({
     where: { userId: user.id },
     include: {
-      deal: true,
+      deal: {
+        include: {
+          store: true,
+          brand: true,
+          category: true,
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
   });
