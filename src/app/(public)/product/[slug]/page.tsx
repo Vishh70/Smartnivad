@@ -372,7 +372,7 @@ export default async function ProductPage({
       </div>
 
       {/* Sticky Bottom CTA */}
-      <div className="fixed bottom-[70px] lg:bottom-0 left-0 w-full z-[60] bg-white/90 backdrop-blur-2xl border-t border-gray-200 p-3 sm:p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      <div className="fixed bottom-[calc(70px+env(safe-area-inset-bottom))] lg:bottom-0 left-0 w-full z-[60] bg-white/90 backdrop-blur-2xl border-t border-gray-200 p-3 sm:p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="hidden sm:flex items-center gap-4">
             <div className="w-12 h-12 relative rounded-xl overflow-hidden bg-gray-50">

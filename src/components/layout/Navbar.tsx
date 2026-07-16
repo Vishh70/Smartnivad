@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Search,
   Menu,
@@ -36,6 +36,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const { data: session, status } = useSession();
   const hardwareCategories = categories.length
     ? categories.slice(0, 4)
@@ -69,6 +70,19 @@ export function Navbar({ categories = [] }: NavbarProps) {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -228,7 +242,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                 {status === "loading" ? (
                   <div className="w-11 h-11 rounded-xl bg-gray-100 animate-pulse"></div>
                 ) : session ? (
-                  <>
+                  <div ref={profileRef}>
                     <button
                       onClick={() => setProfileOpen(!profileOpen)}
                       className="w-11 h-11 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 text-[#2563EB] hover:bg-blue-100 transition-colors border border-blue-100"
@@ -268,7 +282,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                         </button>
                       </div>
                     )}
-                  </>
+                  </div>
                 ) : (
                   <Link
                     href="/login"

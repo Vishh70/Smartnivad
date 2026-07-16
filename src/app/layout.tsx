@@ -72,7 +72,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-gray-50 text-gray-900">
         <AuthProvider>
           <WishlistProvider>{children}</WishlistProvider>
         </AuthProvider>
