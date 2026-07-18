@@ -19,6 +19,12 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "SmartNivad",
+  },
   alternates: {
     canonical: "/",
   },
