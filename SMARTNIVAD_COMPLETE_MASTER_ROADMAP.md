@@ -6490,29 +6490,35 @@ Major release goals:
 ---
 
 # 🚀 SmartNivad Production Launch Validation Report (Phase 31)
+
 **Date:** 2026-07-18
 **Status:** VALIDATION COMPLETE
 
 ## 1. Build & Static Analysis (Phase 1)
+
 - ✅ **ESLint:** 0 errors
 - ✅ **TypeScript:** 0 errors
 - ✅ **Build:** Production build succeeded. All static pages prerendered successfully. No hydration or React warnings.
 
 ## 2. PWA & Service Worker (Phase 5)
+
 - ✅ **Serwist Worker:** Successfully bundled and injected during build (/sw.js).
 - ✅ **Manifest:** manifest.json configured correctly.
 - ✅ **Offline Mode:** /offline fallback route renders (prerender bug fixed by extracting client button).
 
 ## 3. Security (Phase 8)
-- ⚠️ **NPM Audit:** 13 vulnerabilities found (9 moderate, 2 high, 2 critical) inherited from upstream dependencies. Recommended to run 
-pm audit fix periodically.
+
+- ⚠️ **NPM Audit:** 13 vulnerabilities found (9 moderate, 2 high, 2 critical) inherited from upstream dependencies. Recommended to run
+  pm audit fix periodically.
 - ✅ **Headers:** Next.js configured with strict Security headers (CSP, HSTS, X-Frame-Options, Permissions-Policy).
 
 ## 4. E2E & Performance Testing (Phases 2-4, 6)
-- ⚠️ **Playwright & Lighthouse:** Test suites initiated (504 tests total across viewports/browsers), however, the test runs encountered consistent upstream image response timed out errors for images.unsplash.com. Headless test environments may have network restrictions blocking external images, causing page loads to timeout. 
+
+- ⚠️ **Playwright & Lighthouse:** Test suites initiated (504 tests total across viewports/browsers), however, the test runs encountered consistent upstream image response timed out errors for images.unsplash.com. Headless test environments may have network restrictions blocking external images, causing page loads to timeout.
 - **Recommendation:** Run E2E suites and Lighthouse audits in a local, network-unrestricted environment before public announcement.
 
 ## Final Conclusion
+
 SmartNivad is functionally sound, successfully builds to a static production bundle, and securely enforces headers. The core architecture and PWA features are verified. Once image networking is cleared for CI tests and any outstanding NPM audits are addressed, the platform is ready for public traffic.
 
 ## STANDARD RELEASE GATE
@@ -6546,11 +6552,13 @@ SmartNivad is functionally sound, successfully builds to a static production bun
 **Target URL:** https://smartnivad1.vercel.app
 
 ## Executive Summary
-The live production audit (Phase 33) encountered a **SEV-1 Critical Deployment Failure**. The target URL https://smartnivad1.vercel.app is currently returning a 404 DEPLOYMENT_NOT_FOUND error from Vercel. 
 
-As a result, the live End-to-End Chrome QA, Playwright crawls, Lighthouse audits, and Security header checks could not proceed past Phase 1. 
+The live production audit (Phase 33) encountered a **SEV-1 Critical Deployment Failure**. The target URL https://smartnivad1.vercel.app is currently returning a 404 DEPLOYMENT_NOT_FOUND error from Vercel.
+
+As a result, the live End-to-End Chrome QA, Playwright crawls, Lighthouse audits, and Security header checks could not proceed past Phase 1.
 
 ### Diagnostics Captured:
+
 1. **Network Audit (curl):**
    \\\
    HTTP/1.1 404 Not Found
@@ -6562,22 +6570,63 @@ As a result, the live End-to-End Chrome QA, Playwright crawls, Lighthouse audits
    Failed instantly with ERRORED_DOCUMENT_REQUEST.
 
 ## Final Verdict & Action Required
-| Area | Status | Bugs | Fixed |
-| ---- | ------ | ---- | ----- |
-| Production Environment | ❌ OFFLINE | 1 (SEV-1) | No |
-| Homepage | ➖ Blocked | - | - |
-| Search | ➖ Blocked | - | - |
-| Deals | ➖ Blocked | - | - |
-| Product | ➖ Blocked | - | - |
-| Wishlist | ➖ Blocked | - | - |
-| Blog | ➖ Blocked | - | - |
-| Admin | ➖ Blocked | - | - |
-| PWA | ➖ Blocked | - | - |
-| Mobile | ➖ Blocked | - | - |
-| SEO | ➖ Blocked | - | - |
-| Performance | ➖ Blocked | - | - |
-| Security | ➖ Blocked | - | - |
-| Accessibility | ➖ Blocked | - | - |
+
+| Area                   | Status     | Bugs      | Fixed |
+| ---------------------- | ---------- | --------- | ----- |
+| Production Environment | ❌ OFFLINE | 1 (SEV-1) | No    |
+| Homepage               | ➖ Blocked | -         | -     |
+| Search                 | ➖ Blocked | -         | -     |
+| Deals                  | ➖ Blocked | -         | -     |
+| Product                | ➖ Blocked | -         | -     |
+| Wishlist               | ➖ Blocked | -         | -     |
+| Blog                   | ➖ Blocked | -         | -     |
+| Admin                  | ➖ Blocked | -         | -     |
+| PWA                    | ➖ Blocked | -         | -     |
+| Mobile                 | ➖ Blocked | -         | -     |
+| SEO                    | ➖ Blocked | -         | -     |
+| Performance            | ➖ Blocked | -         | -     |
+| Security               | ➖ Blocked | -         | -     |
+| Accessibility          | ➖ Blocked | -         | -     |
 
 ### 🛠️ Required Fix
-The Vercel deployment must be restored or the correct live URL must be provided. Once the deployment is active and returns a 200 OK, the automated Chrome Audit Suite (	ests/e2e/live-audit.spec.ts) and Lighthouse CI (lighthouserc.live.js) are ready to execute the full 20-phase checklist.
+
+The Vercel deployment must be restored or the correct live URL must be provided. Once the deployment is active and returns a 200 OK, the automated Chrome Audit Suite ( ests/e2e/live-audit.spec.ts) and Lighthouse CI (lighthouserc.live.js) are ready to execute the full 20-phase checklist.
+
+# 🚨 PHASE 34 DEPLOYMENT RECOVERY & PHASE 33 AUDIT RETRY
+
+**Date:** 2026-07-18
+**Target URL:** https://smartnivad.vercel.app
+
+## Executive Summary
+
+The Vercel deployment URL was corrected to https://smartnivad.vercel.app (returning 200 OK), and the Live Chrome Audit was executed. However, the audit revealed a **stale production deployment** issue.
+
+### Diagnostics Captured:
+
+1. **GitHub Actions Vercel Deploy Failure:**
+   The last 5 commits (including Phase 7 features like /wishlist) failed during the Deploy Project Artifacts to Vercel step in .github/workflows/deploy.yml.
+2. **Missing Pages:**
+   Curling https://smartnivad.vercel.app/wishlist returns a 404 from Next.js, proving that the live site is running an outdated commit from before Phase 7.
+3. **Playwright Trace:**
+   - 17 tests passed (basic homepage and responsive checks).
+   - 55 tests failed primarily due to missing pages (e.g. /wishlist) and two critical console errors on the live site:
+     - Hydration mismatch (Error #418) on the <HTML> tag. _(A fix for this has been pushed to main)_.
+     - [next-auth][error][CLIENT_FETCH_ERROR] from /api/auth/session returning 400 Bad Request.
+
+## Final Verdict & Action Required
+
+| Area                   | Status                     | Bugs                                            | Fixed                             |
+| ---------------------- | -------------------------- | ----------------------------------------------- | --------------------------------- |
+| Production Environment | ⚠️ STALE (Outdated Commit) | 2 (GitHub Actions Deploy Failing, NextAuth 400) | No                                |
+| Homepage               | ✅ ONLINE                  | 1 (Hydration Mismatch)                          | Yes (Code pushed, pending deploy) |
+| Wishlist               | ❌ 404 NOT FOUND           | 1 (Not deployed)                                | No                                |
+| PWA                    | ❌ 404 NOT FOUND           | 1 (Manifest/SW missing from old deploy)         | No                                |
+
+### 🛠️ Required Fix
+
+The Vercel deployment pipeline in GitHub Actions is failing at ercel deploy --prebuilt --prod. This is typically caused by:
+
+1. An expired or invalid VERCEL_TOKEN in GitHub Secrets.
+2. Missing Vercel runtime environment variables (NEXTAUTH_SECRET), which causes the NextAuth 400 Bad Request error.
+
+Please verify the Vercel Token in GitHub Secrets, and ensure NEXTAUTH_SECRET is set in the Vercel Project Environment Variables. Once the GitHub Action succeeds, the live site will reflect the latest Phase 7-32 features, and the audit can be completed.
