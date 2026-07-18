@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test.describe("Navigation & Core Flows", () => {
   test("homepage has correct title and hero elements", async ({ page }) => {

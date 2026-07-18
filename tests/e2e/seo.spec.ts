@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test.describe("Advanced SEO & Schema Validation", () => {
   test("robots.txt should exist and allow crawling", async ({ request }) => {

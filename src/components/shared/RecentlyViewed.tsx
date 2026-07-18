@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
 
 interface ViewedDeal {
   id: string;
@@ -59,7 +59,7 @@ export function RecentlyViewedCarousel() {
             className="snap-start flex-shrink-0 w-48 border rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
           >
             <div className="relative h-32 w-full bg-slate-100">
-              <Image
+              <SafeImage
                 src={deal.imageUrl}
                 alt={deal.title}
                 fill

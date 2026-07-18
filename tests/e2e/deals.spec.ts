@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test.describe("Deals & Product Cards", () => {
   test("product cards render discount badges and load images", async ({

@@ -23,6 +23,8 @@ export default defineConfig({
   use: {
     baseURL: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
     trace: "on-first-retry",
+    actionTimeout: 15000,
+    navigationTimeout: 30000,
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },

@@ -1,8 +1,12 @@
 module.exports = {
   ci: {
     collect: {
-      url: ["http://localhost:3000/"],
-      startServerCommand: "npm run start",
+      url: [
+        "http://localhost:3000/",
+        "http://localhost:3000/deals",
+        "http://localhost:3000/blog"
+      ],
+      startServerCommand: "npx cross-env NEXT_PUBLIC_CI=true npm run build && npx cross-env NEXT_PUBLIC_CI=true npm run start",
       numberOfRuns: 3,
     },
     assert: {

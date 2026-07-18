@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test.describe("Admin Panel E2E Tests", () => {
   test("unauthenticated users are redirected to login", async ({ page }) => {
