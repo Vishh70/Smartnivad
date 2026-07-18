@@ -68,6 +68,8 @@ export const viewport = {
   viewportFit: "cover",
 };
 
+import { InstallBanner } from "@/components/pwa/InstallBanner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -82,6 +84,7 @@ export default function RootLayout({
         <AuthProvider>
           <WishlistProvider>{children}</WishlistProvider>
         </AuthProvider>
+        <InstallBanner />
         <Analytics />
         <SpeedInsights />
       </body>

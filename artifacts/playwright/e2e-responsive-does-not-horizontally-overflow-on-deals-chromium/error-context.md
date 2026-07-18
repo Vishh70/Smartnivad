@@ -78,74 +78,71 @@ Tearing down "context" exceeded the test timeout of 30000ms.
                     - /url: /quiz-answers
                     - img [ref=e32]
                     - text: Quiz Answers
-            - button "Search" [ref=e36]:
-                - img [ref=e37]
-    - main [ref=e42]
-    - contentinfo [ref=e208]:
-        - generic [ref=e209]:
-            - generic [ref=e210]:
-                - generic [ref=e211]:
-                    - heading "TA TechDeals ." [level=3] [ref=e212]:
-                        - generic [ref=e213]: TA
-                        - text: TechDeals
-                        - generic [ref=e214]: .
-                    - paragraph [ref=e215]: Discover AI-curated tech deals. We analyse thousands of products daily and surface only the best value for money.
-                    - generic [ref=e216]:
-                        - link "📲 WhatsApp" [ref=e217] [cursor=pointer]:
+            - generic [ref=e35]:
+                - button "Search" [ref=e36]:
+                    - img [ref=e37]
+                    - generic [ref=e40]:
+                        - generic [ref=e41]: ⌘
+                        - text: K
+                - link "Wishlist" [ref=e42] [cursor=pointer]:
+                    - /url: /wishlist
+                    - img [ref=e43]
+    - main [ref=e47]
+    - contentinfo [ref=e213]:
+        - generic [ref=e214]:
+            - generic [ref=e215]:
+                - heading "SN SmartNivad ." [level=3] [ref=e216]:
+                    - generic [ref=e217]: SN
+                    - text: SmartNivad
+                    - generic [ref=e218]: .
+                - paragraph [ref=e219]:
+                    - text: Discover AI-powered tech deals.
+                    - text: We analyse thousands of products daily
+                    - text: to help you buy smarter.
+            - generic [ref=e220]:
+                - link "📸 Instagram" [ref=e221] [cursor=pointer]:
+                    - /url: https://www.instagram.com/smartnivad?igsh=MW1ldnFwNXVlczh0OQ==
+                - link "✈️ Telegram" [ref=e222] [cursor=pointer]:
+                    - /url: https://t.me/SmartNivad
+            - generic [ref=e224]:
+                - generic [ref=e225]:
+                    - heading "Deals" [level=4] [ref=e226]
+                    - generic [ref=e227]:
+                        - link "All Deals" [ref=e228] [cursor=pointer]:
+                            - /url: /deals
+                        - link "Hot Deals" [ref=e229] [cursor=pointer]:
+                            - /url: /deals?type=HOT
+                        - link "Coupons" [ref=e230] [cursor=pointer]:
+                            - /url: /coupons
+                        - link "Compare" [ref=e231] [cursor=pointer]:
+                            - /url: /compare
+                - generic [ref=e232]:
+                    - heading "Content" [level=4] [ref=e233]
+                    - generic [ref=e234]:
+                        - link "Blog" [ref=e235] [cursor=pointer]:
+                            - /url: /blog
+                        - link "Quiz" [ref=e236] [cursor=pointer]:
+                            - /url: /quiz-answers
+                        - link "Stores" [ref=e237] [cursor=pointer]:
+                            - /url: /store
+                        - link "Brands" [ref=e238] [cursor=pointer]:
+                            - /url: /brand
+                - generic [ref=e239]:
+                    - heading "Legal" [level=4] [ref=e240]
+                    - generic [ref=e241]:
+                        - link "About" [ref=e242] [cursor=pointer]:
+                            - /url: /about
+                        - link "Contact" [ref=e243] [cursor=pointer]:
                             - /url: /contact
-                        - link "✈️ Telegram" [ref=e218] [cursor=pointer]:
-                            - /url: /contact
-                - generic [ref=e219]:
-                    - heading "Deals" [level=4] [ref=e220]
-                    - list [ref=e221]:
-                        - listitem [ref=e222]:
-                            - link "All Deals" [ref=e223] [cursor=pointer]:
-                                - /url: /deals
-                        - listitem [ref=e224]:
-                            - link "Hot Deals" [ref=e225] [cursor=pointer]:
-                                - /url: /deals?type=HOT
-                        - listitem [ref=e226]:
-                            - link "Coupons" [ref=e227] [cursor=pointer]:
-                                - /url: /coupons
-                        - listitem [ref=e228]:
-                            - link "Compare" [ref=e229] [cursor=pointer]:
-                                - /url: /compare
-                - generic [ref=e230]:
-                    - heading "Content" [level=4] [ref=e231]
-                    - list [ref=e232]:
-                        - listitem [ref=e233]:
-                            - link "Blog" [ref=e234] [cursor=pointer]:
-                                - /url: /blog
-                        - listitem [ref=e235]:
-                            - link "Quiz Answers" [ref=e236] [cursor=pointer]:
-                                - /url: /quiz-answers
-                        - listitem [ref=e237]:
-                            - link "Stores" [ref=e238] [cursor=pointer]:
-                                - /url: /store
-                        - listitem [ref=e239]:
-                            - link "Brands" [ref=e240] [cursor=pointer]:
-                                - /url: /brand
-                - generic [ref=e241]:
-                    - heading "Legal" [level=4] [ref=e242]
-                    - list [ref=e243]:
-                        - listitem [ref=e244]:
-                            - link "About Us" [ref=e245] [cursor=pointer]:
-                                - /url: /about
-                        - listitem [ref=e246]:
-                            - link "Contact" [ref=e247] [cursor=pointer]:
-                                - /url: /contact
-                        - listitem [ref=e248]:
-                            - link "Privacy Policy" [ref=e249] [cursor=pointer]:
-                                - /url: /privacy
-                        - listitem [ref=e250]:
-                            - link "Terms of Service" [ref=e251] [cursor=pointer]:
-                                - /url: /terms
-                        - listitem [ref=e252]:
-                            - link "Disclaimer" [ref=e253] [cursor=pointer]:
-                                - /url: /disclaimer
-            - generic [ref=e254]:
-                - paragraph [ref=e255]: As an Amazon Associate and affiliate partner, we earn from qualifying purchases.
-                - paragraph [ref=e256]: © 2026 TechDeals AI. All rights reserved.
-    - button "Open AI Assistant" [ref=e257]:
-        - img [ref=e258]
+                        - link "Privacy" [ref=e244] [cursor=pointer]:
+                            - /url: /privacy
+                        - link "Terms" [ref=e245] [cursor=pointer]:
+                            - /url: /terms
+                        - link "Disclaimer" [ref=e246] [cursor=pointer]:
+                            - /url: /disclaimer
+            - generic [ref=e248]:
+                - paragraph [ref=e249]: As an Amazon Associate and affiliate partner, we earn from qualifying purchases.
+                - paragraph [ref=e250]: © 2026 SmartNivad. All rights reserved.
+    - button "Open AI Assistant" [ref=e251]:
+        - img [ref=e252]
 ```
