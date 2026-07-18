@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-const LIVE_URL = "https://smartnivad1.vercel.app";
+const LIVE_URL = "https://smartnivad.vercel.app";
 
 // Collect global errors during the run
-let consoleErrors: string[] = [];
-let networkErrors: string[] = [];
+const consoleErrors: string[] = [];
+const networkErrors: string[] = [];
 const visitedUrls = new Set<string>();
 
 test.describe("Live Site Audit", () => {
@@ -26,10 +26,12 @@ test.describe("Live Site Audit", () => {
       const url = request.url();
       // Ignore typical ad-blocker or known analytics blocked requests if necessary
       if (!url.includes("google-analytics") && !url.includes("analytics")) {
-        networkErrors.push(`[${page.url()}] Network Error: ${url} - ${request.failure()?.errorText}`);
+        networkErrors.push(
+          `[${page.url()}] Network Error: ${url} - ${request.failure()?.errorText}`,
+        );
       }
     });
-    
+
     // Intercept 404/500 responses
     page.on("response", (response) => {
       const status = response.status();
@@ -40,23 +42,27 @@ test.describe("Live Site Audit", () => {
     });
   });
 
-  test("Phase 1 & 2 & 3: Full Site Discovery and Console/Network Check", async ({ page }) => {
+  test("Phase 1 & 2 & 3: Full Site Discovery and Console/Network Check", async ({
+    page,
+  }) => {
     test.setTimeout(120000); // 2 mins for discovery
     await page.goto(LIVE_URL);
     visitedUrls.add(LIVE_URL);
-    
+
     // Collect all links on the homepage
-    const links = await page.locator("a[href^='/'], a[href^='" + LIVE_URL + "']").evaluateAll(els => 
-      els.map(el => (el as HTMLAnchorElement).href)
-    );
-    
+    const links = await page
+      .locator("a[href^='/'], a[href^='" + LIVE_URL + "']")
+      .evaluateAll((els) => els.map((el) => (el as HTMLAnchorElement).href));
+
     // Deduplicate and filter out hash links or assets
-    const uniqueLinks = Array.from(new Set(links)).filter(l => !l.includes("#") && !l.match(/\.(png|jpg|jpeg|svg|css|js)$/i));
-    
+    const uniqueLinks = Array.from(new Set(links)).filter(
+      (l) => !l.includes("#") && !l.match(/\.(png|jpg|jpeg|svg|css|js)$/i),
+    );
+
     // Visit a subset of unique links to prevent the test from taking 2 hours
     // (We will visit up to 15 unique internal pages)
     const linksToVisit = uniqueLinks.slice(0, 15);
-    
+
     for (const link of linksToVisit) {
       if (!visitedUrls.has(link)) {
         await page.goto(link);
@@ -64,24 +70,33 @@ test.describe("Live Site Audit", () => {
         visitedUrls.add(link);
       }
     }
-    
+
     // Check if any errors occurred during discovery
-    expect(consoleErrors.length, `Found console errors: ${consoleErrors.join(", ")}`).toBe(0);
-    expect(networkErrors.length, `Found network errors: ${networkErrors.join(", ")}`).toBe(0);
+    expect(
+      consoleErrors.length,
+      `Found console errors: ${consoleErrors.join(", ")}`,
+    ).toBe(0);
+    expect(
+      networkErrors.length,
+      `Found network errors: ${networkErrors.join(", ")}`,
+    ).toBe(0);
   });
 
   test("Phase 4: Mobile Responsive Audit (375px)", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto(LIVE_URL);
-    
+
     // Ensure no horizontal scroll (client width should be same as scroll width, or body doesn't overflow)
     const isOverflowing = await page.evaluate(() => {
-      return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+      return (
+        document.documentElement.scrollWidth >
+        document.documentElement.clientWidth
+      );
     });
     expect(isOverflowing, "Horizontal scrolling detected on 375px").toBe(false);
-    
+
     // Open Mobile Drawer
-    const menuBtn = page.locator('button:has(svg.lucide-menu)').first();
+    const menuBtn = page.locator("button:has(svg.lucide-menu)").first();
     if (await menuBtn.isVisible()) {
       await menuBtn.click();
       // Ensure drawer opened
@@ -91,20 +106,22 @@ test.describe("Live Site Audit", () => {
 
   test("Phase 10: Critical Regression Paths", async ({ page }) => {
     await page.goto(LIVE_URL);
-    
+
     // 1. Search
-    const searchTrigger = page.locator('button:has(svg.lucide-search), input[placeholder*="Search"]').first();
-    if (await searchTrigger.count() > 0) {
-        await searchTrigger.click();
-        const searchInput = page.locator('input[placeholder*="Search"]').last();
-        await searchInput.fill("laptop");
+    const searchTrigger = page
+      .locator('button:has(svg.lucide-search), input[placeholder*="Search"]')
+      .first();
+    if ((await searchTrigger.count()) > 0) {
+      await searchTrigger.click();
+      const searchInput = page.locator('input[placeholder*="Search"]').last();
+      await searchInput.fill("laptop");
     }
-    
+
     // 2. Deals / Wishlist
     await page.goto(`${LIVE_URL}/deals`);
     await page.waitForLoadState("networkidle");
     const saveBtn = page.getByLabel("Save to wishlist").first();
-    if (await saveBtn.count() > 0) {
+    if ((await saveBtn.count()) > 0) {
       await saveBtn.click();
       await page.goto(`${LIVE_URL}/wishlist`);
       await expect(page.locator(".product-card").first()).toBeVisible();
@@ -112,6 +129,8 @@ test.describe("Live Site Audit", () => {
 
     // 3. Login
     await page.goto(`${LIVE_URL}/login`);
-    await expect(page.locator("h1").filter({ hasText: /login|sign in/i })).toBeVisible();
+    await expect(
+      page.locator("h1").filter({ hasText: /login|sign in/i }),
+    ).toBeVisible();
   });
 });
