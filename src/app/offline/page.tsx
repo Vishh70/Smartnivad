@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { WifiOff, RotateCw, Home } from "lucide-react";
-
+import { WifiOff, Home } from "lucide-react";
+import { RetryButton } from "@/components/pwa/RetryButton";
 export const metadata = {
   title: "Offline | SmartNivad",
   description: "You are currently offline.",
@@ -23,13 +23,7 @@ export default function OfflinePage() {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-        <button
-          onClick={() => window.location.reload()}
-          className="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-gray-800 h-10 px-4 py-2 rounded-md font-medium transition-colors w-full sm:w-auto"
-        >
-          <RotateCw className="w-4 h-4" />
-          Retry Connection
-        </button>
+        <RetryButton />
 
         <Link href="/" className="w-full sm:w-auto">
           <button className="flex items-center justify-center gap-2 border border-gray-200 bg-white hover:bg-gray-100 text-gray-900 h-10 px-4 py-2 rounded-md font-medium transition-colors w-full">
