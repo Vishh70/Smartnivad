@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    const isDev = process.env.NODE_ENV === "development";
+    const scriptSrc = isDev 
+      ? "'self' 'unsafe-inline' 'unsafe-eval'" 
+      : "'self' 'unsafe-inline'";
+
     return [
       {
         source: "/:path*",
@@ -51,7 +56,7 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              `script-src ${scriptSrc}`,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://m.media-amazon.com https://rukminim2.flixcart.com https://placehold.co",
               "font-src 'self' data:",

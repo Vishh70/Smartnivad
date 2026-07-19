@@ -34,7 +34,7 @@ export async function getBrands() {
   }
 }
 
-export async function getDeals() {
+export async function getDeals(limit = 20, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { status: PublishStatus.PUBLISHED },
@@ -44,6 +44,8 @@ export async function getDeals() {
         store: true,
         brand: true,
       },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getDeals] DB unreachable:", err);
@@ -67,12 +69,14 @@ export async function getDealBySlug(slug: string) {
   }
 }
 
-export async function getFeaturedDeals() {
+export async function getFeaturedDeals(limit = 10, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { isFeatured: true, status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getFeaturedDeals] DB unreachable:", err);
@@ -80,12 +84,14 @@ export async function getFeaturedDeals() {
   }
 }
 
-export async function getTrendingDeals() {
+export async function getTrendingDeals(limit = 10, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { isTrending: true, status: PublishStatus.PUBLISHED },
       orderBy: { clicks: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getTrendingDeals] DB unreachable:", err);
@@ -93,12 +99,14 @@ export async function getTrendingDeals() {
   }
 }
 
-export async function getHotDeals() {
+export async function getHotDeals(limit = 10, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { dealType: DealType.HOT, status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getHotDeals] DB unreachable:", err);
@@ -106,12 +114,14 @@ export async function getHotDeals() {
   }
 }
 
-export async function getLiveDeals() {
+export async function getLiveDeals(limit = 10, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { dealType: DealType.LIVE, status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getLiveDeals] DB unreachable:", err);
@@ -119,12 +129,14 @@ export async function getLiveDeals() {
   }
 }
 
-export async function getDealsByCategory(categoryId: string) {
+export async function getDealsByCategory(categoryId: string, limit = 20, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { categoryId, status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getDealsByCategory] DB unreachable:", err);
@@ -132,12 +144,14 @@ export async function getDealsByCategory(categoryId: string) {
   }
 }
 
-export async function getDealsByStore(storeId: string) {
+export async function getDealsByStore(storeId: string, limit = 20, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { storeId, status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getDealsByStore] DB unreachable:", err);
@@ -145,12 +159,14 @@ export async function getDealsByStore(storeId: string) {
   }
 }
 
-export async function getDealsByBrand(brandId: string) {
+export async function getDealsByBrand(brandId: string, limit = 20, skip = 0) {
   try {
     return await prisma.deal.findMany({
       where: { brandId, status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { category: true, store: true, brand: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getDealsByBrand] DB unreachable:", err);
@@ -158,16 +174,18 @@ export async function getDealsByBrand(brandId: string) {
   }
 }
 
-export async function getProducts() {
-  return getDeals();
+export async function getProducts(limit = 20, skip = 0) {
+  return getDeals(limit, skip);
 }
 
-export async function getCoupons() {
+export async function getCoupons(limit = 20, skip = 0) {
   try {
     return await prisma.coupon.findMany({
       where: { status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
       include: { store: true, category: true, deal: true },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getCoupons] DB unreachable:", err);
@@ -175,11 +193,13 @@ export async function getCoupons() {
   }
 }
 
-export async function getQuizPosts() {
+export async function getQuizPosts(limit = 20, skip = 0) {
   try {
     return await prisma.quizPost.findMany({
       where: { status: PublishStatus.PUBLISHED },
       orderBy: { quizDate: "desc" },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getQuizPosts] DB unreachable:", err);
@@ -187,11 +207,13 @@ export async function getQuizPosts() {
   }
 }
 
-export async function getBlogPosts() {
+export async function getBlogPosts(limit = 20, skip = 0) {
   try {
     return await prisma.blogPost.findMany({
       where: { status: PublishStatus.PUBLISHED },
       orderBy: { createdAt: "desc" },
+      take: limit,
+      skip,
     });
   } catch (err) {
     console.error("[getBlogPosts] DB unreachable:", err);

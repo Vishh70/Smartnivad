@@ -6,17 +6,13 @@ test.describe("Deals & Product Cards", () => {
   }) => {
     await page.goto("/deals");
 
-    // Check for product cards
+    // Wait for the product cards container and at least one card to be visible
     const cards = page.locator(".product-card");
-    // Wait for at least 1 card (increase timeout for Next.js dev server compilation)
-    await expect(cards.first()).toBeVisible({ timeout: 30000 });
+    await expect(cards.first()).toBeVisible();
 
-    // Verify discount badge is present on at least one deal
-    // Some deals might not have discounts, so we just check if any exist on the page
+    // With our deterministic seed data, we know there are deals with discounts
     const discountBadges = page.getByText(/-\d+%/);
-    if ((await discountBadges.count()) > 0) {
-      await expect(discountBadges.first()).toBeVisible();
-    }
+    await expect(discountBadges.first()).toBeVisible();
 
     // Verify the "Save to wishlist" heart button is present and clickable
     const saveBtns = page.getByLabel("Save to wishlist");

@@ -28,6 +28,7 @@ export async function GET(request: Request) {
       include: {
         store: true,
       },
+      orderBy: { updatedAt: "asc" },
       take: 20, // Process 20 per run to stay under Vercel timeout
     });
 
@@ -76,8 +77,10 @@ export async function GET(request: Request) {
         } else if (!newPrice) {
           status = "Failed";
           errorMessage = "Scraper returned null";
+          await prisma.deal.update({ where: { id: deal.id }, data: { updatedAt: new Date() }});
         } else {
           status = "Unchanged";
+          await prisma.deal.update({ where: { id: deal.id }, data: { updatedAt: new Date() }});
         }
       } catch (error: unknown) {
         status = "Error";

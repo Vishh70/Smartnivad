@@ -4,11 +4,22 @@ import { generateWithFallback } from "@/lib/ai";
 // Simple in-memory rate limiting per session
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
+let lastCleanup = Date.now();
+
 function checkRateLimit(sessionId: string): {
   allowed: boolean;
   retryAfter?: number;
 } {
   const now = Date.now();
+  
+  // Lazy cleanup instead of setInterval (prevents serverless memory leaks)
+  if (now - lastCleanup > 300000) {
+    lastCleanup = now;
+    for (const [key, val] of rateLimitMap.entries()) {
+      if (now > val.resetAt + 300000) rateLimitMap.delete(key);
+    }
+  }
+
   const entry = rateLimitMap.get(sessionId);
 
   if (!entry || now > entry.resetAt) {
@@ -24,14 +35,6 @@ function checkRateLimit(sessionId: string): {
   entry.count++;
   return { allowed: true };
 }
-
-// Clean up stale entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, val] of rateLimitMap.entries()) {
-    if (now > val.resetAt + 300000) rateLimitMap.delete(key);
-  }
-}, 300000);
 
 const SYSTEM_PROMPT = `You are SmartNivad, a helpful shopping assistant.
 
@@ -82,8 +85,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const prompt = `${SYSTEM_PROMPT}\n\nUser: ${message}\n\nAssistant:`;
-    const response = await generateWithFallback(prompt, false);
+    const response = await generateWithFallback(message, false, SYSTEM_PROMPT);
 
     return NextResponse.json({ response });
   } catch (error: unknown) {

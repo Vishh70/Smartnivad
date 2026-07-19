@@ -174,6 +174,7 @@ export function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModalProps) {
             className="flex-1 bg-transparent px-4 py-5 text-lg text-gray-900 placeholder:text-gray-400 focus:outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            data-testid="search-input"
           />
           {isLoading && (
             <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mr-3" />
@@ -188,7 +189,7 @@ export function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModalProps) {
         </form>
 
         {/* Search Content */}
-        <div className="max-h-[60vh] overflow-y-auto p-4 bg-gray-50/50">
+        <div className="max-h-[60vh] overflow-y-auto p-4 bg-gray-50/50" data-testid="search-results">
           {/* Default State: Recent & Popular */}
           {query.trim().length < 2 && (
             <div className="space-y-6">

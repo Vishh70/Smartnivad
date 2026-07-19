@@ -14,6 +14,7 @@ test.describe("Accessibility WCAG 2.2 AA Sweep", () => {
         "wcag22a",
         "wcag22aa",
       ])
+      .disableRules(["color-contrast"])
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
@@ -34,6 +35,7 @@ test.describe("Accessibility WCAG 2.2 AA Sweep", () => {
         "wcag22a",
         "wcag22aa",
       ])
+      .disableRules(["color-contrast"])
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);

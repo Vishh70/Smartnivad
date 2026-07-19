@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
 }
+
 
 // ─── Enums ────────────────────────────────────────────────────────────────────
 
@@ -66,9 +67,9 @@ model Deal {
   storeId       String
   brandId       String?
 
-  category      Category      @relation(fields: [categoryId], references: [id])
-  store         Store         @relation(fields: [storeId], references: [id])
-  brand         Brand?        @relation(fields: [brandId], references: [id])
+  category      Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  store         Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  brand         Brand?        @relation(fields: [brandId], references: [id], onDelete: SetNull)
   couponLinks   Coupon[]
   wishlistedBy  WishlistItem[]
   priceHistory  PriceHistory[]
@@ -159,9 +160,9 @@ model Coupon {
   categoryId   String?
   dealId       String?
 
-  store        Store         @relation(fields: [storeId], references: [id])
-  category     Category?     @relation(fields: [categoryId], references: [id])
-  deal         Deal?         @relation(fields: [dealId], references: [id])
+  store        Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category     Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  deal         Deal?         @relation(fields: [dealId], references: [id], onDelete: SetNull)
 
   @@index([slug])
   @@index([storeId])

@@ -215,6 +215,7 @@ export function Navbar({ categories = [] }: NavbarProps) {
                 onClick={() => setSearchOpen(true)}
                 className="group flex items-center justify-center gap-2 h-11 px-3 sm:px-4 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-blue-600 transition-colors border border-transparent hover:border-gray-200"
                 aria-label="Search"
+                data-testid="search-trigger"
               >
                 <Search
                   size={20}

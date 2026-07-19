@@ -7,7 +7,7 @@ const MODELS = [
   "gemini-flash-latest",
 ];
 
-export async function generateWithFallback(prompt: string, isJson = false) {
+export async function generateWithFallback(prompt: string, isJson = false, systemInstruction?: string) {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error("GEMINI_API_KEY is not configured");
   }
@@ -23,6 +23,7 @@ export async function generateWithFallback(prompt: string, isJson = false) {
       const model = genAI.getGenerativeModel({
         model: modelName,
         generationConfig: config,
+        systemInstruction,
       });
       const result = await model.generateContent(prompt);
       const text = result.response.text();

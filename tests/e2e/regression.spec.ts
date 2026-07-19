@@ -5,17 +5,17 @@ test.describe("SmartNivad Regression Suite", () => {
     await page.goto("/");
     
     // Attempt to open global search
-    // Using the input in the navbar or a search button
-    const searchTrigger = page.locator('button:has(svg.lucide-search), input[placeholder*="Search"]').first();
+    const searchTrigger = page.getByTestId("search-trigger");
     await searchTrigger.click();
     
-    const searchInput = page.locator('input[placeholder*="Search"]').last();
+    const searchInput = page.getByTestId("search-input");
     await expect(searchInput).toBeVisible();
     await searchInput.fill("laptop");
     
     // Depending on the UI, it either shows a modal or navigates
     // We just verify it doesn't crash and shows results or a loading state
-    await expect(page.locator("body")).toBeVisible();
+    const searchResults = page.getByTestId("search-results");
+    await expect(searchResults).toBeVisible();
   });
 
   test("Wishlist functionality", async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe("SmartNivad Regression Suite", () => {
     
     // Save a deal to wishlist
     const saveBtn = page.getByLabel("Save to wishlist").first();
-    await expect(saveBtn).toBeVisible({ timeout: 15000 });
+    await expect(saveBtn).toBeVisible();
     await saveBtn.click();
     
     // Navigate to wishlist
@@ -31,13 +31,13 @@ test.describe("SmartNivad Regression Suite", () => {
     
     // Verify persistence
     const wishlistItems = page.locator(".product-card");
-    await expect(wishlistItems.first()).toBeVisible({ timeout: 10000 });
+    await expect(wishlistItems.first()).toBeVisible();
   });
 
   test("Product page rendering", async ({ page }) => {
     await page.goto("/deals");
     const firstProductLink = page.locator(".product-card a").first();
-    await expect(firstProductLink).toBeVisible({ timeout: 15000 });
+    await expect(firstProductLink).toBeVisible();
     const productUrl = await firstProductLink.getAttribute("href");
     
     if (productUrl) {

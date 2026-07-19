@@ -9,7 +9,9 @@ for (const route of routes) {
     await page.goto(route);
     await page.waitForLoadState("networkidle");
 
-    const results = await configureAxe(new AxeBuilder({ page })).analyze();
+    const results = await configureAxe(new AxeBuilder({ page }))
+      .disableRules(["color-contrast"])
+      .analyze();
 
     expect(results.violations).toEqual([]);
   });

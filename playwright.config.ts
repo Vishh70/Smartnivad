@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
+  globalSetup: require.resolve("./tests/e2e/global.setup.ts"),
   testDir: "./tests",
   testMatch: [
     "e2e/**/*.spec.ts",
@@ -22,7 +23,7 @@ export default defineConfig({
   outputDir: "artifacts/playwright",
   use: {
     baseURL: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
     actionTimeout: 15000,
     navigationTimeout: 30000,
     screenshot: "only-on-failure",

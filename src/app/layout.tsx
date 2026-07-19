@@ -79,8 +79,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden bg-gray-50 text-gray-900">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-gray-50 text-gray-900" suppressHydrationWarning>
         <AuthProvider>
           <WishlistProvider>{children}</WishlistProvider>
         </AuthProvider>
