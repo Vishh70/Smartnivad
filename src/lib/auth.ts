@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 
-const providers: any[] = [
+const providers: NextAuthOptions["providers"] = [
   CredentialsProvider({
     name: "Admin Login",
     credentials: {
@@ -69,7 +69,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
+    }),
   );
 }
 
@@ -141,7 +141,10 @@ export async function requireAdmin() {
     redirect("/access-denied");
   }
 
-  if (process.env.SUPER_ADMIN_EMAIL && user.email === process.env.SUPER_ADMIN_EMAIL) {
+  if (
+    process.env.SUPER_ADMIN_EMAIL &&
+    user.email === process.env.SUPER_ADMIN_EMAIL
+  ) {
     return {
       id: "1",
       email: process.env.SUPER_ADMIN_EMAIL,
