@@ -48,7 +48,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload unit coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage
@@ -90,7 +90,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload Playwright reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: playwright-reports
