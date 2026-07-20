@@ -32,15 +32,32 @@ test.describe("Live Site Audit", () => {
     // Intercept failed network requests
     page.on("requestfailed", (request) => {
       const url = request.url();
+      let parsedReqUrl: URL;
+      try {
+        parsedReqUrl = new URL(url);
+      } catch {
+        return;
+      }
+
+      const hostname = parsedReqUrl.hostname;
+      const ignoredDomains = [
+        "google-analytics.com",
+        "analytics.google.com",
+        "unsplash.com",
+        "cloudinary.com",
+        "m.media-amazon.com",
+        "rukminim2.flixcart.com",
+      ];
+
+      const isIgnored =
+        ignoredDomains.some(
+          (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
+        ) ||
+        url.includes("google-analytics") ||
+        url.includes("analytics");
+
       // Ignore typical ad-blocker or known analytics blocked requests if necessary
-      if (
-        !url.includes("google-analytics") && 
-        !url.includes("analytics") &&
-        !url.includes("unsplash.com") &&
-        !url.includes("cloudinary.com") &&
-        !url.includes("m.media-amazon.com") &&
-        !url.includes("rukminim2.flixcart.com")
-      ) {
+      if (!isIgnored) {
         networkErrors.push(
           `[${page.url()}] Network Error: ${url} - ${request.failure()?.errorText}`,
         );
@@ -145,7 +162,7 @@ test.describe("Live Site Audit", () => {
     // 3. Login
     await page.goto(`${LIVE_URL}/login`);
     await expect(
-      page.getByRole("button", { name: /sign in/i }).first()
+      page.getByRole("button", { name: /sign in/i }).first(),
     ).toBeVisible();
   });
 });

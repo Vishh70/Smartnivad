@@ -6,22 +6,29 @@ const USER_AGENTS = [
 ];
 
 function getRandomUserAgent() {
-  return USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  const secureRandom = array[0] / (0xffffffff + 1);
+  return USER_AGENTS[Math.floor(secureRandom * USER_AGENTS.length)];
 }
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function fetchWithRetry(url: string, retries = 3): Promise<string> {
+export async function fetchWithRetry(
+  url: string,
+  retries = 3,
+): Promise<string> {
   for (let i = 0; i < retries; i++) {
     try {
       const response = await fetch(url, {
         headers: {
           "User-Agent": getRandomUserAgent(),
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
           "Accept-Language": "en-US,en;q=0.5",
           "Cache-Control": "no-cache",
         },
-        next: { revalidate: 0 } // Bypass Next.js cache
+        next: { revalidate: 0 }, // Bypass Next.js cache
       });
 
       if (!response.ok) {
@@ -32,7 +39,10 @@ export async function fetchWithRetry(url: string, retries = 3): Promise<string> 
     } catch (error) {
       if (i === retries - 1) throw error;
       // Exponential backoff with random jitter
-      const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+      const array = new Uint32Array(1);
+      crypto.getRandomValues(array);
+      const secureRandom = array[0] / (0xffffffff + 1);
+      const delay = Math.pow(2, i) * 1000 + secureRandom * 1000;
       await sleep(delay);
     }
   }

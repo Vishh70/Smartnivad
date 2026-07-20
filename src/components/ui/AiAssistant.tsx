@@ -20,7 +20,14 @@ export function AiAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionId] = useState(() => `sess_${crypto.randomUUID()}`);
+  const [sessionId] = useState(() => {
+    const array = new Uint8Array(16);
+    crypto.getRandomValues(array);
+    const hex = Array.from(array, (byte) =>
+      byte.toString(16).padStart(2, "0"),
+    ).join("");
+    return `sess_${hex}`;
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);

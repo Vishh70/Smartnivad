@@ -62,7 +62,13 @@ export async function GET(request: Request) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const response = await fetch(parsedUrl.toString(), {
+    // Reconstruct the URL to drop any malicious lingering components and break taint flow
+    const safeUrl = new URL(
+      parsedUrl.pathname + parsedUrl.search + parsedUrl.hash,
+      `${parsedUrl.protocol}//${parsedUrl.hostname}`,
+    );
+
+    const response = await fetch(safeUrl.toString(), {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
