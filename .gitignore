@@ -42,9 +42,14 @@ next-env.d.ts
 
 .vercel
 
+.vercel
+
 # Serwist PWA
 public/sw.js
 public/sw.js.map
 public/swe-worker-*.js
 public/sw-*.js
 public/workbox-*.js
+
+# Supabase CLI
+supabase/.temp/
