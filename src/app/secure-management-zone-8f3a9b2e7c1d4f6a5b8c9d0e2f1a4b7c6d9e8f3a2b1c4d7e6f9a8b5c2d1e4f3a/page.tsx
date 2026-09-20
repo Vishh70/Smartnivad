@@ -11,6 +11,7 @@ import {
   CheckCircle,
   AlertTriangle,
   Clock,
+  BarChart2,
 } from "lucide-react";
 
 export const metadata = {
@@ -128,6 +129,32 @@ export default async function AdminDashboard() {
             </div>
           </GlassCard>
         ))}
+      </div>
+
+      <div className="grid grid-cols-1 gap-6">
+        <GlassCard className="bg-white hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <BarChart2 className="text-blue-500" />
+              <h2 className="text-xl font-bold text-gray-900">
+                Traffic & Analytics
+              </h2>
+            </div>
+            <a
+              href="https://vercel.com/vishnuaware70-2124s-projects/smartnivad/analytics"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              View Full Dashboard &rarr;
+            </a>
+          </div>
+          <p className="text-sm text-gray-500">
+            SmartNivad uses Vercel Web Analytics and Speed Insights to monitor
+            real-time traffic, page views, and core web vitals. Click the link
+            above to view your detailed dashboard on Vercel.
+          </p>
+        </GlassCard>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

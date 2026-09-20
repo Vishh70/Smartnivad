@@ -184,3 +184,27 @@ export async function toggleDealStatus(formData: FormData) {
   );
   revalidatePath("/");
 }
+
+export async function bulkDeleteDeals(dealIds: string[]) {
+  await prisma.deal.deleteMany({
+    where: { id: { in: dealIds } },
+  });
+  revalidatePath(
+    "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/deals",
+  );
+  revalidatePath("/");
+}
+
+export async function bulkUpdateDealStatus(
+  dealIds: string[],
+  status: "PUBLISHED" | "DRAFT",
+) {
+  await prisma.deal.updateMany({
+    where: { id: { in: dealIds } },
+    data: { status },
+  });
+  revalidatePath(
+    "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/deals",
+  );
+  revalidatePath("/");
+}
