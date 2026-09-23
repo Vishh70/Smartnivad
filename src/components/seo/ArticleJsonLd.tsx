@@ -66,6 +66,38 @@ export function ArticleJsonLd({
     schemas.push(itemListSchema);
   }
 
+  // Add BreadcrumbList schema
+  const basePath =
+    type === "LISTICLE" ? "/best" : type === "REVIEW" ? "/reviews" : "/guides";
+  const categoryName =
+    type === "LISTICLE" ? "Best" : type === "REVIEW" ? "Reviews" : "Guides";
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://smartnivad.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: categoryName,
+        item: `https://smartnivad.com${basePath}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: title,
+        item: url,
+      },
+    ],
+  };
+  schemas.push(breadcrumbSchema);
+
   return (
     <script
       type="application/ld+json"
