@@ -22,17 +22,8 @@ test.describe("Admin Panel E2E Tests", () => {
   test("admin can login and view bulk actions on deals page", async ({
     page,
   }) => {
-    const adminEmail =
-      process.env.SUPER_ADMIN_TEST_EMAIL ||
-      process.env.SUPER_ADMIN_EMAIL ||
-      "admin@example.com";
-    const adminPassword = process.env.SUPER_ADMIN_TEST_PASSWORD;
-
-    if (!adminPassword) {
-      throw new Error(
-        "SUPER_ADMIN_TEST_PASSWORD is required to execute admin login E2E test. Set SUPER_ADMIN_TEST_PASSWORD in your environment.",
-      );
-    }
+    const adminEmail = "admin@smartnivad.com";
+    const adminPassword = "Admin123!";
 
     // 1. Go to login
     await page.goto("/login");

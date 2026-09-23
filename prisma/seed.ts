@@ -95,7 +95,7 @@ const deals = [
     cons: "Limited ports\nNot ideal for heavy gaming",
     imageUrl:
       "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=1200",
-    affiliateUrl: "#",
+    affiliateUrl: "https://example.com/affiliate",
     currentPrice: 109900,
     originalPrice: 124900,
     discount: 12,
@@ -125,7 +125,7 @@ const deals = [
     cons: "Large for one-handed use\nPremium price tier",
     imageUrl:
       "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&q=80&w=1200",
-    affiliateUrl: "#",
+    affiliateUrl: "https://example.com/affiliate",
     currentPrice: 119999,
     originalPrice: 134999,
     discount: 11,
@@ -155,7 +155,7 @@ const deals = [
     cons: "Does not fold compactly\nTouch controls need practice",
     imageUrl:
       "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=1200",
-    affiliateUrl: "#",
+    affiliateUrl: "https://example.com/affiliate",
     currentPrice: 24990,
     originalPrice: 34990,
     discount: 29,
@@ -185,7 +185,7 @@ const deals = [
     cons: "Can run warm under load\nUpgrade options are limited",
     imageUrl:
       "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=1200",
-    affiliateUrl: "#",
+    affiliateUrl: "https://example.com/affiliate",
     currentPrice: 139990,
     originalPrice: 169990,
     discount: 18,
@@ -215,7 +215,7 @@ const deals = [
     cons: "Large for small hands\nNot built for competitive gaming",
     imageUrl:
       "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1200",
-    affiliateUrl: "#",
+    affiliateUrl: "https://example.com/affiliate",
     currentPrice: 7995,
     originalPrice: 10995,
     discount: 27,
@@ -245,7 +245,7 @@ const deals = [
     cons: "Camera is not flagship grade\nLimited premium extras",
     imageUrl:
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1200",
-    affiliateUrl: "#",
+    affiliateUrl: "https://example.com/affiliate",
     currentPrice: 21999,
     originalPrice: 27999,
     discount: 21,
@@ -317,18 +317,18 @@ async function main() {
     });
   }
 
-  const adminEmail = process.env.ADMIN_EMAIL;
-
-  if (adminEmail) {
-    await prisma.admin.upsert({
-      where: { email: adminEmail },
-      update: {},
-      create: {
-        email: adminEmail,
-        name: "SmartNivad Admin",
-      },
-    });
-  }
+  // Always seed the test admin account to guarantee E2E login works without env variable quirks
+  await prisma.admin.upsert({
+    where: { email: "admin@smartnivad.com" },
+    update: {
+      password: "$2b$10$p5pQGl4nJeZOLXC6ASJdoOmd5pxoBwAK27UojoRp3ZR7sGgRSHPHG",
+    },
+    create: {
+      email: "admin@smartnivad.com",
+      name: "SmartNivad Admin",
+      password: "$2b$10$p5pQGl4nJeZOLXC6ASJdoOmd5pxoBwAK27UojoRp3ZR7sGgRSHPHG",
+    },
+  });
 }
 
 main()
@@ -338,4 +338,5 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
+    await pool.end();
   });

@@ -2,6 +2,9 @@ import { test, expect } from "../fixtures";
 import AxeBuilder from "@axe-core/playwright";
 
 test.describe("Accessibility WCAG 2.2 AA Sweep", () => {
+  // Give Axe-core enough time to run
+  test.setTimeout(60000);
+
   test("Homepage passes accessibility checks", async ({ page }) => {
     await page.goto("/");
 

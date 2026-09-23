@@ -47,7 +47,11 @@ function freshness(createdAt?: Date | string): string {
 
 export function ProductCard({ product }: DealCardProps) {
   const imageUrl = product.imageUrl || product.image_url || "";
-  const affiliateUrl = product.affiliateUrl || product.affiliate_link || "#";
+  const hasAff = !!(
+    (product.affiliateUrl && product.affiliateUrl !== "#") ||
+    (product.affiliate_link && product.affiliate_link !== "#")
+  );
+  const affiliateUrl = hasAff && product.slug ? `/go/${product.slug}` : "#";
   const priceLabel = product.currentPrice
     ? `₹${formatNumber(product.currentPrice)}`
     : product.price_text || "Check Price";

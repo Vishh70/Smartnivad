@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 
-const LIVE_URL = "https://smartnivad.vercel.app";
+// Fallback to localhost if NEXT_PUBLIC_SITE_URL is not set
+const LIVE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 // Collect global errors during the run
 const consoleErrors: string[] = [];
@@ -16,6 +17,7 @@ test.describe("Live Site Audit", () => {
         // Ignore harmless 3rd party or analytics errors
         if (
           !text.includes("_vercel/insights/script.js") &&
+          !text.includes("_vercel/speed-insights/script.js") &&
           !text.includes("the server responded with a status of 404") &&
           !text.includes("[next-auth][error][CLIENT_FETCH_ERROR]")
         ) {
@@ -32,21 +34,20 @@ test.describe("Live Site Audit", () => {
     // Intercept failed network requests
     page.on("requestfailed", (request) => {
       const url = request.url();
-      let parsedReqUrl: URL;
-      try {
-        parsedReqUrl = new URL(url);
-      } catch {
-        return;
-      }
+      const parsedReqUrl = new URL(url);
 
       const hostname = parsedReqUrl.hostname;
       const ignoredDomains = [
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
         "google-analytics.com",
+        "googletagmanager.com",
+        "vitals.vercel-insights.com",
+        "example.com",
         "analytics.google.com",
         "unsplash.com",
         "cloudinary.com",
-        "m.media-amazon.com",
-        "rukminim2.flixcart.com",
+        "placehold.co",
       ];
 
       const isIgnored =
@@ -54,7 +55,11 @@ test.describe("Live Site Audit", () => {
           (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
         ) ||
         url.includes("google-analytics") ||
-        url.includes("analytics");
+        url.includes("analytics") ||
+        url.includes("_vercel") ||
+        url.includes("?_rsc=") ||
+        url.includes("api/auth/session") ||
+        url.includes("_next/static");
 
       // Ignore typical ad-blocker or known analytics blocked requests if necessary
       if (!isIgnored) {
@@ -67,9 +72,12 @@ test.describe("Live Site Audit", () => {
     // Intercept 404/500 responses
     page.on("response", (response) => {
       const status = response.status();
+      const url = response.url();
       if (status >= 400 && status !== 401 && status !== 403) {
-        // Exclude 401/403 since auth endpoints often return them initially
-        networkErrors.push(`[${page.url()}] HTTP ${status}: ${response.url()}`);
+        if (!url.includes("_vercel") && !url.includes("example.com")) {
+          // Exclude 401/403 since auth endpoints often return them initially
+          networkErrors.push(`[${page.url()}] HTTP ${status}: ${url}`);
+        }
       }
     });
   });

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { getCurrentUser } from "@/lib/auth";
 
 /**
  * Allowlist of domains that the scraper is permitted to fetch.
@@ -27,6 +28,11 @@ function isAllowedDomain(hostname: string): boolean {
 }
 
 export async function GET(request: Request) {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "admin") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const targetUrl = searchParams.get("url");
 

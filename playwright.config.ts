@@ -1,5 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
+import * as dotenv from "dotenv";
 
+dotenv.config({ path: ".env.local" });
+
+process.env.SUPER_ADMIN_TEST_PASSWORD = "Admin123!";
+process.env.SUPER_ADMIN_PASSWORD_HASH =
+  "$2b$10$p5pQGl4nJeZOLXC6ASJdoOmd5pxoBwAK27UojoRp3ZR7sGgRSHPHG";
 export default defineConfig({
   globalSetup: require.resolve("./tests/e2e/global.setup.ts"),
   testDir: "./tests",
@@ -166,9 +172,16 @@ export default defineConfig({
   webServer: process.env.NEXT_PUBLIC_SITE_URL
     ? undefined
     : {
-        command: process.env.CI ? "npm run start" : "npm run dev",
+        command: "npm run start",
         url: "http://localhost:3000",
         reuseExistingServer: !process.env.CI,
         timeout: 120000,
+        env: {
+          ...process.env,
+          SUPER_ADMIN_EMAIL: "admin@smartnivad.com",
+          SUPER_ADMIN_TEST_PASSWORD: process.env.SUPER_ADMIN_TEST_PASSWORD,
+          SUPER_ADMIN_PASSWORD_HASH: process.env.SUPER_ADMIN_PASSWORD_HASH,
+          NEXTAUTH_URL: "http://localhost:3000",
+        },
       },
 });

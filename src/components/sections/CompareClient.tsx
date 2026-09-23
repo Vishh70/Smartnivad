@@ -171,7 +171,7 @@ export function CompareClient({ deals, categories }: CompareClientProps) {
                     </h3>
                     {d.affiliateUrl !== "#" ? (
                       <a
-                        href={d.affiliateUrl}
+                        href={`/go/${d.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block w-full rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white"

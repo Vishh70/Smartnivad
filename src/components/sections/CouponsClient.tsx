@@ -124,7 +124,7 @@ function CouponCard({
         </button>
         {coupon.affiliateUrl && (
           <a
-            href={coupon.affiliateUrl}
+            href={`/go/${coupon.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-11 rounded-xl bg-[var(--color-primary)] hover:bg-purple-500 text-white transition-colors"

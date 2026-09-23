@@ -74,6 +74,9 @@ export default async function ProductPage({
   const hasExpiry =
     product.expiresAt && new Date(product.expiresAt).getTime() > Date.now();
 
+  const hasAff = !!(product.affiliateUrl && product.affiliateUrl !== "#");
+  const affiliateUrl = hasAff && product.slug ? `/go/${product.slug}` : "#";
+
   return (
     <div className="min-h-screen py-10 pb-36 lg:pb-24">
       <script
@@ -91,7 +94,7 @@ export default async function ProductPage({
             },
             offers: {
               "@type": "Offer",
-              url: product.affiliateUrl,
+              url: affiliateUrl !== "#" ? affiliateUrl : undefined,
               priceCurrency: "INR",
               price: product.currentPrice,
             },
@@ -229,9 +232,9 @@ export default async function ProductPage({
               )}
 
               <div className="mt-6">
-                {product.affiliateUrl !== "#" ? (
+                {affiliateUrl !== "#" ? (
                   <a
-                    href={product.affiliateUrl}
+                    href={affiliateUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full rounded-2xl gradient-btn px-6 py-5 text-center text-xl font-bold tracking-wide shadow-xl hover:-translate-y-1 transition-all"
@@ -401,9 +404,9 @@ export default async function ProductPage({
             </div>
           </div>
           <div className="flex-1 sm:flex-none flex justify-end">
-            {product.affiliateUrl !== "#" && (
+            {affiliateUrl !== "#" && (
               <a
-                href={product.affiliateUrl}
+                href={affiliateUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-xl gradient-btn px-8 py-3 text-center text-lg font-bold shadow-lg sm:w-64"
