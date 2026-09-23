@@ -13,13 +13,13 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const { content } = await getPublishedContent(slug, "LISTICLE");
+  const { content } = await getPublishedContent(slug, "REVIEW");
 
   return {
     title: content.seoTitle || content.title,
     description: content.seoDesc || content.brief,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartnivad.com"}/best/${slug}`,
+      canonical: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartnivad.com"}/reviews/${slug}`,
     },
     robots: {
       index: true,
@@ -28,22 +28,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function BestListiclePage({ params }: PageProps) {
+export default async function ReviewPage({ params }: PageProps) {
   const { slug } = await params;
   const { content, aiJson, products } = await getPublishedContent(
     slug,
-    "LISTICLE",
+    "REVIEW",
   );
 
-  const url = `${process.env.NEXT_PUBLIC_APP_URL || "https://smartnivad.com"}/best/${slug}`;
-
-  // Map products for JSON-LD ItemList
-  const jsonLdProducts = products
-    .filter((p) => p.aiAnalysis)
-    .map((p) => ({
-      name: p.deal.title,
-      url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartnivad.com"}/go/${p.deal.slug}`,
-    }));
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || "https://smartnivad.com"}/reviews/${slug}`;
 
   return (
     <main className="min-h-screen bg-white">
@@ -53,8 +45,7 @@ export default async function BestListiclePage({ params }: PageProps) {
         description={content.seoDesc || content.brief || ""}
         datePublished={content.createdAt.toISOString()}
         dateModified={content.updatedAt.toISOString()}
-        type="LISTICLE"
-        products={jsonLdProducts}
+        type="REVIEW"
       />
 
       {/* Hero Header */}

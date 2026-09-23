@@ -9,19 +9,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     // Fetch dynamic content
-    const [deals, categories, stores, brands, posts] = await Promise.all([
-      prisma.deal.findMany({
-        select: { slug: true, updatedAt: true },
-        where: { status: "PUBLISHED" },
-      }),
-      prisma.category.findMany({ select: { slug: true, updatedAt: true } }),
-      prisma.store.findMany({ select: { slug: true, updatedAt: true } }),
-      prisma.brand.findMany({ select: { slug: true, updatedAt: true } }),
-      prisma.blogPost.findMany({
-        select: { slug: true, updatedAt: true },
-        where: { status: "PUBLISHED" },
-      }),
-    ]);
+    const [deals, categories, stores, brands, posts, contents] =
+      await Promise.all([
+        prisma.deal.findMany({
+          select: { slug: true, updatedAt: true },
+          where: { status: "PUBLISHED" },
+        }),
+        prisma.category.findMany({ select: { slug: true, updatedAt: true } }),
+        prisma.store.findMany({ select: { slug: true, updatedAt: true } }),
+        prisma.brand.findMany({ select: { slug: true, updatedAt: true } }),
+        prisma.blogPost.findMany({
+          select: { slug: true, updatedAt: true },
+          where: { status: "PUBLISHED" },
+        }),
+        prisma.content.findMany({
+          select: { slug: true, updatedAt: true, type: true },
+          where: { status: "PUBLISHED" },
+        }),
+      ]);
 
     const dealUrls = deals.map((deal) => ({
       url: `${baseUrl}/product/${deal.slug}`,
@@ -58,6 +63,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
+    const contentUrls = contents.map((c) => {
+      let prefix = "blog";
+      if (c.type === "LISTICLE") prefix = "best";
+      if (c.type === "REVIEW") prefix = "reviews";
+      if (c.type === "GUIDE") prefix = "guides";
+
+      return {
+        url: `${baseUrl}/${prefix}/${c.slug}`,
+        lastModified: c.updatedAt,
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      };
+    });
     // Static pages
     const staticPages = [
       { path: "", changeFrequency: "daily" as const, priority: 1 },
@@ -90,6 +108,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...storeUrls,
       ...brandUrls,
       ...postUrls,
+      ...contentUrls,
     ];
   } catch (error) {
     console.error(
