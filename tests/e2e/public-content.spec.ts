@@ -7,7 +7,7 @@ test.describe("Public Content Rendering & SEO", () => {
     // the structure of the routes.
     // For now, let's just make sure the routing returns 404 for random invalid paths
     // instead of throwing 500s.
-    const res = await page.goto("/best/non-existent-listicle-slug");
+    await page.goto("/best/non-existent-listicle-slug");
 
     // In Next.js App Router, notFound() can return a 200 HTTP status due to streaming.
     // Instead of asserting the status code strictly, we assert the 404 UI renders correctly.
