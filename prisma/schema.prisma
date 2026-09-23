@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
-
 
 // ─── Enums ────────────────────────────────────────────────────────────────────
 
@@ -63,21 +62,22 @@ model Deal {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
-  categoryId    String
-  storeId       String
-  brandId       String?
+  categoryId String
+  storeId    String
+  brandId    String?
 
-  category      Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  store         Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  brand         Brand?        @relation(fields: [brandId], references: [id], onDelete: SetNull)
-  couponLinks   Coupon[]
-  wishlistedBy  WishlistItem[]
-  priceHistory  PriceHistory[]
-  clickEvents   DealClick[]
+  category     Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  store        Store          @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  brand        Brand?         @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  couponLinks  Coupon[]
+  wishlistedBy WishlistItem[]
+  priceHistory PriceHistory[]
+  clickEvents  DealClick[]
 
-  viewHistory   ViewHistory[]
-  automationLogs AutomationLog[]
+  viewHistory     ViewHistory[]
+  automationLogs  AutomationLog[]
   socialPostQueue SocialPostQueue[]
+  contentProducts ContentProduct[]
 
   @@index([slug])
   @@index([categoryId])
@@ -93,50 +93,50 @@ model Deal {
 }
 
 model Category {
-  id          String    @id @default(cuid())
-  slug        String    @unique
+  id          String   @id @default(cuid())
+  slug        String   @unique
   name        String
   icon        String?
-  description String?   @db.Text
+  description String?  @db.Text
   seoTitle    String?
-  seoDesc     String?   @db.Text
+  seoDesc     String?  @db.Text
   deals       Deal[]
   coupons     Coupon[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([slug])
 }
 
 model Store {
-  id          String    @id @default(cuid())
-  slug        String    @unique
-  name        String
-  logoUrl     String?
-  website     String?
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  logoUrl          String?
+  website          String?
   affiliateBaseUrl String?
-  description String?   @db.Text
-  seoTitle    String?
-  seoDesc     String?   @db.Text
-  deals       Deal[]
-  coupons     Coupon[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  description      String?  @db.Text
+  seoTitle         String?
+  seoDesc          String?  @db.Text
+  deals            Deal[]
+  coupons          Coupon[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@index([slug])
 }
 
 model Brand {
-  id          String    @id @default(cuid())
-  slug        String    @unique
+  id          String   @id @default(cuid())
+  slug        String   @unique
   name        String
   logoUrl     String?
-  description String?   @db.Text
+  description String?  @db.Text
   seoTitle    String?
-  seoDesc     String?   @db.Text
+  seoDesc     String?  @db.Text
   deals       Deal[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([slug])
 }
@@ -156,13 +156,13 @@ model Coupon {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
-  storeId      String
-  categoryId   String?
-  dealId       String?
+  storeId    String
+  categoryId String?
+  dealId     String?
 
-  store        Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  category     Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  deal         Deal?         @relation(fields: [dealId], references: [id], onDelete: SetNull)
+  store    Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  deal     Deal?     @relation(fields: [dealId], references: [id], onDelete: SetNull)
 
   @@index([slug])
   @@index([storeId])
@@ -198,18 +198,18 @@ model DealClick {
 }
 
 model QuizPost {
-  id          String        @id @default(cuid())
-  slug        String        @unique
-  title       String
-  platform    QuizPlatform
-  quizDate    DateTime      @default(now())
-  status      PublishStatus @default(PUBLISHED)
-  qaPairs     Json
-  prize       String?
-  seoTitle    String?
-  seoDesc     String?       @db.Text
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  title     String
+  platform  QuizPlatform
+  quizDate  DateTime      @default(now())
+  status    PublishStatus @default(PUBLISHED)
+  qaPairs   Json
+  prize     String?
+  seoTitle  String?
+  seoDesc   String?       @db.Text
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@index([slug])
   @@index([platform])
@@ -217,19 +217,19 @@ model QuizPost {
 }
 
 model BlogPost {
-  id          String        @id @default(cuid())
-  slug        String        @unique
-  title       String
-  excerpt     String?       @db.Text
-  content     String        @db.Text
-  coverImage  String?
-  tags        String[]
-  status      PublishStatus @default(DRAFT)
-  seoTitle    String?
-  seoDesc     String?       @db.Text
-  views       Int           @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id         String        @id @default(cuid())
+  slug       String        @unique
+  title      String
+  excerpt    String?       @db.Text
+  content    String        @db.Text
+  coverImage String?
+  tags       String[]
+  status     PublishStatus @default(DRAFT)
+  seoTitle   String?
+  seoDesc    String?       @db.Text
+  views      Int           @default(0)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 
   @@index([slug])
   @@index([status])
@@ -260,36 +260,36 @@ model NewsletterSubscriber {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  role          Role      @default(USER)
-  accounts      Account[]
-  sessions      Session[]
-  wishlist      WishlistItem[]
+  id              String           @id @default(cuid())
+  name            String?
+  email           String?          @unique
+  emailVerified   DateTime?
+  image           String?
+  role            Role             @default(USER)
+  accounts        Account[]
+  sessions        Session[]
+  wishlist        WishlistItem[]
   wishlistFolders WishlistFolder[]
-  notifications Notification[]
+  notifications   Notification[]
 
-  viewHistory   ViewHistory[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  viewHistory ViewHistory[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -315,28 +315,28 @@ model VerificationToken {
 // ─── User Engagement ──────────────────────────────────────────────────────────
 
 model WishlistFolder {
-  id        String   @id @default(cuid())
+  id        String         @id @default(cuid())
   name      String
-  isPublic  Boolean  @default(false)
-  slug      String   @unique
+  isPublic  Boolean        @default(false)
+  slug      String         @unique
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   items     WishlistItem[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 
   @@index([userId])
 }
 
 model WishlistItem {
-  id        String   @id @default(cuid())
+  id        String          @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   dealId    String
-  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  deal      Deal            @relation(fields: [dealId], references: [id], onDelete: Cascade)
   folderId  String?
   folder    WishlistFolder? @relation(fields: [folderId], references: [id], onDelete: SetNull)
-  createdAt DateTime @default(now())
+  createdAt DateTime        @default(now())
 
   @@unique([userId, dealId])
   @@index([userId])
@@ -368,7 +368,7 @@ model AutomationLog {
   checkedAt    DateTime @default(now())
   errorMessage String?  @db.Text
 
-  deal         Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
 
   @@index([dealId])
   @@index([status])
@@ -376,13 +376,13 @@ model AutomationLog {
 }
 
 model ViewHistory {
-  id        String   @id @default(cuid())
-  userId    String
-  dealId    String
-  viewedAt  DateTime @default(now())
+  id       String   @id @default(cuid())
+  userId   String
+  dealId   String
+  viewedAt DateTime @default(now())
 
-  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([dealId])
@@ -390,16 +390,16 @@ model ViewHistory {
 }
 
 model ComparisonSEO {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  product1Id  String
-  product2Id  String
-  aiResult    Json
-  winnerId    String?
-  seoTitle    String?
-  seoDesc     String?  @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  product1Id String
+  product2Id String
+  aiResult   Json
+  winnerId   String?
+  seoTitle   String?
+  seoDesc    String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([slug])
   @@index([product1Id])
@@ -446,7 +446,7 @@ model SocialPostQueue {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
-  deal         Deal           @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
 
   @@index([status, scheduledAt])
   @@index([dealId])
@@ -454,16 +454,64 @@ model SocialPostQueue {
 }
 
 model SocialLog {
-  id           String         @id @default(cuid())
-  platform     SocialPlatform
-  dealId       String
-  status       PostStatus
-  request      Json?
-  response     Json?
-  error        String?        @db.Text
-  durationMs   Int?
-  createdAt    DateTime       @default(now())
+  id         String         @id @default(cuid())
+  platform   SocialPlatform
+  dealId     String
+  status     PostStatus
+  request    Json?
+  response   Json?
+  error      String?        @db.Text
+  durationMs Int?
+  createdAt  DateTime       @default(now())
 
   @@index([dealId])
   @@index([createdAt])
+}
+
+enum ContentType {
+  REVIEW
+  GUIDE
+  LISTICLE
+}
+
+enum ContentStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  PUBLISHED
+}
+
+model Content {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  title        String
+  type         ContentType   @default(REVIEW)
+  brief        String?       @db.Text
+  aiJson       Json?
+  finalContent String?       @db.Text
+  status       ContentStatus @default(DRAFT)
+  seoTitle     String?
+  seoDesc      String?       @db.Text
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  products ContentProduct[]
+
+  @@index([status])
+  @@index([type])
+}
+
+model ContentProduct {
+  id        String   @id @default(cuid())
+  contentId String
+  dealId    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  deal    Deal    @relation(fields: [dealId], references: [id], onDelete: Restrict)
+
+  @@unique([contentId, dealId])
+  @@index([contentId])
+  @@index([dealId])
 }

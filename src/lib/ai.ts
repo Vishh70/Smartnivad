@@ -1,13 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const MODELS = [
-  "gemini-2.0-flash-lite", // Very fast, likely high capacity
-  "gemini-2.0-flash",
-  "gemini-2.5-flash",
+  process.env.GEMINI_MODEL || "gemini-3.6-flash",
+  "gemini-3.5-flash-lite",
   "gemini-flash-latest",
 ];
 
-export async function generateWithFallback(prompt: string, isJson = false, systemInstruction?: string) {
+export async function generateWithFallback(
+  prompt: string,
+  isJson = false,
+  systemInstruction?: string,
+) {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error("GEMINI_API_KEY is not configured");
   }

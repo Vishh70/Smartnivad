@@ -28,31 +28,16 @@ async function verifyDatabaseMigration() {
     console.log(`AutomationLog table verified (Count: ${logCount}).`);
 
     // 3. Verify Content and ContentProduct (Phase 39 Additive Models)
-    // NOTE: This will fail until Phase 39 migrations are applied.
-    // However, Phase 39 rules specify this script must check for them.
+    // In Phase 39, these models are strictly required.
     try {
-      // @ts-expect-error - Ignore TS error until models exist in Prisma Client - Ignore TS error until models exist in Prisma Client
-      if (prisma.content) {
-        // @ts-expect-error - Ignore TS error until models exist in Prisma Client
-        const contentCount = await prisma.content.count();
-        console.log(`Content table verified (Count: ${contentCount}).`);
-      } else {
-        console.warn("Content model not yet available in Prisma Client.");
-      }
+      const contentCount = await prisma.content.count();
+      console.log(`Content table verified (Count: ${contentCount}).`);
 
-      // @ts-expect-error - Ignore TS error until models exist in Prisma Client
-      if (prisma.contentProduct) {
-        // @ts-expect-error - Ignore TS error until models exist in Prisma Client
-        const cpCount = await prisma.contentProduct.count();
-        console.log(`ContentProduct table verified (Count: ${cpCount}).`);
-      } else {
-        console.warn(
-          "ContentProduct model not yet available in Prisma Client.",
-        );
-      }
+      const cpCount = await prisma.contentProduct.count();
+      console.log(`ContentProduct table verified (Count: ${cpCount}).`);
     } catch (e) {
       console.error(
-        "Failed to verify Content or ContentProduct availability",
+        "Failed to verify Content or ContentProduct availability. These tables are strictly required for Phase 39.",
         e,
       );
       process.exit(1);
