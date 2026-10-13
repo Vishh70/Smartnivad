@@ -19,6 +19,7 @@ export default async function AutomationAdminPage() {
     recentRuns,
     categories,
     providerStatuses,
+    importQueueItems,
   ] = await Promise.all([
     prisma.deal.count({
       where: { provider: { in: ["AMAZON", "FLIPKART"] } },
@@ -47,6 +48,10 @@ export default async function AutomationAdminPage() {
       orderBy: { name: "asc" },
     }),
     getAllConfigStatuses(),
+    prisma.importQueueItem.findMany({
+      take: 30,
+      orderBy: { createdAt: "desc" },
+    }),
   ]);
 
   return (
@@ -122,6 +127,7 @@ export default async function AutomationAdminPage() {
         reviewQueueDeals={reviewQueueDeals}
         recentRuns={recentRuns}
         categories={categories}
+        importQueueItems={importQueueItems}
       />
     </div>
   );

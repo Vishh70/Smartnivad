@@ -74,6 +74,7 @@ model Deal {
   isPriceStale           Boolean        @default(false)
   inStock                Boolean        @default(true)
   reviewQueue            Boolean        @default(false)
+  sourceUrl              String?
   reviewReason           String?
 
   category     Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -88,6 +89,7 @@ model Deal {
   automationLogs  AutomationLog[]
   socialPostQueue SocialPostQueue[]
   contentProducts ContentProduct[]
+  importQueueItems ImportQueueItem[]
 
   @@index([slug])
   @@index([categoryId])
@@ -612,6 +614,37 @@ model DiscoveryRun {
   createdAt     DateTime @default(now())
 
   @@index([provider])
+  @@index([createdAt])
+}
+
+// ─── Amazon Link Import Queue ─────────────────────────────────────────────────
+
+model ImportQueueItem {
+  id                 String    @id @default(cuid())
+  sourceUrl          String
+  resolvedUrl        String?
+  asin               String?
+  marketplace        String?
+  provider           String    @default("AMAZON")
+  trackingTag        String?
+  isTrackingVerified Boolean   @default(false)
+  status             String    // "PENDING_VERIFICATION", "VERIFIED", "REJECTED", "IMPORTED", "DUPLICATE"
+  pendingReason      String?
+  title              String?
+  imageUrl           String?
+  currentPrice       Float?
+  originalPrice      Float?
+  discount           Int?
+  dealId             String?
+  deal               Deal?     @relation(fields: [dealId], references: [id], onDelete: SetNull)
+  retryCount         Int       @default(0)
+  lastAttemptAt      DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([asin])
+  @@index([status])
+  @@index([sourceUrl])
   @@index([createdAt])
 }
 

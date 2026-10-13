@@ -149,3 +149,61 @@ export async function rejectReviewDealAction(dealId: string) {
   );
   return { success: true };
 }
+
+export async function triggerAmazonLinkImportAction(formData: FormData) {
+  await requireAdmin();
+
+  const urlText = (formData.get("urls") as string) || "";
+  const dryRun = formData.get("dryRun") === "true";
+  const autoPublish = formData.get("autoPublish") === "true";
+
+  const urls = urlText
+    .split("\n")
+    .map((u) => u.trim())
+    .filter(Boolean);
+
+  if (urls.length === 0) {
+    throw new Error("Please provide at least one Amazon URL to import.");
+  }
+
+  const { processAmazonLinkImports } =
+    await import("@/lib/affiliate/import-service");
+  const result = await processAmazonLinkImports(urls, {
+    dryRun,
+    autoPublish,
+  });
+
+  revalidatePath(
+    "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/automation",
+  );
+  revalidatePath(
+    "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/deals",
+  );
+
+  return result;
+}
+
+export async function retryImportQueueItemAction(queueItemId: string) {
+  await requireAdmin();
+
+  const item = await prisma.importQueueItem.findUnique({
+    where: { id: queueItemId },
+  });
+
+  if (!item) {
+    throw new Error("Import queue item not found.");
+  }
+
+  const { processAmazonLinkImports } =
+    await import("@/lib/affiliate/import-service");
+  const result = await processAmazonLinkImports([item.sourceUrl], {
+    dryRun: false,
+    autoPublish: false,
+  });
+
+  revalidatePath(
+    "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/automation",
+  );
+
+  return result;
+}
