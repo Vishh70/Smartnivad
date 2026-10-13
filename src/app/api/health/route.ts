@@ -10,6 +10,7 @@ export async function GET() {
       {
         status: "ok",
         database: "connected",
+        commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev",
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV,
       },
