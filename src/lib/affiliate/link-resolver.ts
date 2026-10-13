@@ -415,6 +415,7 @@ export async function resolveAmazonLink(
         res = await fetch(currentUrl, {
           method: "HEAD",
           redirect: "manual",
+          signal: AbortSignal.timeout(6000),
           headers: {
             "User-Agent":
               "Mozilla/5.0 (Windows NT 10.0; Win64; x64) SmartNivad/1.0",
@@ -427,6 +428,7 @@ export async function resolveAmazonLink(
           res = await fetch(currentUrl, {
             method: "GET",
             redirect: "manual",
+            signal: AbortSignal.timeout(6000),
             headers: {
               "User-Agent":
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) SmartNivad/1.0",
@@ -518,22 +520,29 @@ export async function resolveAmazonLink(
       break;
     }
   } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : String(err);
-    return {
-      sourceUrl,
-      resolvedUrl: hops > 0 ? currentUrl : null,
-      asin: extractAsinFromUrl(currentUrl),
-      titleSlug: extractTitleSlugFromUrl(currentUrl),
-      marketplace: null,
-      isIndiaMarketplace: false,
-      httpStatus: lastStatus,
-      redirectHops: hops,
-      trackingTag: null,
-      isTrackingVerified: false,
-      trackingStatus: "UNRESOLVED",
-      resolutionStatus: "HTTP_ERROR",
-      errorMessage: `Network error during link resolution: ${errorMsg}`,
-    };
+    // If we already followed redirects and arrived at an approved Amazon destination with an ASIN,
+    // don't treat final page network error as total failure
+    const destinationAsin = extractAsinFromUrl(currentUrl);
+    if (hops > 0 && destinationAsin) {
+      lastStatus = 200;
+    } else {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      return {
+        sourceUrl,
+        resolvedUrl: hops > 0 ? currentUrl : null,
+        asin: destinationAsin,
+        titleSlug: extractTitleSlugFromUrl(currentUrl),
+        marketplace: null,
+        isIndiaMarketplace: false,
+        httpStatus: lastStatus,
+        redirectHops: hops,
+        trackingTag: null,
+        isTrackingVerified: false,
+        trackingStatus: "UNRESOLVED",
+        resolutionStatus: "HTTP_ERROR",
+        errorMessage: `Network error during link resolution: ${errorMsg}`,
+      };
+    }
   }
 
   // Parse final destination
@@ -562,7 +571,24 @@ export async function resolveAmazonLink(
   const finalHostCheck = isApprovedAmazonHost(finalHost);
 
   // Check HTTP status code: 404 or >= 400
-  if (lastStatus && (lastStatus < 200 || lastStatus >= 400)) {
+  // Note: 503, 403, 429, and 405 (Method Not Allowed for HEAD requests) on amazon.in
+  // product pages occur when automated HEAD/GET requests reach Amazon product endpoints.
+  // If we successfully redirected to an approved Amazon product page with a valid 10-char ASIN,
+  // treat the link as cleanly resolved.
+  const hasDestinationAsin = !!extractAsinFromUrl(currentUrl);
+  const isAntiBotChallenge =
+    hops > 0 &&
+    hasDestinationAsin &&
+    (lastStatus === 503 ||
+      lastStatus === 403 ||
+      lastStatus === 429 ||
+      lastStatus === 405);
+
+  if (
+    lastStatus &&
+    (lastStatus < 200 || lastStatus >= 400) &&
+    !isAntiBotChallenge
+  ) {
     return {
       sourceUrl,
       resolvedUrl: currentUrl !== sourceUrl ? currentUrl : null,
