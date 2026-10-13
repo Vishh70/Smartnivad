@@ -66,6 +66,16 @@ model Deal {
   storeId    String
   brandId    String?
 
+  externalId             String?
+  provider               String?        @default("MANUAL")
+  lastCheckedAt          DateTime?
+  lastSuccessfulCheckAt  DateTime?
+  consecutiveFailures    Int            @default(0)
+  isPriceStale           Boolean        @default(false)
+  inStock                Boolean        @default(true)
+  reviewQueue            Boolean        @default(false)
+  reviewReason           String?
+
   category     Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   store        Store          @relation(fields: [storeId], references: [id], onDelete: Cascade)
   brand        Brand?         @relation(fields: [brandId], references: [id], onDelete: SetNull)
@@ -90,6 +100,11 @@ model Deal {
   @@index([discount])
   @@index([clicks])
   @@index([createdAt])
+  @@index([externalId])
+  @@index([provider])
+  @@index([lastCheckedAt])
+  @@index([isPriceStale])
+  @@index([reviewQueue])
 }
 
 model Category {
@@ -515,3 +530,88 @@ model ContentProduct {
   @@index([contentId])
   @@index([dealId])
 }
+
+// ─── Financial & Bank Offer Engine ───────────────────────────────────────────
+
+enum BankOfferType {
+  INSTANT_DISCOUNT
+  COUPON
+  CASHBACK
+  EMI_OFFER
+}
+
+enum DiscountValueType {
+  PERCENTAGE
+  FIXED
+}
+
+enum CardType {
+  CREDIT
+  DEBIT
+  ALL
+}
+
+enum OfferVerificationStatus {
+  VERIFIED
+  UNVERIFIED
+  EXPIRED
+}
+
+model BankOffer {
+  id                 String                  @id @default(cuid())
+  bankName           String                  // e.g. "HDFC Bank", "ICICI Bank", "SBI Card", "Axis Bank", "Amazon Pay ICICI"
+  cardName           String                  // e.g. "Regalia", "Millennia", "Amazon Pay Card", "Flipkart Axis", "All Credit Cards"
+  cardType           CardType                @default(CREDIT)
+  offerType          BankOfferType           @default(INSTANT_DISCOUNT)
+  discountType       DiscountValueType       @default(PERCENTAGE)
+  discountValue      Float                   // 10 for 10%, or 1500 for fixed ₹1500
+  maxDiscountCap     Float?                  // Maximum cap e.g. 1500, or null if uncapped
+  minSpend           Float                   @default(0) // Minimum transaction amount e.g. 5000
+  eligibleStores     String[]                // ["Amazon", "Flipkart", "All"]
+  eligibleCategories String[]                // Category slugs or ["ALL"]
+  paymentMethods     String[]                // ["FULL_PAYMENT", "EMI_3M", "EMI_6M", "EMI_9M", "EMI_12M"]
+  emiTenureMonths    Int?                    // e.g. 3, 6, 9, 12
+  emiInterestRate    Float?                  // Subsidized interest % or 0 for No-Cost EMI
+  emiProcessingFee   Float?                  // e.g. 199.0
+  stackable          Boolean                 @default(false) // Stacking allowed with coupon/other offers?
+  termsUrl           String?                 // Official terms URL
+  termsSummary       String?                 @db.Text
+  source             String?                 // "Official Bank Feed", "Amazon Promotion Page", etc.
+  verificationStatus OfferVerificationStatus @default(VERIFIED)
+  lastVerifiedAt     DateTime                @default(now())
+  startDate          DateTime                @default(now())
+  endDate            DateTime?
+  active             Boolean                 @default(true)
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+
+  @@index([bankName])
+  @@index([cardName])
+  @@index([active])
+  @@index([verificationStatus])
+  @@index([endDate])
+}
+
+// ─── Automated Discovery Runs ─────────────────────────────────────────────────
+
+model DiscoveryRun {
+  id            String   @id @default(cuid())
+  provider      String   // "AMAZON", "FLIPKART", "MANUAL"
+  keyword       String?
+  category      String?
+  isDryRun      Boolean  @default(false)
+  foundCount    Int      @default(0)
+  createdCount  Int      @default(0)
+  updatedCount  Int      @default(0)
+  skippedCount  Int      @default(0)
+  rejectedCount Int      @default(0)
+  details       Json?    // Detailed items with reasons
+  status        String   // "SUCCESS", "PARTIAL", "FAILED"
+  errorMessage  String?  @db.Text
+  durationMs    Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  @@index([provider])
+  @@index([createdAt])
+}
+

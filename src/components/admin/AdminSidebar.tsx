@@ -10,6 +10,8 @@ import {
   FileText,
   Settings,
   X,
+  Bot,
+  CreditCard,
 } from "lucide-react";
 import { SignOutButton } from "@/components/admin/SignOutButton";
 
@@ -32,6 +34,16 @@ export function AdminSidebar({
       name: "Dashboard",
       href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a",
       icon: <LayoutDashboard size={20} />,
+    },
+    {
+      name: "Automation",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/automation",
+      icon: <Bot size={20} />,
+    },
+    {
+      name: "Bank Offers",
+      href: "/secure-management-zone-8f3a9b2e7c1d4f6a5b8c9d0e2f1a4b7c6d9e8f3a2b1c4d7e6f9a8b5c2d1e4f3a/bank-offers",
+      icon: <CreditCard size={20} />,
     },
     {
       name: "Deals",

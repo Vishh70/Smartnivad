@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Star, Clock } from "lucide-react";
+import { Star, Clock, CreditCard } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { DealScore } from "@/components/ui/DealScore";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
@@ -32,6 +32,9 @@ interface DealCardProps {
     expiresAt?: Date | string | null;
     store?: { name: string } | null;
     brand?: { name: string } | null;
+    isPriceStale?: boolean;
+    inStock?: boolean;
+    lastCheckedAt?: Date | string | null;
   };
 }
 
@@ -66,10 +69,15 @@ export function ProductCard({ product }: DealCardProps) {
   return (
     <SpotlightCard className="h-full rounded-[20px] shadow-[0_12px_40px_rgba(15,23,42,0.08)]">
       <GlassCard className="product-card flex flex-col h-full group relative overflow-hidden !border-none !shadow-none !p-3 sm:!p-4 bg-white">
-        {/* Absolute Top Right - Discount */}
-        {discPct > 0 && (
+        {/* Absolute Top Right - Discount or Unverified Status */}
+        {discPct > 0 && !product.isPriceStale && (
           <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-30 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-[10px] sm:text-[11px] font-black px-2 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-md">
             -{discPct}%
+          </div>
+        )}
+        {product.isPriceStale && (
+          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-30 bg-amber-500 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-md">
+            Unverified
           </div>
         )}
 
@@ -149,14 +157,35 @@ export function ProductCard({ product }: DealCardProps) {
             )}
           </div>
 
-          {/* Store / Freshness */}
+          {/* Smart Card Savings Snippet */}
+          {product.currentPrice && product.currentPrice >= 1000 && (
+            <div className="mb-2 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-lg px-2 py-1 flex items-center gap-1.5 text-[11px] text-blue-900">
+              <CreditCard size={12} className="text-blue-600 shrink-0" />
+              <span className="truncate">
+                With Card:{" "}
+                <strong className="text-blue-700">
+                  ₹{formatNumber(Math.round(product.currentPrice * 0.9))}
+                </strong>
+              </span>
+            </div>
+          )}
+
+          {/* Store / Freshness / Status */}
           <div className="flex items-center gap-1.5 sm:gap-3 mb-3 sm:mb-4">
             {product.store?.name && (
               <span className="text-[10px] sm:text-[12px] font-bold text-gray-700 bg-gray-100 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md max-w-[80px] sm:max-w-none truncate">
                 {product.store.name}
               </span>
             )}
-            {ago && !hasExpiry && (
+            {product.inStock === false ? (
+              <span className="text-[10px] sm:text-[11px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded">
+                Out of Stock
+              </span>
+            ) : product.isPriceStale ? (
+              <span className="text-[10px] sm:text-[11px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">
+                Unverified price
+              </span>
+            ) : ago && !hasExpiry ? (
               <div
                 className="flex items-center gap-1 text-[10px] sm:text-[11px] text-gray-400 font-medium shrink-0"
                 suppressHydrationWarning
@@ -164,7 +193,7 @@ export function ProductCard({ product }: DealCardProps) {
                 <Clock size={10} className="sm:w-3 sm:h-3" />
                 <span suppressHydrationWarning>{ago}</span>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Countdown Timer */}
@@ -177,7 +206,11 @@ export function ProductCard({ product }: DealCardProps) {
 
         {/* CTA Button */}
         <div className="mt-auto">
-          {affiliateUrl === "#" ? (
+          {product.inStock === false ? (
+            <span className="flex items-center justify-center w-full h-11 sm:h-12 rounded-[10px] sm:rounded-[14px] bg-gray-100 text-[13px] sm:text-[14px] font-semibold text-gray-400">
+              Out of Stock
+            </span>
+          ) : affiliateUrl === "#" ? (
             <span className="flex items-center justify-center w-full h-11 sm:h-12 rounded-[10px] sm:rounded-[14px] bg-gray-50 text-[13px] sm:text-[14px] font-semibold text-gray-400">
               Unavailable
             </span>

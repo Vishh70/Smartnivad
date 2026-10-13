@@ -19,6 +19,8 @@ const PriceHistoryChart = dynamic(() =>
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { getDealBySlug, getDealsByCategory } from "@/lib/data";
 import { formatNumber } from "@/lib/format";
+import { CardOffersSection } from "@/components/ui/CardOffersSection";
+import { getApplicableOffersForProduct } from "@/lib/offers/service";
 
 export async function generateMetadata({
   params,
@@ -76,6 +78,12 @@ export default async function ProductPage({
 
   const hasAff = !!(product.affiliateUrl && product.affiliateUrl !== "#");
   const affiliateUrl = hasAff && product.slug ? `/go/${product.slug}` : "#";
+
+  const bankOfferResult = await getApplicableOffersForProduct({
+    price: product.currentPrice,
+    storeName: product.store?.name,
+    categorySlug: product.category?.slug,
+  });
 
   return (
     <div className="min-h-screen py-10 pb-36 lg:pb-24">
@@ -210,14 +218,34 @@ export default async function ProductPage({
                         {origLabel}
                       </span>
                     )}
-                    <span className="text-sm font-bold text-green-600 bg-green-50 px-2.5 py-1 rounded-lg border border-green-200">
-                      {product.discount}% OFF
-                    </span>
+                    {product.discount > 0 && !product.isPriceStale ? (
+                      <span className="text-sm font-bold text-green-600 bg-green-50 px-2.5 py-1 rounded-lg border border-green-200">
+                        {product.discount}% OFF
+                      </span>
+                    ) : product.isPriceStale ? (
+                      <span className="text-sm font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">
+                        Price Unverified
+                      </span>
+                    ) : null}
                   </div>
                 </div>
-                <div className="bg-blue-50 border border-blue-200 text-blue-600 text-sm px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
-                  <Info size={16} />
-                  <span>External affiliate link</span>
+                <div className="flex flex-col items-start sm:items-end gap-1">
+                  <div className="bg-blue-50 border border-blue-200 text-blue-600 text-sm px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
+                    <Info size={16} />
+                    <span>External affiliate link</span>
+                  </div>
+                  {product.isPriceStale ? (
+                    <span className="text-[11px] text-amber-600 font-semibold bg-amber-50 px-2 py-0.5 rounded">
+                      Unverified / pending price check
+                    </span>
+                  ) : product.lastCheckedAt ? (
+                    <span className="text-[11px] text-gray-400 font-medium">
+                      Price verified{" "}
+                      {new Date(product.lastCheckedAt).toLocaleDateString(
+                        "en-IN",
+                      )}
+                    </span>
+                  ) : null}
                 </div>
               </div>
 
@@ -251,6 +279,13 @@ export default async function ProductPage({
                 </p>
               </div>
             </GlassCard>
+
+            {/* Smart Card Savings Engine */}
+            <CardOffersSection
+              offerResult={bankOfferResult}
+              productPrice={product.currentPrice}
+              storeName={product.store?.name}
+            />
 
             {/* Price History Chart & Alert */}
             <div className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
