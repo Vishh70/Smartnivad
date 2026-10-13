@@ -1,6 +1,9 @@
 import { getDeals, getCategories, getStores, getBrands } from "@/lib/data";
 import { DealsClient } from "@/components/sections/DealsClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "All Deals | SmartNivad",
   description: "Browse thousands of deals across categories and stores.",
