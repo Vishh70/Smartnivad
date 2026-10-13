@@ -809,6 +809,10 @@ https://link.amazon/B05YNFlPW`;
                             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800">
                               Duplicate
                             </span>
+                          ) : item.importStatus === "REJECTED" ? (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">
+                              Rejected (Test SKU)
+                            </span>
                           ) : (
                             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800">
                               HTTP Error

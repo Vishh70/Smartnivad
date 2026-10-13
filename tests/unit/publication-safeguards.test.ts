@@ -84,20 +84,22 @@ describe("Publication Safeguards & Catalog Protection", () => {
   describe("Import Pipeline Safeguards", () => {
     it("quarantines candidates without API credentials as AWAITING_VERIFICATION and creates zero deals", async () => {
       // Mock network resolution for candidate
-      vi.spyOn(global, "fetch").mockImplementation((url: string) => {
-        if (String(url).includes("amzn.to/candidate")) {
-          return Promise.resolve(
-            new Response(null, {
-              status: 301,
-              headers: {
-                location:
-                  "https://www.amazon.in/SPARX-SM-9039-Shoes/dp/B0B4KCH1LV?tag=smartnivad-21",
-              },
-            }),
-          );
-        }
-        return Promise.resolve(new Response(null, { status: 200 }));
-      });
+      vi.spyOn(global, "fetch").mockImplementation(
+        (url: string | URL | Request) => {
+          if (String(url).includes("amzn.to/candidate")) {
+            return Promise.resolve(
+              new Response(null, {
+                status: 301,
+                headers: {
+                  location:
+                    "https://www.amazon.in/SPARX-SM-9039-Shoes/dp/B0B4KCH1LV?tag=smartnivad-21",
+                },
+              }),
+            );
+          }
+          return Promise.resolve(new Response(null, { status: 200 }));
+        },
+      );
 
       // Ensure Creators API credentials are not set
       delete process.env.AMAZON_CREATORS_CREDENTIAL_ID;

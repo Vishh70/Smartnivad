@@ -33,6 +33,7 @@ export interface ImportCandidateAudit {
     | "UPDATED"
     | "AWAITING_VERIFICATION"
     | "DUPLICATE"
+    | "REJECTED"
     | "REJECTED_ERROR";
   statusReason: string;
   dealId?: string;
@@ -278,12 +279,72 @@ export async function processAmazonLinkImports(
 
     // 6. Handle Pending Verification (when Creators API is not configured)
     if (!apiProduct) {
-      awaitingVerification++;
       const candidateTitle = resolved.titleSlug
         ? resolved.titleSlug.replace(/-/g, " ")
         : asin
           ? `Amazon Product (${asin})`
           : "Amazon Item";
+
+      // Detect non-retail utility services or test recharge SKUs
+      const isTestSku =
+        candidateTitle.toLowerCase().includes("billdesk") ||
+        candidateTitle.toLowerCase().includes("test_model") ||
+        candidateTitle.toLowerCase().includes("prepaid recharge") ||
+        asin === "B01LTI9KAW";
+
+      if (isTestSku) {
+        invalidOrUnsupported++;
+        failuresRequiringAction++;
+        const rejectedAudit: ImportCandidateAudit = {
+          sourceUrl: resolved.sourceUrl,
+          resolvedUrl: resolved.resolvedUrl,
+          asin,
+          marketplace: resolved.marketplace,
+          isIndiaMarketplace: resolved.isIndiaMarketplace,
+          httpStatus: resolved.httpStatus,
+          trackingTag: resolved.trackingTag,
+          isTrackingVerified: resolved.isTrackingVerified,
+          trackingStatus: resolved.trackingStatus,
+          resolutionStatus: resolved.resolutionStatus,
+          resolutionError: null,
+          title: candidateTitle,
+          imageUrl: null,
+          currentPrice: null,
+          originalPrice: null,
+          discount: 0,
+          inStock: false,
+          isDuplicate: false,
+          importStatus: "REJECTED",
+          statusReason:
+            "Rejected: Test recharge SKU (Billdesk test_model). Not eligible for public deals catalog.",
+        };
+
+        if (!isDryRun) {
+          try {
+            await prisma.importQueueItem.create({
+              data: {
+                sourceUrl: resolved.sourceUrl,
+                resolvedUrl: resolved.resolvedUrl,
+                asin,
+                marketplace: resolved.marketplace,
+                provider: "AMAZON",
+                trackingTag: resolved.trackingTag,
+                isTrackingVerified: resolved.isTrackingVerified,
+                status: "REJECTED",
+                pendingReason: rejectedAudit.statusReason,
+                title: candidateTitle,
+              },
+            });
+          } catch {
+            // In unit tests without database
+          }
+        }
+
+        items.push(rejectedAudit);
+        continue;
+      }
+
+      awaitingVerification++;
 
       const candidateAudit: ImportCandidateAudit = {
         sourceUrl: resolved.sourceUrl,

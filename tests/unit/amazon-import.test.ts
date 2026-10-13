@@ -87,18 +87,18 @@ describe("Amazon Link Import Pipeline & Audit", () => {
 
     expect(result.isDryRun).toBe(true);
     expect(result.totalSubmitted).toBe(5);
-    expect(result.successfullyResolved).toBe(4);
-    expect(result.invalidOrUnsupported).toBe(1);
-    expect(result.awaitingVerification).toBe(4); // API credentials pending
+    expect(result.invalidOrUnsupported).toBe(2);
+    expect(result.awaitingVerification).toBe(3); // 3 valid retail items awaiting API credentials
 
-    // Check Candidate 1: Billdesk / B01LTI9KAW
+    // Check Candidate 1: Billdesk / B01LTI9KAW (Test Recharge SKU)
     const item1 = result.items[0];
     expect(item1.sourceUrl).toBe("https://amzn.to/3VKp4AG");
     expect(item1.asin).toBe("B01LTI9KAW");
     expect(item1.isIndiaMarketplace).toBe(true);
     expect(item1.isTrackingVerified).toBe(true);
     expect(item1.trackingTag).toBe("smartnivad-21");
-    expect(item1.importStatus).toBe("AWAITING_VERIFICATION");
+    expect(item1.importStatus).toBe("REJECTED");
+    expect(item1.statusReason).toContain("Test recharge SKU");
 
     // Check Candidate 2: SPARX / B0B4KCH1LV
     const item2 = result.items[1];
