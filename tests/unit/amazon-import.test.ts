@@ -179,4 +179,90 @@ describe("Amazon Link Import Pipeline & Audit", () => {
     expect(calcDiscount(1500, 1200)).toBe(0); // Price higher than comparison: never negative!
     expect(calcDiscount(0, 5000)).toBe(0); // Zero price rejected!
   });
+
+  describe("Single Amazon Link Import Engine (One-Link)", () => {
+    it("processes a single valid affiliate link and extracts metadata", async () => {
+      global.fetch = vi.fn().mockImplementation((url: string) => {
+        const u = String(url);
+        if (u === "https://amzn.to/3TYvcVs") {
+          return Promise.resolve(
+            new Response(null, {
+              status: 301,
+              headers: {
+                location:
+                  "https://www.amazon.in/SPARX-SM-9039-Stylish-Comfortable/dp/B0B4KCH1LV?tag=smartnivad-21&linkCode=as4",
+              },
+            }),
+          );
+        }
+        return Promise.resolve(new Response(null, { status: 200 }));
+      });
+
+      const { processSingleAmazonLinkImport } =
+        await import("@/lib/affiliate/import-service");
+
+      const candidate = await processSingleAmazonLinkImport(
+        "https://amzn.to/3TYvcVs",
+        { dryRun: true },
+      );
+
+      expect(candidate.sourceUrl).toBe("https://amzn.to/3TYvcVs");
+      expect(candidate.asin).toBe("B0B4KCH1LV");
+      expect(candidate.isIndiaMarketplace).toBe(true);
+      expect(candidate.isTrackingVerified).toBe(true);
+      expect(candidate.trackingTag).toBe("smartnivad-21");
+      expect(candidate.importStatus).toBe("AWAITING_VERIFICATION");
+      expect(candidate.statusReason).toContain(
+        "Amazon Creators API credentials pending",
+      );
+    });
+
+    it("rejects non-retail utility / test recharge SKU immediately on single link input", async () => {
+      global.fetch = vi.fn().mockImplementation((url: string) => {
+        const u = String(url);
+        if (u.includes("amazon.in/")) {
+          return Promise.resolve(new Response(null, { status: 200 }));
+        }
+        return Promise.resolve(
+          new Response(null, {
+            status: 301,
+            headers: {
+              location:
+                "https://www.amazon.in/Billdesk-test_model-Mobile-Prepaid-Recharge/dp/B01LTI9KAW?tag=smartnivad-21",
+            },
+          }),
+        );
+      });
+
+      const { processSingleAmazonLinkImport } =
+        await import("@/lib/affiliate/import-service");
+
+      const candidate = await processSingleAmazonLinkImport(
+        "https://amzn.to/3VKp4AG",
+        { dryRun: true },
+      );
+
+      expect(candidate.asin).toBe("B01LTI9KAW");
+      expect(candidate.importStatus).toBe("REJECTED");
+      expect(candidate.statusReason).toContain("Test recharge SKU");
+    });
+
+    it("handles 404 dead link securely and returns REJECTED_ERROR", async () => {
+      global.fetch = vi.fn().mockImplementation(() => {
+        return Promise.resolve(new Response(null, { status: 404 }));
+      });
+
+      const { processSingleAmazonLinkImport } =
+        await import("@/lib/affiliate/import-service");
+
+      const candidate = await processSingleAmazonLinkImport(
+        "https://link.amazon/deadlink",
+        { dryRun: true },
+      );
+
+      expect(candidate.importStatus).toBe("REJECTED_ERROR");
+      expect(candidate.httpStatus).toBe(404);
+      expect(candidate.statusReason).toContain("HTTP 404");
+    });
+  });
 });

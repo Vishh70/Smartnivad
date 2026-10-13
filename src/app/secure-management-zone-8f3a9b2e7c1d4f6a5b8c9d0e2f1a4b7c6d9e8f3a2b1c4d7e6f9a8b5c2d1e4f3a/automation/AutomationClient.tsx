@@ -16,6 +16,8 @@ import {
   Inbox,
   CheckCircle2,
   AlertCircle,
+  Zap,
+  Sparkles,
 } from "lucide-react";
 import {
   triggerDiscoveryAction,
@@ -24,10 +26,14 @@ import {
   approveReviewDealAction,
   rejectReviewDealAction,
   triggerAmazonLinkImportAction,
+  triggerOneLinkImportAction,
   retryImportQueueItemAction,
 } from "./actions";
 import { DiscoveryResult } from "@/lib/affiliate/discovery";
-import { AmazonImportSummary } from "@/lib/affiliate/import-service";
+import {
+  AmazonImportSummary,
+  ImportCandidateAudit,
+} from "@/lib/affiliate/import-service";
 
 interface AutomationClientProps {
   providerStatuses: Array<{
@@ -98,10 +104,42 @@ https://link.amazon/B05YNFlPW`;
   const [amazonLinksText, setAmazonLinksText] = useState(
     DEFAULT_CANDIDATE_LINKS,
   );
-  const [linkDryRun, setLinkDryRun] = useState(true);
-  const [linkAutoPublish, setLinkAutoPublish] = useState(false);
+  const [linkDryRun, setLinkDryRun] = useState(false);
+  const [linkAutoPublish, setLinkAutoPublish] = useState(true);
   const [linkImportResult, setLinkImportResult] =
     useState<AmazonImportSummary | null>(null);
+
+  // One-Link Engine state
+  const [importMode, setImportMode] = useState<"single" | "bulk">("single");
+  const [singleLinkUrl, setSingleLinkUrl] = useState("");
+  const [singleLinkResult, setSingleLinkResult] =
+    useState<ImportCandidateAudit | null>(null);
+
+  const handleSingleLinkImport = (overrideDryRun?: boolean) => {
+    if (!singleLinkUrl.trim()) {
+      setStatusMessage("Please enter an Amazon product URL.");
+      return;
+    }
+    setStatusMessage(null);
+    const useDryRun =
+      overrideDryRun !== undefined ? overrideDryRun : linkDryRun;
+
+    const formData = new FormData();
+    formData.set("url", singleLinkUrl.trim());
+    formData.set("dryRun", useDryRun ? "true" : "false");
+    formData.set("autoPublish", linkAutoPublish ? "true" : "false");
+
+    startTransition(async () => {
+      try {
+        const res = await triggerOneLinkImportAction(formData);
+        setSingleLinkResult(res);
+        setStatusMessage(res.statusReason || "Link processed successfully.");
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setStatusMessage(`One-Link Import Error: ${msg}`);
+      }
+    });
+  };
 
   // Form states
   const [provider, setProvider] = useState("AMAZON");
@@ -545,121 +583,459 @@ https://link.amazon/B05YNFlPW`;
         </div>
       )}
 
-      {/* ── TAB: Amazon Link Importer (5 URLs) ── */}
+      {/* ── TAB: One-Link Automatic Affiliate Deal Engine ── */}
       {activeTab === "amazon-links" && (
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Link2 className="text-blue-600" size={20} /> Amazon Link
-                  Import & Verifier
-                </h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  Resolve shortened Amazon links (amzn.to, link.amazon), verify
-                  India marketplace (www.amazon.in), validate Associates
-                  tracking ID (smartnivad-21), detect duplicates, and preview
-                  verified catalog data.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setAmazonLinksText(DEFAULT_CANDIDATE_LINKS)}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors shrink-0 flex items-center gap-1.5"
-              >
-                <RefreshCw size={12} /> Load 5 Candidate Links
-              </button>
-            </div>
+          {/* Mode Switcher Tabs */}
+          <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-xl w-fit">
+            <button
+              type="button"
+              onClick={() => setImportMode("single")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                importMode === "single"
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              <Zap
+                size={14}
+                className={
+                  importMode === "single" ? "text-amber-500 fill-amber-500" : ""
+                }
+              />{" "}
+              One-Link Instant Engine
+            </button>
+            <button
+              type="button"
+              onClick={() => setImportMode("bulk")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                importMode === "bulk"
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              <Link2 size={14} /> Bulk Importer (5+ Links)
+            </button>
+          </div>
 
-            {/* Provider and Attribution Guardrails Banner */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-blue-50/60 rounded-xl border border-blue-100 text-xs mb-5">
-              <div>
-                <span className="text-gray-500 block text-[10px] uppercase font-bold">
-                  Target Marketplace
-                </span>
-                <strong className="text-blue-900">www.amazon.in (India)</strong>
-              </div>
-              <div>
-                <span className="text-gray-500 block text-[10px] uppercase font-bold">
-                  Configured Associate ID
-                </span>
-                <strong className="text-blue-900">smartnivad-21</strong>
-              </div>
-              <div>
-                <span className="text-gray-500 block text-[10px] uppercase font-bold">
-                  Amazon Creators API
-                </span>
-                <span className="font-semibold text-amber-700">
-                  OAuth 2.0 Credentials Pending
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
-                  Amazon Product URLs (one per line)
-                </label>
-                <textarea
-                  rows={6}
-                  value={amazonLinksText}
-                  onChange={(e) => setAmazonLinksText(e.target.value)}
-                  placeholder="https://amzn.to/3VKp4AG&#10;https://amzn.to/3TYvcVs&#10;https://amzn.to/4yKV71P&#10;https://amzn.to/3TYvdJ0&#10;https://link.amazon/B05YNFlPW"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-gray-100">
-                <div className="flex items-center gap-6 text-xs">
-                  <label className="flex items-center gap-2 cursor-pointer font-medium text-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={linkDryRun}
-                      onChange={(e) => setLinkDryRun(e.target.checked)}
-                      className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                    />
-                    Dry Run (Preview resolution & validation without saving)
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-medium text-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={linkAutoPublish}
-                      onChange={(e) => setLinkAutoPublish(e.target.checked)}
-                      className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                    />
-                    Auto-publish if fully verified & clean
-                  </label>
+          {/* Mode 1: One-Link Instant Engine */}
+          {importMode === "single" && (
+            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <Zap className="text-amber-500 fill-amber-500" size={20} />
+                    One-Link Automatic Affiliate Deal Engine
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Paste ONLY an Amazon affiliate link. SmartNivad
+                    automatically resolves the ASIN, verifies tracking (
+                    <strong>smartnivad-21</strong>), fetches authorized product
+                    data, writes the AI summary & buying highlights, and
+                    publishes the deal card.
+                  </p>
                 </div>
+              </div>
 
-                <div className="flex items-center gap-3">
+              {/* Provider and Attribution Guardrails Banner */}
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3.5 bg-blue-50/60 rounded-xl border border-blue-100 text-xs">
+                <div>
+                  <span className="text-gray-500 block text-[10px] uppercase font-bold">
+                    Target Marketplace
+                  </span>
+                  <strong className="text-blue-900">
+                    www.amazon.in (India)
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-gray-500 block text-[10px] uppercase font-bold">
+                    Associate ID
+                  </span>
+                  <strong className="text-blue-900">
+                    smartnivad-21 (Verified)
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-gray-500 block text-[10px] uppercase font-bold">
+                    Amazon Creators API
+                  </span>
+                  <span className="font-semibold text-amber-700">
+                    OAuth 2.0 Ready
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-500 block text-[10px] uppercase font-bold">
+                    AI Deal Engine
+                  </span>
+                  <strong className="text-emerald-700">
+                    Automatic Highlights
+                  </strong>
+                </div>
+              </div>
+
+              {/* Single Link Input Box */}
+              <div className="space-y-3">
+                <label className="block text-xs font-bold text-gray-700 uppercase">
+                  Paste Amazon Product or Affiliate Link
+                </label>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <input
+                      type="url"
+                      value={singleLinkUrl}
+                      onChange={(e) => setSingleLinkUrl(e.target.value)}
+                      placeholder="Paste e.g. https://amzn.to/3TYvcVs or https://www.amazon.in/dp/B0B4KCH1LV"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                    />
+                  </div>
                   <button
                     type="button"
-                    onClick={() => handleAmazonLinkImport()}
-                    disabled={isPending}
-                    className="py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-colors flex items-center gap-2"
+                    onClick={() => handleSingleLinkImport(false)}
+                    disabled={isPending || !singleLinkUrl.trim()}
+                    className="py-3 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 shrink-0"
                   >
                     {isPending ? (
                       <RefreshCw className="animate-spin" size={14} />
                     ) : (
-                      <Play size={14} />
+                      <Sparkles size={14} />
                     )}
-                    Run Resolution & Verification
+                    Auto-Import & Publish Deal
                   </button>
+                </div>
 
-                  {linkImportResult?.isDryRun && (
+                {/* Quick Test Chips */}
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <span className="text-[11px] text-gray-400 font-medium">
+                    Quick Test Links:
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setSingleLinkUrl("https://amzn.to/3TYvcVs")}
+                    className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-md transition-colors"
+                  >
+                    SPARX Shoes (B0B4KCH1LV)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSingleLinkUrl("https://amzn.to/4yKV71P")}
+                    className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-md transition-colors"
+                  >
+                    Zebronics Keyboard (B0B29G5SSW)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSingleLinkUrl("https://amzn.to/3TYvdJ0")}
+                    className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-md transition-colors"
+                  >
+                    NIVEA Cream (B00E96N6O8)
+                  </button>
+                </div>
+
+                {/* Import Controls */}
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-gray-100 text-xs">
+                  <div className="flex items-center gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer font-medium text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={linkDryRun}
+                        onChange={(e) => setLinkDryRun(e.target.checked)}
+                        className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                      />
+                      Dry Run (Preview resolution & AI analysis without saving)
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer font-medium text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={linkAutoPublish}
+                        onChange={(e) => setLinkAutoPublish(e.target.checked)}
+                        className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                      />
+                      Auto-publish to public catalogue if clean
+                    </label>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleSingleLinkImport(true)}
+                    disabled={isPending || !singleLinkUrl.trim()}
+                    className="py-1.5 px-3 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 text-xs font-semibold transition-colors"
+                  >
+                    Run Dry Run Only
+                  </button>
+                </div>
+              </div>
+
+              {/* Single Link Result Card */}
+              {singleLinkResult && (
+                <div className="mt-5 p-5 rounded-2xl border border-gray-200 bg-gradient-to-br from-gray-50/50 to-white shadow-sm space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                        Pipeline Result
+                      </span>
+                      {singleLinkResult.importStatus === "IMPORTED" ||
+                      singleLinkResult.dealStatus === "PUBLISHED" ? (
+                        <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 flex items-center gap-1">
+                          <CheckCircle2 size={12} /> Published (Live Deal)
+                        </span>
+                      ) : singleLinkResult.importStatus === "UPDATED" ? (
+                        <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 flex items-center gap-1">
+                          <CheckCircle2 size={12} /> Existing Deal Updated
+                        </span>
+                      ) : singleLinkResult.importStatus ===
+                        "AWAITING_VERIFICATION" ? (
+                        <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 flex items-center gap-1">
+                          <Clock size={12} /> Preserved in Review Queue
+                        </span>
+                      ) : singleLinkResult.importStatus === "REJECTED" ? (
+                        <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 flex items-center gap-1">
+                          <AlertCircle size={12} /> Rejected (Test SKU)
+                        </span>
+                      ) : (
+                        <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 flex items-center gap-1">
+                          <AlertCircle size={12} /> Resolution Failed
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="text-xs text-gray-500">
+                      ASIN: <strong>{singleLinkResult.asin || "N/A"}</strong> ·
+                      Tracking:{" "}
+                      <strong
+                        className={
+                          singleLinkResult.isTrackingVerified
+                            ? "text-green-600"
+                            : "text-amber-600"
+                        }
+                      >
+                        {singleLinkResult.trackingTag || "Unverified"}
+                      </strong>
+                    </div>
+                  </div>
+
+                  {/* Product Details & AI Highlights */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+                    {singleLinkResult.imageUrl && (
+                      <div className="md:col-span-3 aspect-square rounded-xl bg-white p-3 border border-gray-100 flex items-center justify-center overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={singleLinkResult.imageUrl}
+                          alt={singleLinkResult.title || "Product"}
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      </div>
+                    )}
+                    <div
+                      className={
+                        singleLinkResult.imageUrl
+                          ? "md:col-span-9 space-y-2.5"
+                          : "md:col-span-12 space-y-2.5"
+                      }
+                    >
+                      <h4 className="text-base font-bold text-gray-900 leading-snug">
+                        {singleLinkResult.title || "Amazon Product Candidate"}
+                      </h4>
+
+                      {/* Pricing */}
+                      {singleLinkResult.currentPrice && (
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-2xl font-black text-gray-900">
+                            ₹
+                            {singleLinkResult.currentPrice.toLocaleString(
+                              "en-IN",
+                            )}
+                          </span>
+                          {singleLinkResult.originalPrice &&
+                            singleLinkResult.originalPrice >
+                              singleLinkResult.currentPrice && (
+                              <>
+                                <span className="text-sm text-gray-400 line-through">
+                                  ₹
+                                  {singleLinkResult.originalPrice.toLocaleString(
+                                    "en-IN",
+                                  )}
+                                </span>
+                                <span className="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
+                                  {singleLinkResult.discount}% OFF
+                                </span>
+                              </>
+                            )}
+                          {singleLinkResult.categoryName && (
+                            <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded ml-2">
+                              {singleLinkResult.categoryName}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* AI Summary */}
+                      {singleLinkResult.aiSummary && (
+                        <div className="p-3 rounded-xl bg-blue-50/60 border border-blue-100 text-xs text-blue-900">
+                          <strong className="block text-[10px] uppercase font-bold text-blue-600 mb-0.5">
+                            AI Buying Summary
+                          </strong>
+                          {singleLinkResult.aiSummary}
+                        </div>
+                      )}
+
+                      {/* Buying Highlights (Pros) */}
+                      {singleLinkResult.pros &&
+                        singleLinkResult.pros.length > 0 && (
+                          <div className="space-y-1">
+                            <span className="text-[10px] uppercase font-bold text-gray-400 block">
+                              Verified Highlights
+                            </span>
+                            <ul className="text-xs text-gray-700 space-y-0.5">
+                              {singleLinkResult.pros.map((p, i) => (
+                                <li
+                                  key={i}
+                                  className="flex items-center gap-1.5"
+                                >
+                                  <span className="text-emerald-500 font-bold">
+                                    ✓
+                                  </span>{" "}
+                                  {p}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                      {/* Status Reason / Diagnostic Message */}
+                      <p className="text-xs text-gray-500 italic pt-1">
+                        {singleLinkResult.statusReason}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Action Links */}
+                  <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-gray-100">
+                    {singleLinkResult.dealSlug && (
+                      <>
+                        <a
+                          href={`/product/${singleLinkResult.dealSlug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-colors flex items-center gap-1.5"
+                        >
+                          <Eye size={14} /> View Public Product Page
+                        </a>
+                        <a
+                          href={`/go/${singleLinkResult.dealSlug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs transition-colors flex items-center gap-1.5"
+                        >
+                          <ExternalLink size={14} /> Test /go Affiliate Redirect
+                        </a>
+                      </>
+                    )}
+                    {singleLinkResult.resolvedUrl && (
+                      <a
+                        href={singleLinkResult.resolvedUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-gray-500 hover:text-gray-700 underline truncate max-w-xs"
+                      >
+                        Amazon URL
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Mode 2: Bulk Link Importer */}
+          {importMode === "bulk" && (
+            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <Link2 className="text-blue-600" size={20} /> Amazon Bulk
+                    Link Importer
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Paste multiple URLs (one per line) to resolve, verify
+                    attribution, detect duplicates, and queue or import in
+                    batch.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAmazonLinksText(DEFAULT_CANDIDATE_LINKS)}
+                  className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors shrink-0 flex items-center gap-1.5"
+                >
+                  <RefreshCw size={12} /> Load 5 Candidate Links
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                    Amazon Product URLs (one per line)
+                  </label>
+                  <textarea
+                    rows={6}
+                    value={amazonLinksText}
+                    onChange={(e) => setAmazonLinksText(e.target.value)}
+                    placeholder="https://amzn.to/3VKp4AG&#10;https://amzn.to/3TYvcVs&#10;https://amzn.to/4yKV71P&#10;https://amzn.to/3TYvdJ0&#10;https://link.amazon/B05YNFlPW"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-gray-100">
+                  <div className="flex items-center gap-6 text-xs">
+                    <label className="flex items-center gap-2 cursor-pointer font-medium text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={linkDryRun}
+                        onChange={(e) => setLinkDryRun(e.target.checked)}
+                        className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                      />
+                      Dry Run (Preview resolution & validation without saving)
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer font-medium text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={linkAutoPublish}
+                        onChange={(e) => setLinkAutoPublish(e.target.checked)}
+                        className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                      />
+                      Auto-publish if fully verified & clean
+                    </label>
+                  </div>
+
+                  <div className="flex items-center gap-3">
                     <button
                       type="button"
-                      onClick={() => handleAmazonLinkImport(false)}
+                      onClick={() => handleAmazonLinkImport()}
                       disabled={isPending}
-                      className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-colors flex items-center gap-2"
+                      className="py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-colors flex items-center gap-2"
                     >
-                      <PlusCircle size={14} /> Execute Live Import
+                      {isPending ? (
+                        <RefreshCw className="animate-spin" size={14} />
+                      ) : (
+                        <Play size={14} />
+                      )}
+                      Run Resolution & Verification
                     </button>
-                  )}
+
+                    {linkImportResult?.isDryRun && (
+                      <button
+                        type="button"
+                        onClick={() => handleAmazonLinkImport(false)}
+                        disabled={isPending}
+                        className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-colors flex items-center gap-2"
+                      >
+                        <PlusCircle size={14} /> Execute Live Import
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Import Results & Audit View */}
           {linkImportResult && (
